@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+header {
+    background-color: #add7f6;
+    color: #fff;
+    padding: 6px; /* Добавляем отступы по желанию */
+}
+
+footer {
+    background-color: #001219;
+    color: #fff;
+}
+
+.header-line {
+    width: 100%;
+    height: 4px;
+    background-color: #80b918; /* Цвет полоски, измените на нужный вам */
+    margin-bottom: 10px; /* Отступ под header */
+}
+
+.text-start {
+    margin-bottom: 0; /* Убираем отступ снизу для "Название" */
+    color: #001219;
+}
+
+.list-inline {
+    padding-left: 0;
+    margin-bottom: 0; /* Убираем отступ снизу для списка */
+}
+
+.list-inline-item {
+    margin-right: 10px; /* Отступ между элементами списка */
+}
+
+main {
+    padding: 40px 0;
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.movie-poster {
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+.movie-poster img {
+    width: 90%;
+    height: 300px; /* Устанавливаем высоту изображений */
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.movie-poster h3,
+.movie-poster p {
+    margin: 10px 0; /* Добавляем отступы для заголовка и описания */
+}
+
+.movie-poster {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.movie-poster:hover img {
+    transform: scale(1.1);
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+    header h1 {
+        font-size: 28px;
+    }
+}
