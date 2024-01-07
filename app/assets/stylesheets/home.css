@@ -24,7 +24,7 @@ footer {
 .header-line {
     width: 100%;
     height: 4px;
-    background-color: #80b918; /* Цвет полоски, измените на нужный вам */
+    background-color: #0d47a1; /* Цвет полоски, измените на нужный вам */
     margin-bottom: 10px; /* Отступ под header */
 }
 

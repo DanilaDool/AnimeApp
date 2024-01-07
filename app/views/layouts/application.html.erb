@@ -25,7 +25,7 @@
             <li class="list-inline-item"><a href="#"><img src="friends.svg" height="20px" width="20px"></a></li>
             <li class="list-inline-item"><a href="#"><img src="search.svg" height="20px" width="20px"></a></li>
             <li class="list-inline-item"><a href="#"><img src="chat.svg" height="20px" width="20px"></a></li>
-            <li class="list-inline-item"><a href="#">Выйти</a></li>
+            <li class="list-inline-item"><%= link_to 'Выйти', log_out_path(current_user)%></li>
           <%else %>
             <li class="list-inline-item"><%= link_to 'Войти через ВКонтакте', '/auth/vkontakte'%></li>
           <% end %>
@@ -36,6 +36,7 @@
   </div>
 </header>
 <div class="header-line"></div>
+
 <%= yield %>
 </body>
 </html>
