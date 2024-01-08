@@ -17,8 +17,18 @@ header {
 }
 
 footer {
-    background-color: #001219;
-    color: #fff;
+    background-color: #add7f6;
+    color: #001219;
+}
+
+#text-footer {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.text-footer2 {
+    margin-top: 15px;
+    text-align: left;
 }
 
 .header-line {
@@ -31,6 +41,8 @@ footer {
 .text-start {
     margin-bottom: 0; /* Убираем отступ снизу для "Название" */
     color: #001219;
+    text-decoration: none; /* Убираем подчеркивание */
+    margin-top: 3px;
 }
 
 .list-inline {
@@ -80,6 +92,131 @@ main {
 
 .movie-poster:hover img {
     transform: scale(1.1);
+}
+
+.season {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ced4da;
+    padding: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+
+    /* Добавленные стили */
+    width: 100%; /* Ширина контейнера по умолчанию */
+}
+
+.season img {
+    height: 250px;
+    width: 160px;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    margin-right: 5px; /* Уменьшаем отступ между изображениями */
+}
+
+.season a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; /* Убираем стандартное подчеркивание */
+}
+
+.season a img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain; /* Подгоняем размеры стрелок без искажения */
+    border-radius: 50%; /* Делаем стрелки круглыми */
+    transition: transform 0.3s ease;
+}
+
+/* Убираем контур у стрелочных изображений при наведении */
+.season a:hover img {
+    outline: none;
+}
+
+/* Последнему изображению не нужен правый отступ */
+.season img:last-child {
+    margin-right: 0;
+}
+
+.images-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: hidden; /* Убираем горизонтальную прокрутку */
+    padding: 20px 0; /* Добавляем внутренние отступы */
+
+}
+
+.image-wrapper {
+    flex: 0 0 auto;
+    width: 160px; /* Ширина изображения */
+    border-radius: 10px;
+    overflow: hidden; /* Обрезаем изображения по краям */
+    margin: 0 10px; /* Добавляем внутренние отступы */
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 240px; /* Поддержка пропорций */
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+
+.current-image {
+    flex: 0 0 auto;
+    width: auto; /* Устанавливаем ширину на автоматическую, чтобы изображения не обрезались */
+    height: 100%; /* Устанавливаем высоту на 100%, чтобы изображения занимали все доступное пространство */
+    border-radius: 10px;
+    object-fit: contain; /* Подгоняем изображение так, чтобы оно полностью поместилось в контейнер */
+    transition: transform 0.3s ease-in-out; /* Плавная анимация переключения */
+}
+
+#text_name_season {
+    padding-top: 50px;
+}
+
+.smaller-input {
+    width: 200px; /* Укажите желаемую ширину поля ввода */
+    height: 35px; /* Укажите желаемую высоту поля ввода */
+    border-radius: 5px; /* Радиус закругления краев */
+    border: 1px solid transparent; /* Устанавливаем прозрачную границу */
+    padding-right: 30px; /* Отступ справа для размещения изображения */
+    background-image: url('search.svg'); /* Укажите путь к вашему изображению */
+    background-repeat: no-repeat;
+    background-position: right 8px center; /* Расположение изображения справа по центру */
+    background-size: 17px 17px; /* Укажите желаемый размер изображения */
+    box-sizing: border-box; /* Учтем отступы и границы в общей ширине элемента */
+    transition: border-color 0.3s; /* Добавим плавный переход для цвета границы */
+    text-indent: 5px; /* Сдвиг placeholder текста влево на 2px */
+}
+
+.smaller-input:focus {
+    border-color: #0d47a1; /* Цвет границы при фокусировке */
+    outline: none; /* Убираем стандартный контур фокуса */
+}
+
+.logovk {
+    margin-left: 4px;
+}
+
+#textvklog_in a {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: #000; /* Изменяем цвет текста на черный */
+}
+
+.separator {
+    height: 25px; /* Высота разделителя, соответствующая высоте элементов */
+    width: 1.4px; /* Ширина разделителя */
+    background-color: #0d47a1; /* Цвет разделителя */
+    display: inline-block; /* Разделитель отображается как блочный элемент в потоке */
+    margin: 0 7px; /* Отступы по бокам разделителя */
+    vertical-align: middle; /* Выравнивание по вертикали по центру относительно соседних элементов */
 }
 
 /* Стили для мобильных устройств */

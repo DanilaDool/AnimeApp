@@ -1,6 +1,61 @@
 <main>
   <div class="container">
-    <h2>Новые релизы</h2>
+    <h2 >Аниме этого сезона</h2>
+
+    <div class="season">
+      <a href="#" id="leftArrow"><img src="left.svg" alt="стрелка влево" width="40px" height="40px"></a>
+      <div class="images-container">
+
+        <div class="image-wrapper">
+          <img src="https://w.forfun.com/fetch/d6/d616831ed4fd1f2de99bec0d05a92784.jpeg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="https://w.forfun.com/fetch/d6/d616831ed4fd1f2de99bec0d05a92784.jpeg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="https://ae01.alicdn.com/kf/H0eeeeb1d53af49aaa0dbdc90bdb02988p.jpg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
+          <h5>Название фильма</h5>
+        </div>
+
+      </div>
+      <a href="#" id="rightArrow"><img src="right.svg" alt="стрелка вправо" width="40px" height="40px"></a>
+    </div>
+
+    <h2 id="text_name_season">Новые релизы</h2>
     <div class="movies-grid">
 
       <div class="movie-poster">
@@ -69,6 +124,35 @@
 
 <footer>
   <div class="container">
-    <p>&copy; 2024 Киносайт. Все права защищены.</p>
+    <p id="text-footer">&copy; название.org 2024.</p>
   </div>
 </footer>
+
+<script>
+    leftArrow.addEventListener('click', function(event) {
+        event.preventDefault();
+        const imagesContainer = document.querySelector('.images-container');
+        const scrollStep = -200; /* Измените значение для более или менее значительной прокрутки */
+        const maxScrollLeft = imagesContainer.scrollWidth - imagesContainer.clientWidth;
+
+        if (imagesContainer.scrollLeft + scrollStep <= 0) {
+            imagesContainer.scrollTo({ left: maxScrollLeft, behavior: 'smooth' });
+        } else {
+            imagesContainer.scrollBy({ left: scrollStep, behavior: 'smooth' });
+        }
+    });
+
+    rightArrow.addEventListener('click', function(event) {
+        event.preventDefault();
+        const imagesContainer = document.querySelector('.images-container');
+        const scrollStep = 200; /* Измените значение для более или менее значительной прокрутки */
+        const maxScrollLeft = imagesContainer.scrollWidth - imagesContainer.clientWidth;
+
+        if (imagesContainer.scrollLeft + imagesContainer.clientWidth + scrollStep >= imagesContainer.scrollWidth) {
+            imagesContainer.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            imagesContainer.scrollBy({ left: scrollStep, behavior: 'smooth' });
+        }
+    });
+
+</script>
