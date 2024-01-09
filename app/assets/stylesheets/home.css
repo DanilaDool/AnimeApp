@@ -10,6 +10,38 @@ body {
     overflow: hidden;
 }
 
+.container2 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center; /* Центрирование содержимого */
+}
+
+#text-footer1 {
+    margin-top: 15px;
+    text-align: right;
+    margin-left: 800px; /* Отступ справа */
+}
+
+#text-footer2 {
+    margin-top: 15px;
+    text-align: left;
+    margin-right: 20px; /* Отступ справа */
+    margin-left: 10px; /* Отступ слева */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+#text-footer3 {
+    margin-top: 15px;
+    text-align: left;
+    margin-left: 10px; /* Отступ слева */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.container2 a  {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: #000; /* Изменяем цвет текста на черный */
+}
+
 header {
     background-color: #add7f6;
     color: #fff;
@@ -19,11 +51,6 @@ header {
 footer {
     background-color: #add7f6;
     color: #001219;
-}
-
-#text-footer {
-    margin-top: 15px;
-    text-align: right;
 }
 
 .text-footer2 {
