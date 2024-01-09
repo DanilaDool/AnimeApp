@@ -125,14 +125,14 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #ced4da;
+    background-color: #add7f6;
     padding: 20px;
     border-radius: 15px;
     overflow: hidden;
     position: relative;
+    border: 2px solid #0d47a1;
 
-    /* Добавленные стили */
-    width: 100%; /* Ширина контейнера по умолчанию */
+    width: 100%;
 }
 
 .season img {
