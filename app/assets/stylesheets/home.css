@@ -246,6 +246,45 @@ main {
     vertical-align: middle; /* Выравнивание по вертикали по центру относительно соседних элементов */
 }
 
+.text-new-relese {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: #000; /* Изменяем цвет текста на черный */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.pagination-item {
+    margin-right: 5px;
+}
+
+.pagination-item a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+}
+
+.pagination-item.active a {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#anime-this-season {
+    margin-bottom: 30px;
+}
+
+
 /* Стили для мобильных устройств */
 @media (max-width: 768px) {
     .container {
