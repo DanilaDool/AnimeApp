@@ -8,6 +8,11 @@ gem "rails", "~> 7.1.2"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
+gem 'google_search_results'
+
+gem 'open-uri'
+gem 'nokogiri'
+
 gem 'omniauth'
 
 gem 'omniauth-vkontakte'

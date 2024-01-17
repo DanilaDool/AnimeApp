@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #E0FFFF;
 }
 
 .container {
@@ -229,6 +230,7 @@ main {
 }
 
 .logovk {
+    margin-bottom: 1px;
     margin-left: 4px;
 }
 
@@ -239,7 +241,7 @@ main {
 
 .separator {
     height: 25px; /* Высота разделителя, соответствующая высоте элементов */
-    width: 1.4px; /* Ширина разделителя */
+    width: 1px; /* Ширина разделителя */
     background-color: #0d47a1; /* Цвет разделителя */
     display: inline-block; /* Разделитель отображается как блочный элемент в потоке */
     margin: 0 7px; /* Отступы по бокам разделителя */
@@ -284,6 +286,36 @@ main {
     margin-bottom: 30px;
 }
 
+#exampleDataList {
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+    margin-left: 10px; /* Уменьшил отступ от лупы */
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    cursor: pointer;
+}
+
+.col.d-flex.align-items-center {
+    display: flex;
+}
+
+.left-header-text {
+    margin-top: 4px;
+    margin-right: 20px;
+    margin-bottom: 0;
+}
+
+.left-header-title {
+    margin-right: 15px;
+}
 
 /* Стили для мобильных устройств */
 @media (max-width: 768px) {
@@ -293,4 +325,25 @@ main {
     header h1 {
         font-size: 28px;
     }
+
+    .text-end {
+        flex-direction: column; /* Переключение на вертикальное расположение элементов в мобильном виде */
+        align-items: flex-start; /* Выравнивание по левому краю в мобильном виде */
+    }
+
+    #exampleDataList {
+        margin-left: 0; /* Убираем отступ от лупы в мобильном виде */
+        margin-top: 10px; /* Добавляем отступ сверху для поля ввода в мобильном виде */
+    }
+
+    .search-icon {
+        left: 0; /* Располагаем лупу в левом верхнем углу в мобильном виде */
+        top: 0;
+        margin-right: 10px; /* Добавляем отступ справа для лупы в мобильном виде */
+    }
+
+    .search-icon img {
+        height: 20px; /* Указал фиксированную высоту для изображения лупы в мобильном виде */
+    }
 }
+

@@ -7,50 +7,11 @@
       <a href="#" id="leftArrow"><img src="left2.svg" id="leftArrow2" alt="стрелка влево"></a>
       <div class="images-container">
 
-        <div class="image-wrapper">
-          <img src="https://w.forfun.com/fetch/d6/d616831ed4fd1f2de99bec0d05a92784.jpeg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
-
-        <div class="image-wrapper">
-          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
-
-        <div class="image-wrapper">
-          <img src="https://w.forfun.com/fetch/d6/d616831ed4fd1f2de99bec0d05a92784.jpeg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
-
-        <div class="image-wrapper">
-          <img src="https://ae01.alicdn.com/kf/H0eeeeb1d53af49aaa0dbdc90bdb02988p.jpg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
-
-        <div class="image-wrapper">
-          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
-
-        <div class="image-wrapper">
-          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
-
-        <div class="image-wrapper">
-          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
-
-        <div class="image-wrapper">
-          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
-
-        <div class="image-wrapper">
-          <img src="https://ae01.alicdn.com/kf/Hac5bd938f1dc4147ac3dc2587e7f67d6P.jpg" alt="Название фильма" class="current-image">
-          <h5>Название фильма</h5>
-        </div>
+        <% @animes.each do |anime| %>
+          <div class="image-wrapper">
+            <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %>
+          </div>
+        <%end %>
 
       </div>
       <a href="#" id="rightArrow"><img src="right2.svg" id="rightArrow2" alt="стрелка вправо"></a>

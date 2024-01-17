@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AnimeWebApp2</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
   <%= csrf_meta_tags %>
@@ -14,36 +15,72 @@
 <header>
   <div class="container">
     <div class="row align-items-center">
-      <div class="col">
-        <a href="#" class="text-start" ><h3>Аниме</h3></a>
+
+      <div class="col d-flex align-items-center">
+        <a href="#" class="text-start"><h3 class="mb-0 left-header-title">Название</h3></a>
+        <a href="#" class="text-start ms-3"><p class="left-header-text">Аниме</p></a>
+        <a href="#" class="text-start ms-3"><p class="left-header-text">Персонажи</p></a>
+        <a href="#" class="text-start ms-3"><p class="left-header-text">Случайное аниме</p></a>
       </div>
+
       <div class="col text-end">
         <nav>
           <% if current_user %>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="#"><%= current_user.name %></a></li>
-            <li class="list-inline-item"><a href="#"><img src="friends.svg" height="20px" width="20px"></a></li>
-            <li class="list-inline-item"><a href="#"><img src="chat.svg" height="20px" width="20px"></a></li>
-            <li class="list-inline-item"><a href="#"><img src="search.svg" height="20px" width="20px"></a></li>
-            <li class="list-inline-item"><%= link_to 'Выйти', log_out_path(current_user)%></li>
-          <%else %>
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <a href="#"><%= current_user.name %></a>
+              </li>
+              <li class="list-inline-item separator"></li>
+              <li class="list-inline-item">
+                <div class="search-container">
+                  <div class="search-icon" onclick="toggleSearchInput()">
+                    <img src="search.svg" alt="Search Icon" style="height: 20px; width: 20px;">
+                  </div>
+                  <input class="smaller-input" list="datalistOptions" id="exampleDataList" placeholder="Поиск аниме" style="display: none;">
+                </div>
+              </li>
+              <li class="list-inline-item separator"></li>
+              <li class="list-inline-item">
+                <a href="#"><img src="friends.svg" alt="Friends Icon" height="20px" width="20px"></a>
+              </li>
+              <li class="list-inline-item separator"></li>
+              <li class="list-inline-item">
+                <a href="#"><img src="chat.svg" alt="Chat Icon" height="20px" width="20px"></a>
+              </li>
+              <li class="list-inline-item separator"></li>
+              <li class="list-inline-item">
+                <%= link_to 'Выйти', log_out_path(current_user) %>
+              </li>
+            </ul>
+          <% else %>
             <input class="smaller-input" list="datalistOptions" id="exampleDataList" placeholder="Поиск аниме">
-            <span class="separator"></span> <!-- Разделитель -->
-            <img class="logovk" src="logovk.svg" height="25px" width="25px">
-
+            <li class="list-inline-item separator"></li>
+            <img class="logovk" src="logovk.svg" alt="VK Logo" height="25px" width="25px">
             <li class="list-inline-item" id="textvklog_in">
-              <%= link_to 'Войти через ВКонтакте', '/auth/vkontakte'%>
+              <%= link_to 'Войти через ВКонтакте', '/auth/vkontakte' %>
             </li>
-
-
           <% end %>
-          </ul>
         </nav>
       </div>
     </div>
   </div>
 </header>
+
 <div class="header-line"></div>
+
+<script>
+    function toggleSearchInput() {
+        var inputElement = document.getElementById('exampleDataList');
+        var searchIcon = document.querySelector('.search-icon');
+
+        setTimeout(function() {
+            if (inputElement.style.display === 'none' || inputElement.style.display === '') {
+                inputElement.style.display = 'block';
+                searchIcon.style.display = 'none';
+            }
+        }, 300); // 500 миллисекунд (0.5 секунды)
+    }
+</script>
 
 <%= yield %>
 </body>
