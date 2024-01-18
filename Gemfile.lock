@@ -295,6 +295,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   capybara
+  date
   debug
   google_search_results
   importmap-rails

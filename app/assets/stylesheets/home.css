@@ -129,21 +129,18 @@ main {
     background-color: #add7f6;
     padding: 20px;
     border-radius: 15px;
-    overflow: hidden;
-    position: relative;
+    overflow-x: auto; /* Используйте автоматическую прокрутку по горизонтали */
     border: 2px solid #0d47a1;
-
     width: 100%;
+    white-space: nowrap; /* Предотвращаем перенос текста на новую строку */
+    overflow-y: hidden; /* Скрыть вертикальную прокрутку, если она вдруг появится */
 }
 
 .season img {
-    height: 250px;
-    width: 160px;
-    object-fit: cover;
-    display: block;
+    height: 100%; /* Измените на 100% для полного отображения изображения в блоке */
+    object-fit: contain; /* Измените на contain, чтобы сохранить соотношение сторон без обрезки */
     border-radius: 10px;
     transition: transform 0.3s ease;
-    margin-right: 5px; /* Уменьшаем отступ между изображениями */
 }
 
 .season a {
@@ -161,30 +158,54 @@ main {
     transition: transform 0.3s ease;
 }
 
-/* Убираем контур у стрелочных изображений при наведении */
 .season a:hover img {
     outline: none;
 }
 
-/* Последнему изображению не нужен правый отступ */
 .season img:last-child {
     margin-right: 0;
 }
 
+.season-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+#leftArrow,
+#rightArrow {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрируем содержимое по горизонтали */
+    width: 50px; /* Укажите нужную ширину для контейнеров стрелок */
+}
+
+#leftArrow img,
+#rightArrow img {
+    width: 80%; /* Сделайте ширину изображения стрелки 100% */
+    height: auto; /* Автоматически рассчитывайте высоту, чтобы сохранить соотношение сторон */
+}
+
+
 .images-container {
     display: flex;
     gap: 20px;
-    overflow-x: hidden; /* Убираем горизонтальную прокрутку */
-    padding: 20px 0; /* Добавляем внутренние отступы */
-
+    overflow-x: hidden;
+    padding: 20px 0;
+    scroll-snap-type: x proximity;
+    flex: 1;
+    justify-content: space-between; /* Равномерное распределение изображений */
 }
 
 .image-wrapper {
-    flex: 0 0 auto;
-    width: 160px; /* Ширина изображения */
+    flex-shrink: 0;
+    width: 160px;
     border-radius: 10px;
-    overflow: hidden; /* Обрезаем изображения по краям */
-    margin: 0 10px; /* Добавляем внутренние отступы */
+    overflow: hidden;
+    margin: 0 9px;
+    scroll-snap-align: start; /* Это свойство указывает, как элемент должен "прилипать" к краю контейнера */
 }
 
 .image-wrapper img {
@@ -194,7 +215,6 @@ main {
     border-radius: 10px;
     transition: transform 0.3s ease;
 }
-
 
 .current-image {
     flex: 0 0 auto;

@@ -12,6 +12,7 @@ gem 'google_search_results'
 
 gem 'open-uri'
 gem 'nokogiri'
+gem "date"
 
 gem 'omniauth'
 
