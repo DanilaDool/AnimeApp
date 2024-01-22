@@ -7,21 +7,22 @@
       <a href="#" id="leftArrow"><img src="left2.svg" id="leftArrow2" alt="стрелка влево"></a>
       <div class="images-container">
 
-        <%# no_anime_in_season = true %>
+        <% no_anime_in_season = true %>
         <% @animes.each do |anime| %>
-          <%# if anime.in_current_season? %>
-            <%# no_anime_in_season = false %>
-            <div class="image-wrapper">
+          <% if anime.in_current_season? %>
+            <% no_anime_in_season = false %>
+            <div class="image-wrapper" data-shikimori-id="<%= anime.shikimori_id %>">
               <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %>
+              <h5 class="title-anime"><%= anime.title %></h5>
             </div>
-          <%# end %>
+          <% end %>
         <% end %>
 
-        <%#if no_anime_in_season %>
-<!--          <div class="image-wrapper">-->
-<!--            <h4>Аниме в этом сезоне нету</h4>-->
-<!--          </div>-->
-        <%#end %>
+        <%if no_anime_in_season %>
+          <div class="image-wrapper">
+            <h4>Аниме в этом сезоне нету</h4>
+          </div>
+        <%end %>
 
       </div>
       <a href="#" id="rightArrow"><img src="right2.svg" id="rightArrow2" alt="стрелка вправо"></a>
@@ -31,16 +32,13 @@
     <div class="movies-grid">
 
 
-
-
-
-      <div class="movie-poster">
-        <a href="#" class="text-new-relese">
-        <img src="https://w.forfun.com/fetch/d6/d616831ed4fd1f2de99bec0d05a92784.jpeg" alt="Название фильма">
-        <h3>Название фильма</h3>
-        <p>Описание фильма</p>
-        </a>
-      </div>
+<!--      <div class="movie-poster">-->
+<!--        <a href="#" class="text-new-relese">-->
+<!--        <img src="https://w.forfun.com/fetch/d6/d616831ed4fd1f2de99bec0d05a92784.jpeg" alt="Название фильма">-->
+<!--        <h3>Название фильма</h3>-->
+<!--        <p>Описание фильма</p>-->
+<!--        </a>-->
+<!--      </div>-->
 
     </div>
 
@@ -130,10 +128,12 @@
                 imageWrapper.querySelector('img').style.filter = "brightness(100%)";
             });
 
-            imageWrapper.addEventListener("click", function() {
-                const linkURL = "#"; // Замените ссылкой на нужный URL
-                window.location.href = linkURL; // Открывает ссылку в текущей вкладке
+            imageWrapper.addEventListener('click', function() {
+                const shikimoriId = imageWrapper.dataset.shikimoriId;
+                const linkURL = "<%= anime_link_path(shikimori_id: "") %>" + shikimoriId;
+                window.location.href = linkURL;
             });
+
         });
 
         document.querySelectorAll('.current-image').forEach(function(currentImage) {

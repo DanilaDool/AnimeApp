@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_14_073939) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_20_004919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,31 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_14_073939) do
     t.string "date"
     t.string "status"
     t.float "score"
+    t.string "id_anime"
+    t.string "link"
+    t.string "title_orig"
+    t.string "other_title"
+    t.integer "last_season"
+    t.integer "last_episode"
+    t.integer "episodes_count"
+    t.string "kinopoisk_id"
+    t.string "worldart_link"
+    t.string "imdb_id"
+    t.string "mdl_id"
+    t.string "quality"
+    t.boolean "camrip"
+    t.boolean "lgbt"
+    t.text "blocked_countries", default: [], array: true
+    t.jsonb "blocked_seasons", default: {}
+    t.text "screenshots", default: [], array: true
+    t.jsonb "translation", default: {}
+    t.jsonb "genres", default: {}
+    t.string "rating_mpaa"
+    t.string "next_episode_at"
+    t.jsonb "studios", default: {}
+    t.jsonb "videos", default: {}
+    t.integer "duration"
+    t.string "description"
   end
 
   create_table "users", force: :cascade do |t|

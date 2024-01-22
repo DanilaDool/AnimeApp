@@ -200,6 +200,8 @@ main {
 }
 
 .image-wrapper {
+    max-width: 100%;
+    height: auto;
     flex-shrink: 0;
     width: 160px;
     border-radius: 10px;
@@ -214,6 +216,7 @@ main {
     object-fit: cover;
     border-radius: 10px;
     transition: transform 0.3s ease;
+    display: block; /* Убедимся, что изображение является блочным элементом */
 }
 
 .current-image {
@@ -335,6 +338,14 @@ main {
 
 .left-header-title {
     margin-right: 15px;
+}
+
+.title-anime {
+    margin-top: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Установите желаемую максимальную ширину контейнера */
 }
 
 /* Стили для мобильных устройств */
