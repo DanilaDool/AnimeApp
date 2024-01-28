@@ -17,10 +17,11 @@
     <div class="row align-items-center">
 
       <div class="col d-flex align-items-center">
-        <a href="#" class="text-start"><h3 class="mb-0 left-header-title">Название</h3></a>
-        <a href="#" class="text-start ms-3"><p class="left-header-text">Аниме</p></a>
-        <a href="#" class="text-start ms-3"><p class="left-header-text">Персонажи</p></a>
-        <a href="#" class="text-start ms-3"><p class="left-header-text">Случайное аниме</p></a>
+        <a href="/" onclick="loadContent('/'); return false;" class="text-start"><h3 class="mb-0 left-header-title">Название</h3></a>
+        <a href="#" onclick="loadContent('/anime'); return false;" class="text-start ms-3"><p class="left-header-text">Аниме</p></a>
+        <a href="#" onclick="loadContent('/characters'); return false;" class="text-start ms-3"><p class="left-header-text">Персонажи</p></a>
+        <a href="#" onclick="loadContent('/random_anime'); return false;" class="text-start ms-3"><p class="left-header-text">Случайное аниме</p></a>
+
       </div>
 
       <div class="col text-end">
@@ -78,7 +79,7 @@
                 inputElement.style.display = 'block';
                 searchIcon.style.display = 'none';
             }
-        }, 300); // 500 миллисекунд (0.5 секунды)
+        }, 300);
     }
 </script>
 

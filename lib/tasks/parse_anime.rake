@@ -86,10 +86,12 @@ namespace :parse_anime do
         puts "duration for anime:#{anime.duration}"
         puts "description for anime:#{anime.description}"
 
-
         puts
 
         anime.save
+
+        url = data['next_page']
+        break unless url
       end
 
     rescue OpenURI::HTTPError => e
