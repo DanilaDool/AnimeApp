@@ -1,346 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-
-  <title>Streaming Anime | AnimeLovers</title>
-</head>
+<html lang="ru">
 
 <body>
 <div class="max-width">
+  <div class="container">
+    <h2 id="anime-this-season">Аниме этого сезона</h2>
+    <div class="border-color">
+      <div class="season-container">
+        <div class="season">
+          <a href="#" id="leftArrow"><img src="left2.svg" id="leftArrow2" alt="стрелка влево"></a>
+          <div class="season slider">
+            <div class="images-container">
+              <% no_anime_in_season = true %>
+              <% @animes.each do |anime| %>
+                <% if anime.in_current_season? %>
+                  <% no_anime_in_season = false %>
+                  <div class="image-wrapper" data-shikimori-id="<%= anime.shikimori_id %>">
+                    <a href="anime/show/<%=anime.shikimori_id%>"><%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %></a>
+                    <a href="anime/show/<%=anime.shikimori_id%>"><h5 class="title-anime"><%= anime.title %></h5></a>
+                  </div>
+                <% end %>
+              <% end %>
 
-  <div class="season">
-    <div class="season-container">
-      <div class="season">
-        <a href="#" id="leftArrow"><img src="left2.svg" id="leftArrow2" alt="стрелка влево"></a>
-        <div class="images-container">
-          <% no_anime_in_season = true %>
-          <% @animes.each do |anime| %>
-            <% if anime.in_current_season? %>
-              <% no_anime_in_season = false %>
-              <div class="image-wrapper" data-shikimori-id="<%= anime.shikimori_id %>">
-                <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %>
-                <h5 class="title-anime"><%= anime.title %></h5>
+              <% if no_anime_in_season %>
+                <div class="image-wrapper">
+                  <h4>Аниме в этом сезоне нету</h4>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <a href="#" id="rightArrow"><img src="right2.svg" id="rightArrow2" alt="стрелка вправо"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="latest-updates">
+    <h2>Последние обновления аниме</h2>
+    <ul>
+      <li>
+        <img src="anime1.jpg" alt="Anime 1">
+        <p>Название аниме 1</p>
+      </li>
+      <li>
+        <img src="anime2.jpg" alt="Anime 2">
+        <p>Название аниме 2</p>
+      </li>
+      <!-- Добавьте дополнительные элементы, если необходимо -->
+    </ul>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-8">
+
+      <div class="sidebar2">
+        <div class="movie">
+          <div class="header-for-anime">
+            <h3>Новые аниме на сайте</h3>
+          </div>
+
+          <div class="content-item">
+            <% no_anime_in_season = true %>
+            <div class="item-container">
+              <% displayed_animes = 0 %>
+              <% @animes.each do |anime| %>
+                <% if anime.in_current_season? %>
+                  <% no_anime_in_season = false %>
+                  <% if displayed_animes < 10 %>
+                    <div class="item2">
+                      <a href="anime/show/<%=anime.shikimori_id%>" class="item-content">
+                        <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image2" %>
+                        <div class="description2">
+
+                          <% if anime.dtype == "anime-serial" %>
+                            <% anime.dtype = "ТВ-Сериал" %>
+                          <% elsif anime.dtype == "anime"%>
+                            <% anime.dtype = "Фильм" %>
+                          <%end %>
+
+                          <p class="info"><%= anime.title %></p>
+                          <p class="info">  <%= anime.date%> | <%= anime.dtype%> | <% anime.genres.each_with_index do |genre, index| %>
+                              <%= genre["name"] %><%= index == anime.genres.size - 1 ? '' : ', ' %>
+                            <% end if anime.genres.present? %>
+                          </p>
+
+                          <p class="info-description">
+                            <%= anime.description %>
+                          </p>
+
+                        </div>
+                      </a>
+                    </div>
+                    <% displayed_animes += 1 %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+            <% if no_anime_in_season %>
+              <div class="image-wrapper">
+                <p>Аниме в этом сезоне нету</p>
               </div>
             <% end %>
-          <% end %>
-          <% if no_anime_in_season %>
-            <div class="image-wrapper">
-              <h4>Аниме в этом сезоне нету</h4>
-            </div>
-          <% end %>
+          </div>
+          <a href="anime/index"><button type="button" class="btn btn-secondary" style="margin-left: 363px">Весь список аниме</button></a>
+
         </div>
-        <a href="#" id="rightArrow"><img src="right2.svg" id="rightArrow2" alt="стрелка вправо"></a>
       </div>
     </div>
-  </div>
-
-  <div class="content">
-
-    <div class="sidebar">
-      <div class="movie">
-        <div class="header-for-anime">
-          <h3>Rilisan Terbaru</h3>
+    <div class="col-6 col-md-4">
+      <div class="filter-sidebar">
+        <h3>Filter Options</h3>
+        <div class="filter-checkbox">
+          <label>
+            <input type="checkbox" name="filter-option" value="option1"> Option 1
+          </label>
         </div>
-
-        <div class="content-item">
-          <% no_anime_in_season = true %>
-          <% @animes.each do |anime| %>
-            <% if anime.in_current_season? %>
-              <% no_anime_in_season = false %>
-              <div class="item">
-                <div class="image">
-                  <a href="anime/show/<%=anime.shikimori_id%>"><%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %></a>
-                </div>
-                <div class="description">
-                  <a href="anime/show/<%=anime.shikimori_id%>"><p><%= anime.title %></p></a>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-          <% if no_anime_in_season %>
-            <div class="image-wrapper">
-              <p>Аниме в этом сезоне нету</p>
-            </div>
-          <% end %>
+        <div class="filter-checkbox">
+          <label>
+            <input type="checkbox" name="filter-option" value="option2"> Option 2
+          </label>
         </div>
-
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#">
-                <i class='bx bx-first-page'></i>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                <i class='bx bx-last-page'></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div class="recomendations" style="margin-top:15px ;">
-        <header>
-          <h3>Anime Terbaru</h3>
-        </header>
-        <div class="content-item ">
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Brave Witches..webp " alt=" ">
-            </div>
-            <div class="description ">
-              <p>Brave Witches</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Majo-no-Tabitabi.jpg" alt=" ">
-            </div>
-            <div class="description ">
-              <p>Majo-no-Tabitabi</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Horimiya.jpg " alt=" ">
-            </div>
-            <div class="description ">
-              <p>Horimiya</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Kaguya-sama-wa-Kokurasetai-Ultra-Romantic.jpg " alt=" ">
-            </div>
-            <div class="description ">
-              <p>Kaguya-sama-wa...</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Pokemon-Legends-Arceus-Yuki-Hodo-Kishi-Futaai.jpg " alt=" ">
-            </div>
-            <div class="description ">
-              <p>Pokemon-Legends...</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Koe-no-Katachi.webp " alt=" ">
-            </div>
-            <div class="description ">
-              <p>Koe-no-Katachi</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Jujutsu Kaisen.webp " alt=" ">
-            </div>
-            <div class="description ">
-              <p>Jujutsu Kaisen 0 ...</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Hunter-x-Hunter-2011.webp " alt=" ">
-            </div>
-            <div class="description ">
-              <p>Hunter-x-Hunter...</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Kimi-no-Na-wa..webp" alt=" ">
-            </div>
-            <div class="description ">
-              <p>Kimi-no-Na-wa...</p>
-            </div>
-          </div>
-          <div class="item ">
-            <div class="image ">
-              <img src="./image/Date-A-Live.jpg" alt=" ">
-            </div>
-            <div class="description ">
-              <p>Date-A-Live</p>
-            </div>
-          </div>
-        </div>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#">
-                <i class='bx bx-first-page'></i>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                <i class='bx bx-last-page'></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <!-- Add more checkboxes for additional filter options -->
       </div>
     </div>
-    <div class="leftbar ">
-      <div class="container-news ">
-        <h3>Berita Terbaru</h3>
-        <img src="./image/backround-kakkou.jpg " alt=" ">
-        <p>Nagi Umino dan Erika Amano, seorang siswa sekolah menengah yang rajin belajar dan bintang media sosial, tidak memiliki apa pun yang menghubungkan mereka bersama-sama—sampai mereka mengetahui bahwa mereka tertukar saat lahir.</p>
-        <div class="menu-item-card ">
-          <div class="menu-item-genre ">
-            <a href="# ">Eps 1</a>
-          </div>
-          <div class="menu-item-genre ">
-            <a href="# ">Eps 2</a>
-          </div>
-          <div class="menu-item-genre ">
-            <a href="# ">Eps 3</a>
-          </div>
-          <div class="menu-item-genre ">
-            <a href="# ">Eps 4</a>
-          </div>
-          <div class="menu-item-genre ">
-            <a href="# ">Eps 5</a>
-          </div>
-          <div class="menu-item-genre ">
-            <a href="# ">Eps 6</a>
-          </div>
-          <div class="menu-item-genre ">
-            <a href="# ">Eps 7</a>
-          </div>
-          <div class="menu-item-genre ">
-            <a href="# ">Eps 8</a>
-          </div>
-        </div>
-        <div class="title-link-genre ">
-          <a href="# ">Selengkapnya</a>
-        </div>
-
-      </div>
-
-      <div class="menu-genre" style="margin-top: 1rem;">
-        <h3>Genre : </h3>
-        <div class="genre-opsi ">
-          <div class="genre ">
-            <a href="# ">Ecchi</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Action</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Romance</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Comedy</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Adventure</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Drama</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Fantasy</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Horor</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Mystery</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Sci-Fi</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Mecha</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Hentai</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Harem</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Isekai</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Demons</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Game</a>
-          </div>
-
-          <div class="genre ">
-            <a href="# ">Parody</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Shoujo</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">School</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Music</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Shounen</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Seinen</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Military</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Vampire</a>
-          </div>
-          <div class="genre ">
-            <a href="# ">Magic</a>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="on-going">
-        <div class="image-ongoing">
-          <h3>On-Going</h3>
-          <img src="./image/Pause-let-me-check-the-guide-donghua.jpg" alt="" srcset="">
-        </div>
-        <p>Wu Dong Qian Kun Musim 3 dirilis pada 1 Mei 2022; pembuka yang luar biasa untuk bulan ini karena menggantikan Stellar Transformations Musim 4 di slot waktu hari Minggu yang sangat didambakan. Lin Dong melanjutkan perjalanannya menuju
-          puncak dunia kultivasi dan kali ini, pertarungannya yang sangat dinanti melawan Lin Langtian akhirnya akan terjadi karena dia juga akan mendapatkan harta baru dan mempelajari keterampilan baru untuk lebih memperkuat kultivasinya.</p>
-      </div>
     </div>
-  </div>
-</div>
 
-<footer class="footer-item ">
-  <div class="copyright"><a href="#">Privacy Policy - DMCA - Contact</a>
-  </div>
-  <div class="copyright-end">
-    <a href="#"> © 2022 AnimeLovers - Streaming Anime Sub Indo All rights reserved</a>
+
   </div>
 
-</footer>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
+<script>
+    // Initialize the Slick carousel for anime
+    $(document).ready(function () {
+        $('.season.slider .images-container').slick({
+            slidesToShow: 6,  // Adjust the number of slides to show
+            slidesToScroll: 1,
+            prevArrow: $('#leftArrow'),
+            nextArrow: $('#rightArrow'),
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1  // Adjust the number of slides to show on smaller screens
+                    }
+                }
+            ]
+        });
+    });
 
-
-<script src="main.js "></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js "></script>
+</script>
 
 </body>
-
 </html>

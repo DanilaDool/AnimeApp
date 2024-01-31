@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="sidebar2">
+      <div class="movie">
+        <div class="header-for-anime">
+          <h3>Список Аниме</h3>
+        </div>
+
+        <div class="content-item">
+          <% no_anime_in_season = true %>
+          <% @animes.each do |anime| %>
+            <% if anime.in_current_season? %>
+              <% no_anime_in_season = false %>
+              <div class="item">
+                <div class="image">
+                  <a href="anime/show/<%=anime.shikimori_id%>"><%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %></a>
+                </div>
+                <div class="description">
+                  <a href="anime/show/<%=anime.shikimori_id%>"><p><%= anime.title %></p></a>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+          <% if no_anime_in_season %>
+            <div class="image-wrapper">
+              <p>Аниме в этом сезоне нету</p>
+            </div>
+          <% end %>
+        </div>
+
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class='bx bx-first-page'></i>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class='bx bx-last-page'></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-4">
+    <div class="filter-sidebar">
+      <h3>Filter Options</h3>
+      <div class="filter-checkbox">
+        <label>
+          <input type="checkbox" name="filter-option" value="option1"> Option 1
+        </label>
+      </div>
+      <div class="filter-checkbox">
+        <label>
+          <input type="checkbox" name="filter-option" value="option2"> Option 2
+        </label>
+      </div>
+      <!-- Add more checkboxes for additional filter options -->
+    </div>
+  </div>
+</div>
