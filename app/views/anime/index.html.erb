@@ -13,10 +13,10 @@
               <% no_anime_in_season = false %>
               <div class="item">
                 <div class="image">
-                  <a href="anime/show/<%=anime.shikimori_id%>"><%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %></a>
+                  <a href="<%=anime_link_path(anime.shikimori_id)%>"><%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %></a>
                 </div>
                 <div class="description">
-                  <a href="anime/show/<%=anime.shikimori_id%>"><p><%= anime.title %></p></a>
+                  <a href="<%=anime_link_path(anime.shikimori_id)%>"><p><%= anime.title %></p></a>
                 </div>
               </div>
             <% end %>

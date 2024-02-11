@@ -8,7 +8,11 @@
     <div class="border-color">
       <div class="season-container">
         <div class="season">
-          <a href="#" id="leftArrow"><img src="left2.svg" id="leftArrow2" alt="стрелка влево"></a>
+          <a id="leftArrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+          </a>
           <div class="season slider">
             <div class="images-container">
               <% no_anime_in_season = true %>
@@ -16,8 +20,11 @@
                 <% if anime.in_current_season? %>
                   <% no_anime_in_season = false %>
                   <div class="image-wrapper" data-shikimori-id="<%= anime.shikimori_id %>">
-                    <a href="anime/show/<%=anime.shikimori_id%>"><%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %></a>
-                    <a href="anime/show/<%=anime.shikimori_id%>"><h5 class="title-anime"><%= anime.title %></h5></a>
+                    <a href="<%=anime_link_path(anime.shikimori_id)%>">
+                      <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %>
+                      <%= anime.title.length > 15 ? "#{anime.title[0..14]}..." : anime.title %>
+                    </a>
+
                   </div>
                 <% end %>
               <% end %>
@@ -29,27 +36,56 @@
               <% end %>
             </div>
           </div>
-          <a href="#" id="rightArrow"><img src="right2.svg" id="rightArrow2" alt="стрелка вправо"></a>
+          <a id="rightArrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
   </div>
 
+  <div id="yandex_rtb_R-A-5944326-3"></div>
+  <script>
+      window.yaContextCb.push(()=>{
+          Ya.Context.AdvManager.render({
+              "blockId": "R-A-5944326-3",
+              "renderTo": "yandex_rtb_R-A-5944326-3"
+          })
+      })
+  </script>
+
   <div class="latest-updates">
     <h2>Последние обновления аниме</h2>
-    <ul>
-      <li>
-        <img src="anime1.jpg" alt="Anime 1">
-        <p>Название аниме 1</p>
-      </li>
-      <li>
-        <img src="anime2.jpg" alt="Anime 2">
-        <p>Название аниме 2</p>
-      </li>
-      <!-- Добавьте дополнительные элементы, если необходимо -->
+    <ul class="columns">
+      <% displayed_animes = 0 %>
+      <% @animes.sort_by(&:updated_at).reverse_each do |anime| %>
+        <% if displayed_animes < 8 %>
+          <li class="anime-item">
+            <div>
+              <a href="<%= anime_link_path(anime.shikimori_id)%>">
+                <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма" %>
+                <p><%= anime.title.length > 23 ? "#{anime.title[0..22]}..." : anime.title %></p>
+              </a>
+              <p style="font-size: 12px; color: #ffffff;">
+                <% if anime.updated_at.to_date == Date.today %>
+                  Обновлено: Cегодня в <%= l anime.updated_at, format: :time %>
+                <% elsif anime.updated_at.to_date == Date.yesterday %>
+                  Вчера в <%= anime.updated_at.strftime('%H:%M') %>
+                <% else %>
+                  Обновлено: <%= l anime.updated_at, format: :short %>
+                <% end %>
+              </p>
+              <p>Эпизод: <%= anime.last_episode %></p>
+
+              <% displayed_animes += 1 %>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
     </ul>
   </div>
-
 
   <div class="row">
     <div class="col-md-8">
@@ -110,20 +146,78 @@
     </div>
     <div class="col-6 col-md-4">
       <div class="filter-sidebar">
-        <h3>Filter Options</h3>
-        <div class="filter-checkbox">
-          <label>
-            <input type="checkbox" name="filter-option" value="option1"> Option 1
-          </label>
+        <div class="filter-header">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-filter-right" viewBox="0 0 16 16">
+            <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
+          </svg>
+          <h3 style="font-size: 20px;">Фильтр</h3>
         </div>
-        <div class="filter-checkbox">
-          <label>
-            <input type="checkbox" name="filter-option" value="option2"> Option 2
-          </label>
+
+        <div class="range-slider-container">
+          <label>Выберите год выпуска</label>
+          <p class="small-text-filter">Укажите пустое поле если не желвете искать по году</p>
+          <div class="slider-inputs">
+            <input type="number" id="selectedYear" min="1959" max="2024" onchange="updateYear(this.value)">
+            <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="updateSlider(this.value)">
+          </div>
         </div>
-        <!-- Add more checkboxes for additional filter options -->
+
+        <div class="filter-dropdown">
+          <div class="dropdown-button" style="font-size: 16px;">Жанры ▼</div>
+          <div class="dropdown-content">
+            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+            <!-- Добавьте другие опции по мере необходимости -->
+          </div>
+        </div>
+
+
+        <div class="filter-dropdown">
+          <div class="dropdown-button" style="font-size: 16px;">Статус ▼</div>
+          <div class="dropdown-content">
+            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+            <!-- Добавьте другие опции по мере необходимости -->
+          </div>
+        </div>
+
+        <div class="filter-dropdown">
+          <div class="dropdown-button" style="font-size: 16px;">Тип ▼</div>
+          <div class="dropdown-content">
+            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+            <!-- Добавьте другие опции по мере необходимости -->
+          </div>
+        </div>
+
+        <div class="filter-dropdown">
+          <div class="dropdown-button" style="font-size: 16px;">Озвучка ▼</div>
+          <div class="dropdown-content">
+            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+            <!-- Добавьте другие опции по мере необходимости -->
+          </div>
+        </div>
+
+        <div class="filter-dropdown">
+          <div class="dropdown-button" style="font-size: 16px;">Возрастное ограничение ▼</div>
+          <div class="dropdown-content">
+            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+            <!-- Добавьте другие опции по мере необходимости -->
+          </div>
+        </div>
+
+        <div class="filter-dropdown btn-filter">
+           <button type="button" class="btn btn-secondary btn-filter-width">Найти</button>
+        </div>
+
       </div>
     </div>
+
+
+
+
     </div>
 
 
@@ -134,10 +228,15 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
 <script>
-    // Initialize the Slick carousel for anime
-    $(document).ready(function () {
+
+    window.addEventListener('popstate', function(event) {
+        // Обновить страницу
+        window.location.reload();
+    });
+
+    function initSlickCarousel() {
         $('.season.slider .images-container').slick({
-            slidesToShow: 6,  // Adjust the number of slides to show
+            slidesToShow: 6,
             slidesToScroll: 1,
             prevArrow: $('#leftArrow'),
             nextArrow: $('#rightArrow'),
@@ -145,12 +244,41 @@
                 {
                     breakpoint: 768,
                     settings: {
-                        slidesToShow: 1  // Adjust the number of slides to show on smaller screens
+                        slidesToShow: 1
                     }
                 }
             ]
         });
+    }
+
+    // Вызываем функцию для инициализации Slick carousel при загрузке страницы
+    $(document).ready(function () {
+        initSlickCarousel();
     });
+
+    // Вызываем функцию для инициализации Slick carousel после каждой навигации на странице
+    $(window).on('popstate', function () {
+        initSlickCarousel();
+    });
+
+
+    $(document).ready(function() {
+        $('.dropdown-button').click(function() {
+            $(this).siblings('.dropdown-content').toggle();
+        });
+    });
+
+    function updateSlider(value) {
+        document.getElementById('selectedYear').value = value;
+    }
+
+    function updateYear(value) {
+        var currentYear = new Date().getFullYear();
+        if (value >= 1959 && value <= currentYear) {
+            document.getElementById('customRange1').value = value;
+        }
+    }
+
 
 </script>
 
