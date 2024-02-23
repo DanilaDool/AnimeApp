@@ -20,11 +20,10 @@
                 <% if anime.in_current_season? %>
                   <% no_anime_in_season = false %>
                   <div class="image-wrapper" data-shikimori-id="<%= anime.shikimori_id %>">
-                    <a href="<%=anime_link_path(anime.shikimori_id)%>">
+                    <a href="<%=anime_link_path(anime.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
                       <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %>
                       <%= anime.title.length > 15 ? "#{anime.title[0..14]}..." : anime.title %>
                     </a>
-
                   </div>
                 <% end %>
               <% end %>
@@ -64,7 +63,7 @@
         <% if displayed_animes < 8 %>
           <li class="anime-item">
             <div>
-              <a href="<%= anime_link_path(anime.shikimori_id)%>">
+              <a href="<%= anime_link_path(anime.shikimori_id)%>" onclick="reloadClickedPage(event, this)">
                 <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма" %>
                 <p><%= anime.title.length > 23 ? "#{anime.title[0..22]}..." : anime.title %></p>
               </a>
@@ -86,7 +85,7 @@
       <% end %>
     </ul>
   </div>
-
+<div class="block">
   <div class="row">
     <div class="col-md-8">
 
@@ -105,7 +104,7 @@
                   <% no_anime_in_season = false %>
                   <% if displayed_animes < 10 %>
                     <div class="item2">
-                      <a href="anime/show/<%=anime.shikimori_id%>" class="item-content">
+                      <a href="anime/show/<%=anime.shikimori_id%>" onclick="reloadClickedPage(event, this)" class="item-content">
                         <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image2" %>
                         <div class="description2">
 
@@ -113,7 +112,7 @@
                             <% anime.dtype = "ТВ-Сериал" %>
                           <% elsif anime.dtype == "anime"%>
                             <% anime.dtype = "Фильм" %>
-                          <%end %>
+                          <% end %>
 
                           <p class="info"><%= anime.title %></p>
                           <p class="info">  <%= anime.date%> | <%= anime.dtype%> | <% anime.genres.each_with_index do |genre, index| %>
@@ -139,12 +138,12 @@
               </div>
             <% end %>
           </div>
-          <a href="anime/index"><button type="button" class="btn btn-secondary" style="margin-left: 363px">Весь список аниме</button></a>
+          <a href="<%=anime_index_path%>" id="button-list"><button type="button" class="btn btn-secondary">Весь список аниме</button></a>
 
         </div>
       </div>
     </div>
-    <div class="col-6 col-md-4">
+    <div class="col-md-4">
       <div class="filter-sidebar">
         <div class="filter-header">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-filter-right" viewBox="0 0 16 16">
@@ -158,6 +157,9 @@
           <p class="small-text-filter">Укажите пустое поле если не желвете искать по году</p>
           <div class="slider-inputs">
             <input type="number" id="selectedYear" min="1959" max="2024" onchange="updateYear(this.value)">
+            <p style="display: inline; font-size: smaller;">1959</p>
+            <p style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
+
             <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="updateSlider(this.value)">
           </div>
         </div>
@@ -215,11 +217,8 @@
       </div>
     </div>
 
-
-
-
     </div>
-
+</div>
 
   </div>
 
@@ -228,15 +227,22 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
 <script>
+    if (!sessionStorage.getItem('pageRefreshed')) {
+        sessionStorage.setItem('pageRefreshed', 'true');
+        location.reload();
+    }
 
-    window.addEventListener('popstate', function(event) {
-        // Обновить страницу
-        window.location.reload();
-    });
 
     function initSlickCarousel() {
+        var slidesToShowCount = 6; // По умолчанию отображается 6 слайдов
+
+        // Проверяем разрешение экрана при загрузке страницы
+        if (window.matchMedia("(max-width: 1399px)").matches) {
+            slidesToShowCount = 5; // Если ширина экрана меньше 1400px, отображаем 5 слайдов
+        }
+
         $('.season.slider .images-container').slick({
-            slidesToShow: 6,
+            slidesToShow: slidesToShowCount,
             slidesToScroll: 1,
             prevArrow: $('#leftArrow'),
             nextArrow: $('#rightArrow'),
@@ -249,7 +255,17 @@
                 }
             ]
         });
+
+        // Следим за изменением размеров окна и пересчитываем количество слайдов при необходимости
+        $(window).resize(function() {
+            if (window.matchMedia("(max-width: 1399px)").matches) {
+                $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', 5);
+            } else {
+                $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', 6);
+            }
+        });
     }
+
 
     // Вызываем функцию для инициализации Slick carousel при загрузке страницы
     $(document).ready(function () {
@@ -278,8 +294,6 @@
             document.getElementById('customRange1').value = value;
         }
     }
-
-
 </script>
 
 </body>

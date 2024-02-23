@@ -13,6 +13,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1;
+
 }
 
 header a:hover {
@@ -376,7 +377,6 @@ body {
     padding-bottom: 2vh;
 }
 
-/* Content */
 
 .content {
     display: grid;
@@ -401,10 +401,16 @@ body {
     border-radius: 5px;
     padding: 10px;
     display: grid;
-    gap: 10px;
-    margin-left: 274px;
-
+    width: 950px; /* Фиксированная ширина */
+    margin-left: 60px; /* Автоматический отступ слева для выравнивания */
 }
+
+.block {
+    display: grid;
+    justify-content: center; /* Выравнивание контента по центру по горизонтали */
+    align-items: center; /* Выравнивание контента по центру по вертикали */
+}
+
 
 .sidebar h3 {
     color: #fff;
@@ -528,7 +534,6 @@ body {
     width: 100%;
     margin: 0 auto;
     overflow: hidden;
-
 }
 
 .container-wrapper {
@@ -781,9 +786,6 @@ a {
     padding: 7px 0 15px 20px;
 }
 
-
-/* Footer Styling */
-
 .footer-item {
     border-top: 2px solid var(--white);
     padding: 5px 0;
@@ -813,7 +815,7 @@ a {
 
 .filter-sidebar {
     border-radius: 5px;
-    width: 53%;
+    width: 320px; /* Задаем фиксированную ширину */
     padding: 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 11px;
@@ -823,7 +825,10 @@ a {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-left: 70px;
+
 }
+
 
 .filter-sidebar h3 {
     margin-bottom: 10px;
@@ -836,6 +841,7 @@ a {
 .filter-header {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Равномерно распределяет элементы по контейнеру */
 }
 
 .bi-filter-right {
@@ -973,34 +979,102 @@ a {
 }
 
 .search-container {
+    white-space: nowrap;
     position: relative;
     display: inline-block;
+    width: 100%;
+    max-width: 350px;
+    margin-right: 5px;
 }
 
 .search-input {
-    padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ffffff;
     border-radius: 5px;
     height: 30px;
     width: 0;
+    max-width: 250px; /* Максимальная ширина поля ввода */
     box-sizing: border-box;
     font-size: 16px;
     overflow: hidden;
     transition: width 0.3s, opacity 0.3s; /* Анимация изменения ширины и прозрачности */
     opacity: 0; /* Начальная прозрачность 0 */
     vertical-align: middle;
+    white-space: nowrap; /* Предотвращаем перенос строки */
+}
+
+.search-input:focus {
+    outline: none; /* Убираем обводку при фокусе */
 }
 
 .search-icon {
-    vertical-align: middle;
+    position: fixed; /* Изменение на фиксированное положение */
+    right: 10px; /* Помещаем иконку поиска справа */
+    top: 50%; /* Выравниваем по вертикали */
+    transform: translateY(-50%); /* Корректируем положение по вертикали */
     color: #555;
     cursor: pointer;
 }
 
-#searchIconOpen:hover svg,
+
+#searchIconOpen:hover svg {
+    transition: all 0.3s ease;
+    fill: #999999;
+}
+
 #searchIconClose:hover svg {
     transition: all 0.3s ease;
+    fill: #999999;
+}
+
+#searchIconClose {
+    right: 0;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+
+.search-input2 {
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    height: 27px;
+    width: 0;
+    max-width: 250px; /* Максимальная ширина поля ввода */
+    box-sizing: border-box;
+    font-size: 16px;
+    overflow: hidden;
+    transition: width 0.3s, opacity 0.3s; /* Анимация изменения ширины и прозрачности */
+    opacity: 0; /* Начальная прозрачность 0 */
+    vertical-align: middle;
+    white-space: nowrap; /* Предотвращаем перенос строки */
+}
+
+.search-input2:focus {
+    outline: none; /* Убираем обводку при фокусе */
+}
+
+.list-inline-item:hover svg {
+    transition: all 0.3s ease;
+    color: #999999;
+}
+
+.list-inline-item:hover {
+    transition: all 0.3s ease;
+    color: #999999;
+}
+
+.button-logout {
+    display: flex; /* Устанавливаем контейнер в режим флексбокс */
+    justify-content: flex-end; /* Выравниваем элементы по правому краю */
+    align-items: center; /* Выравниваем элементы по вертикали */
+    flex-wrap: nowrap; /* Запрещаем перенос элементов на новую строку */
+}
+
+.button-logout:hover svg,
+.button-logout:hover a {
+    transition: all 0.3s ease;
     fill: #999999; /* Желаемый цвет при наведении */
+    color: #999999; /* Цвет текста при наведении */
+    cursor: pointer;
 }
 
 .dropdown-button {
@@ -1010,8 +1084,8 @@ a {
     border-radius: 5px;
     width: 282px;
     margin-top: 25px;
-    margin-left: auto; /* Автоматический отступ слева */
-    margin-right: auto; /* Автоматический отступ справа */
+    /* margin-left: auto; */ /* Удалите эту строку */
+    margin-right: auto; /* Оставьте эту строку */
 }
 
 
@@ -1065,7 +1139,6 @@ a {
     margin-top: 10px;
 }
 
-
 .container2 {
     display: flex;
     align-items: flex-end;
@@ -1096,6 +1169,14 @@ a {
     transition: all 0.3s ease;
 }
 
+#text-footer4 {
+    margin-top: 10px;
+    text-align: left;
+    margin-left: 40px; /* Отступ слева */
+    text-decoration: none; /* Убираем подчеркивание */
+    transition: all 0.1s ease;
+}
+
 #text-footer2:hover {
     color: #999999;
 }
@@ -1104,68 +1185,152 @@ a {
     color: #999999;
 }
 
-
-
-@media screen and (max-width: 992px) {
-    .container {
-        grid-template-areas: 'navbar navbar navbar navbar' 'header header header header' 'content content content content' 'footer footer footer footer';
-    }
-    .navbar .menu {
-        position: absolute;
-        display: none;
-    }
-    .navbar .bx-menu {
-        display: block;
-    }
-    .alert-notification {
-        width: 100%;
-    }
-    .movie {
-        order: 1;
-    }
-    .recomendations {
-        order: 3;
-    }
-    .content {
-        grid-template-columns: 1fr;
-    }
-    .sidebar {
-        order: 2;
-    }
+#button-list {
+    display: flex;
+    justify-content: center;
 }
 
-@media screen and (max-width: 768px) {
-    .content-item {
-        grid-template-columns: repeat(3, 1fr);
-    }
+.ert {
+    display: flex; /* Устанавливаем контейнер в режим флексбокс */
+    justify-content: flex-end; /* Выравниваем элементы по правому краю */
+    align-items: center; /* Выравниваем элементы по вертикали */
+    flex-wrap: nowrap; /* Запрещаем перенос элементов на новую строку */
 }
 
-@media screen and (min-width: 768px) {
-    .content-item {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+#friends-button:hover svg {
+    transition: all 0.3s ease;
+    fill: #999999; /* Желаемый цвет при наведении */
+    color: #999999; /* Цвет текста при наведении */
+    cursor: pointer;
 }
 
-@media screen and (min-width: 992px) {
-    .content-item {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+#textvklog_in {
+    white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+    margin-left: 6px;
 }
 
-@media screen and (min-width: 1200px) {
-    .content-item {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+.go-top {
+    position: fixed; /* фиксированное позиционирование */
+    left: 50px; /* отступ слева 20px */
+    top: 90%; /* выравниваем по центру */
+    transform: translateY(-50%); /* выравниваем по центру */
+    cursor: pointer; /* при наведении меняем курсор */
+    display: none; /* по умолчанию скрываем кнопку */
+    font-size: 15px;
+    color: white;
+    border: 1px solid white;
+    background-color: #2d3142;
+    padding: 10px 20px;
 }
 
+/* меняем прозрачность при наведении мышкой */
+.go-top:hover {
+    transition: all 0.3s ease;
+    color: #999999;
+    border: 1px solid #999999;
 
-@media screen and (max-width: 992px) {
+}
+
+/* модификатор для отображения кнопки */
+.go-top--show {
+    display: block;
+}
+
+@media screen and (max-width: 1399px) {
     .container-wrapper {
-        flex-direction: column;
+        flex-direction: column; /* Изменение направления контейнера на вертикальное */
+        margin-right: 0; /* Удаление отступа справа */
+    }
+
+    .sidebar {
+        margin-left: 0; /* Удаление отступа слева */
+    }
+
+    .sidebar2 {
+        margin-left: 0; /* Удаление отступа слева */
+        width: 800px;
+    }
+
+    .latest-updates {
+        max-width: 1115px;
+    }
+
+    .image-wrapper img {
+        max-width: 200px;
+        height: 240px; /* Поддержка пропорций */
+    }
+
+    .movie {
+        background-color: #4f5d75;
+        padding: 20px;
+        border-radius: 7px;
+        margin-left: 18px;
     }
 
     .filter-sidebar {
-        width: 100%;
-        margin-top: 20px; /* Adjust the margin as needed */
+        margin-left: 25px;
+        padding-right: 5px;
     }
+
+    .filter-header {
+        align-self: flex-start;
+        margin-bottom: 5px;
+    }
+
+    .slider-inputs {
+        width: 286px;
+
+    }
+
+    #selectedYear {
+        width: 286px;
+    }
+
+
+    #text-footer1 {
+        margin-left: 500px; /* Отступ справа */
+    }
+
+    .left-header-text {
+        margin-right: 20px;
+        margin-bottom: 0;
+        white-space: nowrap;
+    }
+
+    .left-header-title {
+        margin-right: 15px;
+    }
+
+    #anime-this-season {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        color: #ffffff;
+    }
+
+    .search-input2 {
+        max-width: 150px; /* Максимальная ширина поля ввода */
+    }
+
+    .search-input {
+        max-width: 200px; /* Увеличение максимальной ширины поля ввода */
+    }
+
+    .icon-vk {
+        margin-right: 1px;
+    }
+}
+
+/* Для экранов шириной до 992px */
+@media screen and (max-width: 992px) {
+    /* Ваши стили здесь */
+}
+
+/* Для экранов шириной до 768px */
+@media screen and (max-width: 768px) {
+    /* Ваши стили здесь */
+}
+
+/* Для экранов шириной до 576px */
+@media screen and (max-width: 576px) {
+    /* Ваши стили здесь */
 }

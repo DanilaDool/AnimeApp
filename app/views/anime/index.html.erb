@@ -50,18 +50,72 @@
   </div>
   <div class="col-6 col-md-4">
     <div class="filter-sidebar">
-      <h3>Filter Options</h3>
-      <div class="filter-checkbox">
-        <label>
-          <input type="checkbox" name="filter-option" value="option1"> Option 1
-        </label>
+      <div class="filter-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-filter-right" viewBox="0 0 16 16">
+          <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
+        </svg>
+        <h3 style="font-size: 20px;">Фильтр</h3>
       </div>
-      <div class="filter-checkbox">
-        <label>
-          <input type="checkbox" name="filter-option" value="option2"> Option 2
-        </label>
+
+      <div class="range-slider-container">
+        <label>Выберите год выпуска</label>
+        <p class="small-text-filter">Укажите пустое поле если не желвете искать по году</p>
+        <div class="slider-inputs">
+          <input type="number" id="selectedYear" min="1959" max="2024" onchange="updateYear(this.value)">
+          <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="updateSlider(this.value)">
+        </div>
       </div>
-      <!-- Add more checkboxes for additional filter options -->
+
+      <div class="filter-dropdown">
+        <div class="dropdown-button" style="font-size: 16px;">Жанры ▼</div>
+        <div class="dropdown-content">
+          <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+          <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+          <!-- Добавьте другие опции по мере необходимости -->
+        </div>
+      </div>
+
+
+      <div class="filter-dropdown">
+        <div class="dropdown-button" style="font-size: 16px;">Статус ▼</div>
+        <div class="dropdown-content">
+          <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+          <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+          <!-- Добавьте другие опции по мере необходимости -->
+        </div>
+      </div>
+
+      <div class="filter-dropdown">
+        <div class="dropdown-button" style="font-size: 16px;">Тип ▼</div>
+        <div class="dropdown-content">
+          <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+          <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+          <!-- Добавьте другие опции по мере необходимости -->
+        </div>
+      </div>
+
+      <div class="filter-dropdown">
+        <div class="dropdown-button" style="font-size: 16px;">Озвучка ▼</div>
+        <div class="dropdown-content">
+          <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+          <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+          <!-- Добавьте другие опции по мере необходимости -->
+        </div>
+      </div>
+
+      <div class="filter-dropdown">
+        <div class="dropdown-button" style="font-size: 16px;">Возрастное ограничение ▼</div>
+        <div class="dropdown-content">
+          <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
+          <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
+          <!-- Добавьте другие опции по мере необходимости -->
+        </div>
+      </div>
+
+      <div class="filter-dropdown btn-filter">
+        <button type="button" class="btn btn-secondary btn-filter-width">Найти</button>
+      </div>
+
     </div>
   </div>
 </div>
