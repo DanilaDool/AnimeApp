@@ -298,6 +298,7 @@ DEPENDENCIES
   date
   debug
   google_search_results
+  i18n
   importmap-rails
   jbuilder
   nokogiri

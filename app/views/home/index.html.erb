@@ -116,12 +116,16 @@
 
                           <p class="info"><%= anime.title %></p>
                           <p class="info">  <%= anime.date%> | <%= anime.dtype%> | <% anime.genres.each_with_index do |genre, index| %>
-                              <%= genre["name"] %><%= index == anime.genres.size - 1 ? '' : ', ' %>
+                              <%= genre["russian"] %><%= index == anime.genres.size - 1 ? '' : ', ' %>
                             <% end if anime.genres.present? %>
                           </p>
 
                           <p class="info-description">
-                            <%= anime.description %>
+                            <% if anime.description.present? %>
+                              <%= anime.description.gsub(/\[character=\d+\]/, '').gsub(/\[\/character\]/, '') %>
+                            <% else%>
+                              Описание отсутсвует :(
+                            <%end %>
                           </p>
 
                         </div>
