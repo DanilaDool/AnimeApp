@@ -114,7 +114,7 @@
                             <% anime.dtype = "Фильм" %>
                           <% end %>
 
-                          <p class="info"><%= anime.title %></p>
+                          <h5 class="info2"><%= anime.title %></h5>
                           <p class="info">  <%= anime.date%> | <%= anime.dtype%> | <% anime.genres.each_with_index do |genre, index| %>
                               <%= genre["russian"] %><%= index == anime.genres.size - 1 ? '' : ', ' %>
                             <% end if anime.genres.present? %>

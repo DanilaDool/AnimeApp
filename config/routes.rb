@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'anime/index'
 
+  get 'users/show'
+
   get 'anime/show/:shikimori_id', to: 'anime#show', as: :anime_link
 
   get 'log_out', to: 'sessions#destroy'
