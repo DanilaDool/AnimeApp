@@ -27,11 +27,12 @@
 
 .info-column {
     color: white;
+    margin-bottom: 60px;
 }
 
 .name {
     color: white;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .trip2 {
@@ -78,4 +79,17 @@
 #closeModalBtn:hover a {
     transition: all 0.3s ease;
     fill: #999999; /* Желаемый цвет при наведении */
+}
+
+.shiki_img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.shiki_img-container {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+
 }
