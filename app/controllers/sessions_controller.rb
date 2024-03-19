@@ -15,7 +15,8 @@ class SessionsController < ApplicationController
       new_user = User.create(
         uid: auth['uid'],
         name: auth['info']['name'],
-        email: auth['info']['email']
+        email: auth['info']['email'],
+        image: auth['info']['image']
       # Дополнительные данные о пользователе могут быть добавлены сюда в соответствии с вашими потребностями
       )
 

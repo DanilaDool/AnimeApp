@@ -1,1 +1,21 @@
-<h1>HAHAHAHAHAH</h1>
+<body>
+<main>
+  <section class="user-profile">
+
+    <%= image_tag current_user.image, alt: "Ваш аватар" %>
+
+    <%# if current_user.online? == true %>
+<!--      <p>пользоваткл в онлайне</p>-->
+    <%# end %>
+
+    <div class="name">
+      <h4><%= current_user.name %></h4>
+    </div>
+
+    <div class="registration_date">
+      <p>На сайте с <%= current_user.created_at.strftime("%d.%m.%Y") %></p>
+    </div>
+
+  </section>
+</main>
+</body>

@@ -1,0 +1,30 @@
+main {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #4f5d75;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    border: 3px solid white;
+}
+
+.user-profile {
+    text-align: center;
+}
+
+.user-profile img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.name {
+    margin-top: 15px;
+    color: white;
+}
+
+.registration_date {
+    font-size: 14px;
+    color: white;
+}
