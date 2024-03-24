@@ -6,7 +6,6 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     border: 3px solid white;
-    margin-bottom: 617px;
 }
 
 .user-profile {
@@ -54,4 +53,28 @@ main {
 
 .img-botton-home2 {
     margin-bottom: 3px;
+}
+
+.wall {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #4f5d75;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    border: 3px solid white;
+}
+
+.wall-name {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.form-sending1 {
+    width: 300px;
+}
+
+.form-control {
+    resize: none;
 }

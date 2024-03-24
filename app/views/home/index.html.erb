@@ -22,7 +22,7 @@
                   <div class="image-wrapper" data-shikimori-id="<%= anime.shikimori_id %>">
                     <a href="<%=anime_link_path(anime.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
                       <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %>
-                      <%= anime.title.length > 15 ? "#{anime.title[0..14]}..." : anime.title %>
+                      <%= anime.title.gsub(/\[ТВ-(\d+)\]/, '\1').length > 15 ? "#{anime.title[0..14].gsub(/\[ТВ-(\d+)\]/, '\1')}..." : anime.title.gsub(/\[ТВ-(\d+)\]/, '\1') %>
                     </a>
                   </div>
                 <% end %>
@@ -65,7 +65,7 @@
             <div>
               <a href="<%= anime_link_path(anime.shikimori_id)%>" onclick="reloadClickedPage(event, this)">
                 <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма" %>
-                <p><%= anime.title.length > 23 ? "#{anime.title[0..22]}..." : anime.title %></p>
+                <p><%= anime.title.gsub(/\[ТВ-(\d+)\]/, '\1').length > 23 ? "#{anime.title[0..22].gsub(/\[ТВ-(\d+)\]/, '\1')}..." : anime.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></p>
               </a>
               <p style="font-size: 12px; color: #ffffff;">
                 <% if anime.updated_at.to_date == Date.today %>
@@ -114,7 +114,7 @@
                             <% anime.dtype = "Фильм" %>
                           <% end %>
 
-                          <h5 class="info2"><%= anime.title %></h5>
+                          <h5 class="info2"><%= anime.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></h5>
                           <p class="info">  <%= anime.date%> | <%= anime.dtype%> | <% anime.genres.each_with_index do |genre, index| %>
                               <%= genre["russian"] %><%= index == anime.genres.size - 1 ? '' : ', ' %>
                             <% end if anime.genres.present? %>
