@@ -84,13 +84,21 @@
   Стена
 </div>
 
-  <div class="form-sending1">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Поделиться новыми впечетлениям"></textarea>
-    <button type="button" class="btn btn-secondary" style="margin-top: 10px; margin-bottom: 10px;">Отправить</button>
-  </div>
+
+
+  <%= form_with(model: @entry, url: entries_path, local: true) do |form| %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <div class="form-group">
+      <%= form.text_area :content, class: "form-control", placeholder: "Поделиться новыми впечетлениям", rows: "3" %>
+    </div>
+    <%= form.submit "Отправить", class: "btn btn-secondary", style: "margin-top: 10px; margin-bottom: 10px;" %>
+  <% end %>
 
   <div class="trip3"></div>
 
+  <% @entries_user.each do |entry| %>
+    <%= entry.content %>
+  <% end %>
 
 
 </div>

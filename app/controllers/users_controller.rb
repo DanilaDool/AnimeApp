@@ -2,6 +2,9 @@ class UsersController < ApplicationController
 
   def show
     @all_user = User.all
+    @user = current_user
+    @entry = Entry.new
+    @entries_user = @user.entries
   end
 
   private

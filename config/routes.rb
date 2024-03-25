@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get 'users/show'
 
+  resources :entries, only: [:create, :update, :destroy]
+
   get 'anime/show/:shikimori_id', to: 'anime#show', as: :anime_link
 
   get 'log_out', to: 'sessions#destroy'
