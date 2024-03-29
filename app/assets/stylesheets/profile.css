@@ -64,6 +64,9 @@ main {
     border-radius: 5px;
     border: 3px solid white;
 }
+.bi-bricks {
+    margin-bottom: 3px;
+}
 
 .wall-name {
     color: white;
@@ -71,10 +74,80 @@ main {
     margin-bottom: 10px;
 }
 
-.form-sending1 {
-    width: 300px;
-}
-
 .form-control {
     resize: none;
+}
+
+.avatar-image-entry {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover; /* сохраняет соотношение сторон и обрезает изображение, чтобы оно полностью заполняло контейнер */
+    border: 1px solid white;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.publications {
+  color: white;
+}
+
+.post_rating {
+    margin-left: 10px;
+    margin-top: -30px;
+}
+.bi-hand-thumbs-up {
+    margin-right: 6px;
+    margin-top: -8px;
+}
+
+.button-entry-comment {
+    margin-left: 15px;
+}
+
+.bi-pencil {
+    margin-left: 6px;
+}
+
+.publications-trash:hover {
+    transition: all 0.3s ease;
+    fill: #999999; /* Желаемый цвет при наведении */
+    color: #999999; /* Цвет текста при наведении */
+    cursor: pointer;
+}
+
+.editing-wall:hover {
+    transition: all 0.3s ease;
+    fill: #999999; /* Желаемый цвет при наведении */
+    color: #999999; /* Цвет текста при наведении */
+    cursor: pointer;
+}
+
+.edit-form {
+    display: none;
+}
+
+.show-form-btn {
+    margin-bottom: 2px;
+}
+
+.btn-save-entry {
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.bi-x {
+    display: none;
+}
+
+.close-form-btn:hover {
+    transition: all 0.3s ease;
+    fill: #999999; /* Желаемый цвет при наведении */
+    color: #999999; /* Цвет текста при наведении */
+    cursor: pointer;
+}
+
+.paper_clip {
+
+    color: #730E15;
 }

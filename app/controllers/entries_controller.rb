@@ -1,17 +1,24 @@
 class EntriesController < ApplicationController
-
   def create
     @entry = Entry.new(entry_params)
-    @entry.save
-
+    if @entry.save
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def update
-
+    @entry = Entry.find(params[:id])
+    if @entry.update(entry_params)
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def destroy
+    @entry = Entry.find(params[:id])
 
+    if @entry.destroy
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   private
