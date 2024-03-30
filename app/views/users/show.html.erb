@@ -89,6 +89,9 @@
       <%= form.hidden_field :user_id, value: current_user.id %>
       <div class="form-group">
         <%= form.text_area :content, class: "form-control", placeholder: "Поделиться новыми впечетлениям", rows: "3" %>
+        <button class="btn btn-secondary img-form-sending1-btn">
+          <%= image_tag "https://svgsilh.com/svg/98520.svg", width: "20", height: "20",style: "filter: invert(1);" %>
+        </button>
       </div>
       <%= form.submit "Отправить", class: "btn btn-secondary", style: "margin-top: 10px; margin-bottom: 15px;", onclick: "reloadPage()" %>
     <% end %>
@@ -102,7 +105,6 @@
 
        <%= image_tag current_user.image, alt: "Ваш аватар", class: "avatar-image-entry"%>
        <p style="display: inline; "><%= current_user.name %></p>
-
 
        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-pencil editing-wall show-form-btn" viewBox="0 0 16 16">
          <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>

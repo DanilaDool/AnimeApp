@@ -136,10 +136,6 @@ main {
     margin-bottom: 10px;
 }
 
-.bi-x {
-    display: none;
-}
-
 .close-form-btn:hover {
     transition: all 0.3s ease;
     fill: #999999; /* Желаемый цвет при наведении */
@@ -147,7 +143,8 @@ main {
     cursor: pointer;
 }
 
-.paper_clip {
-
-    color: #730E15;
+.img-form-sending1-btn {
+    border: 2px solid white;
+    margin-top: 5px;
+    float: right;
 }
