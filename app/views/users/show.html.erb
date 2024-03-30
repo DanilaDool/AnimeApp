@@ -89,9 +89,12 @@
       <%= form.hidden_field :user_id, value: current_user.id %>
       <div class="form-group">
         <%= form.text_area :content, class: "form-control", placeholder: "Поделиться новыми впечетлениям", rows: "3" %>
-        <button class="btn btn-secondary img-form-sending1-btn">
-          <%= image_tag "https://svgsilh.com/svg/98520.svg", width: "20", height: "20",style: "filter: invert(1);" %>
+        <button type="button" class="btn btn-secondary img-form-sending1-btn file-upload">
+          <span class="attachment-icon">
+            <%= image_tag "https://svgsilh.com/svg/98520.svg", width: "20", height: "20", style: "filter: invert(1);" %>
+          </span>
         </button>
+          <%= form.file_field :img_content, id: "upload-image", class: "hidden-file-field", accept: "image/*" %>
       </div>
       <%= form.submit "Отправить", class: "btn btn-secondary", style: "margin-top: 10px; margin-bottom: 15px;", onclick: "reloadPage()" %>
     <% end %>
@@ -127,7 +130,13 @@
          </button>
        <% end %>
 
-       <p style="margin-left: 10px; word-wrap: break-word;"><%= entry.content %></p><br>
+       <%= form_with(model: entry, url: entry_path(entry)) do |form| %>
+         <% if entry.img_content.present? %>
+           <%= image_tag(entry.img_content.thumb.url, class: 'img-content')%>
+         <% end %>
+         <p style="margin-left: 10px; word-wrap: break-word;"><%= entry.content %></p><br>
+       <% end %>
+
 
      <div class="post_rating">
        123
@@ -164,8 +173,6 @@
      <% end %>
 
    </div>
-
-
 </div>
 
 </body>
@@ -208,4 +215,12 @@
             });
         });
     });
+
+    // JavaScript
+    $(document).ready(function() {
+        $('.img-form-sending1-btn').click(function() {
+            $('#upload-image').click();
+        });
+    });
+
 </script>

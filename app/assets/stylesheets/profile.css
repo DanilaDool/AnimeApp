@@ -148,3 +148,17 @@ main {
     margin-top: 5px;
     float: right;
 }
+
+.file-upload {
+    position: relative;
+    display: inline-block;
+}
+
+/* CSS */
+.hidden-file-field {
+    display: none;
+}
+
+.img-content {
+    margin-bottom: 5px;
+}

@@ -14,7 +14,8 @@ gem 'open-uri'
 gem 'nokogiri'
 gem "date"
 gem "i18n"
-
+gem 'carrierwave'
+gem 'rmagick'
 gem 'omniauth'
 
 gem 'omniauth-vkontakte'
