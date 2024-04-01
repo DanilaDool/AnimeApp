@@ -15,10 +15,18 @@
           </a>
           <div class="season slider">
             <div class="images-container">
-              <% no_anime_in_season = true %>
-              <% @animes.each do |anime| %>
-                <% if anime.in_current_season? %>
-                  <% no_anime_in_season = false %>
+              <% @animes_in_season = @animes.select { |anime| anime.in_current_season? } %>
+              <% if @animes_in_season.size < 6 %>
+                <% latest_animes = @animes.reject { |anime| anime.in_current_season? }.last(6 - @animes_in_season.size) %>
+                <% @animes_in_season.concat(latest_animes) %>
+              <% end %>
+
+              <% if @animes_in_season.empty? %>
+                <div class="image-wrapper">
+                  <h4>Аниме в этом сезоне нету</h4>
+                </div>
+              <% else %>
+                <% @animes_in_season.each do |anime| %>
                   <div class="image-wrapper" data-shikimori-id="<%= anime.shikimori_id %>">
                     <a href="<%=anime_link_path(anime.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
                       <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image" %>
@@ -27,13 +35,8 @@
                   </div>
                 <% end %>
               <% end %>
-
-              <% if no_anime_in_season %>
-                <div class="image-wrapper">
-                  <h4>Аниме в этом сезоне нету</h4>
-                </div>
-              <% end %>
             </div>
+
           </div>
           <a id="rightArrow">
             <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -135,13 +138,50 @@
                   <% end %>
                 <% end %>
               <% end %>
+
+              <% if displayed_animes < 10 && no_anime_in_season %>
+                <% last_animes = @animes.reject { |anime| anime.in_current_season? }.last(10 - displayed_animes) %>
+                <% last_animes.each do |anime| %>
+                  <div class="item2">
+                    <a href="anime/show/<%=anime.shikimori_id%>" onclick="reloadClickedPage(event, this)" class="item-content">
+                      <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image2" %>
+                      <div class="description2">
+
+                        <% if anime.dtype == "anime-serial" %>
+                          <% anime.dtype = "ТВ-Сериал" %>
+                        <% elsif anime.dtype == "anime"%>
+                          <% anime.dtype = "Фильм" %>
+                        <% end %>
+
+                        <h5 class="info2"><%= anime.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></h5>
+                        <p class="info">  <%= anime.date%> | <%= anime.dtype%> | <% anime.genres.each_with_index do |genre, index| %>
+                            <%= genre["russian"] %><%= index == anime.genres.size - 1 ? '' : ', ' %>
+                          <% end if anime.genres.present? %>
+                        </p>
+
+                        <p class="info-description">
+                          <% if anime.description.present? %>
+                            <%= anime.description.gsub(/\[character=\d+\]/, '').gsub(/\[\/character\]/, '') %>
+                          <% else%>
+                            Описание отсутсвует :(
+                          <%end %>
+                        </p>
+
+                      </div>
+                    </a>
+                  </div>
+                  <% displayed_animes += 1 %>
+                <% end %>
+              <% end %>
             </div>
-            <% if no_anime_in_season %>
+
+            <% if no_anime_in_season && displayed_animes == 0 %>
               <div class="image-wrapper">
                 <p>Аниме в этом сезоне нету</p>
               </div>
             <% end %>
           </div>
+
           <a href="<%=anime_index_path%>" id="button-list"><button type="button" class="btn btn-secondary">Весь список аниме</button></a>
 
         </div>

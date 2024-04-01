@@ -8,7 +8,10 @@ Rails.application.routes.draw do
 
   get 'users/show'
 
-  resources :entries, only: [:create, :update, :destroy]
+  resources :entries, only: [:create, :update, :destroy] do
+    resources :likes, only: [:create, :destroy]
+    resources :dislikes, only: [:create, :destroy]
+  end
 
   get 'anime/show/:shikimori_id', to: 'anime#show', as: :anime_link
 

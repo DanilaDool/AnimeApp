@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_30_153755) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_01_191142) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,13 +54,29 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_30_153755) do
     t.integer "minimal_age"
   end
 
+  create_table "dislikes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "entry_id"
+    t.integer "user_id"
+  end
+
   create_table "entries", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "img_content"
+    t.integer "like"
+    t.integer "dislikes"
     t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "entry_id"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
