@@ -5,6 +5,7 @@ class UsersController < ApplicationController
     @entry = Entry.new
     @user = current_user
     @entries_user = @user.entries
+    @entries_user_count = @user.entries.count
     @like = Like.new
     @dislike = Dislike.new
     @likes_received_count = @user.likes.count

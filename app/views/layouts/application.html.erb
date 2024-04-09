@@ -165,14 +165,16 @@
 
 <%= yield %>
 
-<footer class="footer-item">
-  <div class="container2">
-    <a href="#"><p id="text-footer2">Соглашение</p></a>
-    <a href="#"><p id="text-footer3">Конфендициальность</p></a>
-    <a href="#"><p id="text-footer4">О нас</p></a>
-    <p id="text-footer1">&copy; AnimeHub.org 2024.</p>
-  </div>
-</footer>
+<div class="wrapper">
+  <footer class="footer-item">
+    <div class="container2">
+      <a href="#"><p id="text-footer2">Соглашение</p></a>
+      <a href="#"><p id="text-footer3">Конфендициальность</p></a>
+      <a href="#"><p id="text-footer4">О нас</p></a>
+      <p id="text-footer1">&copy; AnimeHub.org 2024.</p>
+    </div>
+  </footer>
+</div>
 
 <script>
     function reloadClickedPage(event, link) {
@@ -188,29 +190,33 @@
         window.location.reload();
     });
 
-    var searchInput = document.getElementById('searchInput');
-    var searchIconOpen = document.getElementById('searchIconOpen');
-    var searchIconClose = document.getElementById('searchIconClose');
+    function setupSearchFunctionality() {
+        var searchInput = document.getElementById('searchInput');
+        var searchIconOpen = document.getElementById('searchIconOpen');
+        var searchIconClose = document.getElementById('searchIconClose');
 
-    searchIconOpen.addEventListener('click', function() {
-        searchInput.style.width = '300px';
-        searchInput.style.opacity = '1';
-        searchIconOpen.style.display = 'none';
-        searchIconClose.style.display = 'inline-block';
-    });
-
-    searchIconClose.addEventListener('click', function() {
-        searchInput.style.width = '0';
-        searchInput.style.opacity = '0';
-        searchIconClose.style.display = 'none';
-        // Добавляем обработчик события transitionend для поля ввода
-        searchInput.addEventListener('transitionend', function(event) {
-            if (event.propertyName === 'width' && searchInput.style.width === '0px') {
-                searchIconOpen.style.display = 'inline-block';
-            }
+        searchIconOpen.addEventListener('click', function() {
+            searchInput.style.width = '300px';
+            searchInput.style.opacity = '1';
+            searchIconOpen.style.display = 'none';
+            searchIconClose.style.display = 'inline-block';
         });
-    });
 
+        searchIconClose.addEventListener('click', function() {
+            searchInput.style.width = '0';
+            searchInput.style.opacity = '0';
+            searchIconClose.style.display = 'none';
+            // Добавляем обработчик события transitionend для поля ввода
+            searchInput.addEventListener('transitionend', function(event) {
+                if (event.propertyName === 'width' && searchInput.style.width === '0px') {
+                    searchIconOpen.style.display = 'inline-block';
+                }
+            });
+        });
+    }
+
+    // Первичная настройка функциональности поиска при загрузке страницы
+    setupSearchFunctionality();
 
     // считываем кнопку
     const goTopBtn = document.querySelector(".go-top");

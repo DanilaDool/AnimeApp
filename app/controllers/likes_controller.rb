@@ -3,14 +3,14 @@ class LikesController < ApplicationController
   def create
     @like = Like.new(like_params)
     if @like.save
-      redirect_back(fallback_location: root_path)
+      existing_dislike = Dislike.find_by(entry_id: params[:like][:entry_id], user_id: params[:like][:user_id])
+      existing_dislike.destroy if existing_dislike
     end
   end
 
   def destroy
     @like = Like.find(params[:id])
     if @like.destroy
-      redirect_back(fallback_location: root_path)
     end
   end
 

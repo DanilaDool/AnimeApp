@@ -22,8 +22,9 @@ header a:hover {
 
 body {
     background: #2d3142;
-    margin: auto;
     overflow-x: hidden;
+    height: 100%;
+    margin: 0;
 }
 
 .navbar {
@@ -792,10 +793,11 @@ a {
 }
 
 .footer-item {
+    width: 100%;
     border-top: 2px solid var(--white);
-    padding: 5px 0;
-    grid-area: footer;
-    background-color: #4f5d75;
+    background-color: #4f5d75; /* Цвет фона футера, замените на ваш */
+    padding: 10px 0; /* Регулирует отступы внутри футера */
+    text-align: center; /* Выравнивание текста по центру */
 }
 
 .footer-item a:hover {
@@ -1147,6 +1149,7 @@ a {
     display: flex;
     align-items: flex-end;
     justify-content: center; /* Центрирование содержимого */
+    bottom: 0;
 }
 
 #text-footer1 {

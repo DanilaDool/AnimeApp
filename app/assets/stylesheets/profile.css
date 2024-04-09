@@ -96,13 +96,11 @@ main {
     margin-left: 10px;
     margin-top: -30px;
 }
-.bi-hand-thumbs-up {
-    margin-right: 6px;
-    margin-top: -8px;
-}
 
 .button-entry-comment {
     margin-left: 5px;
+    height: 40px;
+    margin-bottom: 5px;
 }
 
 .bi-pencil {
@@ -171,4 +169,33 @@ main {
 .post_rating form,
 .post_rating button {
     margin-right: 5px; /* Adjust the spacing between elements as needed */
+}
+
+.bi-hand-thumbs-up {
+    margin-right: 6px;
+    margin-top: -8px;
+    height: 20px;
+}
+
+.bi-hand-thumbs-up-fill {
+    margin-right: 6px;
+    margin-top: -8px;
+    height: 20px;
+}
+
+.bi-hand-thumbs-down {
+    height: 20px;
+}
+
+.bi-hand-thumbs-down-fill {
+    height: 20px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    bottom: 0;
+    align-self: flex-end; /* Зафиксировать футер внизу */;
+    margin-top: 275px;
 }
