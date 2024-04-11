@@ -7,4 +7,8 @@ class AnimeController < ApplicationController
   def index
     @animes = Anime.all
   end
+
+  def cult
+    @animes = Anime.all
+  end
 end

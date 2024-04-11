@@ -1,0 +1,19 @@
+.sidebar4 {
+    border: 3px solid white;
+    border-radius: 5px;
+    display: grid;
+    width: 1350px; /* Фиксированная ширина */
+}
+
+.sidebar4 h3 {
+    color: #fff;
+    margin-left: 1rem;
+    padding: 1vh 0 3vh 0;
+}
+
+.movie3 {
+    background-color: #4f5d75;
+    padding: 20px;
+    border-radius: 7px;
+
+}

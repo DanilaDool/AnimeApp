@@ -1204,7 +1204,7 @@ a {
     flex-wrap: nowrap; /* Запрещаем перенос элементов на новую строку */
 }
 
-#friends-button:hover svg {
+#list-button:hover svg {
     transition: all 0.3s ease;
     fill: #999999; /* Желаемый цвет при наведении */
     color: #999999; /* Цвет текста при наведении */

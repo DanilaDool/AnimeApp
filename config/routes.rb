@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'anime/index'
 
+  get 'anime/cult'
+
   get 'users/show'
 
   resources :entries, only: [:create, :update, :destroy] do
