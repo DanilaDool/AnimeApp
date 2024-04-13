@@ -398,11 +398,12 @@ body {
 }
 
 .sidebar2 {
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 10px;
     display: grid;
     width: 950px; /* Фиксированная ширина */
-    margin-left: 60px; /* Автоматический отступ слева для выравнивания */
+    margin-left: 73px; /* Автоматический отступ слева для выравнивания */
+    border: 3px solid white;
+    margin-top: 10px;
 }
 
 .block {
@@ -821,7 +822,7 @@ a {
 }
 
 .filter-sidebar {
-    border-radius: 5px;
+    border-radius: 10px;
     width: 320px; /* Задаем фиксированную ширину */
     padding: 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
@@ -903,12 +904,13 @@ a {
 }
 
 .latest-updates {
-    border-radius: 5px;
+    border-radius: 10px;
     max-width: 1287px;
     margin: 20px auto;
     background-color: #4f5d75;
     padding-top: 30px;
     padding-bottom: 50px;
+    border: 3px solid white;
 
 }
 

@@ -1,6 +1,6 @@
 .sidebar4 {
     border: 3px solid white;
-    border-radius: 5px;
+    border-radius: 10px;
     display: grid;
     width: 1350px; /* Фиксированная ширина */
 }
@@ -15,5 +15,9 @@
     background-color: #4f5d75;
     padding: 20px;
     border-radius: 7px;
+}
 
+.filter-sidebar {
+    border: 3px solid white;
+    border-radius: 10px;
 }

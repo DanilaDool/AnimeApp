@@ -3,6 +3,8 @@
     margin-bottom: 100px;
     padding: 40px;
     background-color: #4f5d75;
+    border: 3px solid white;
+    border-radius: 10px;
 }
 
 .video-wrapper {
@@ -42,9 +44,15 @@
     background-color: white;
 }
 
+.trip5 {
+    margin-bottom: 50px;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+}
+
 .description-anime {
     color: white;
-
 }
 
 .screenshots-anime {

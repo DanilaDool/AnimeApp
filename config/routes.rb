@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     resources :dislikes, only: [:create, :destroy]
   end
 
+  get '/entries/load_more', to: 'entries#load_more'
+
+
   get 'anime/show/:shikimori_id', to: 'anime#show', as: :anime_link
 
   get 'log_out', to: 'sessions#destroy'

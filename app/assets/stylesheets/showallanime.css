@@ -9,10 +9,11 @@
 }
 
 .sidebar3 {
-    border-radius: 5px;
-    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
     display: grid;
     width: 1000px; /* Фиксированная ширина */
+    border: 3px solid white;
 }
 
 .sidebar3 h3 {
@@ -25,7 +26,6 @@
     background-color: #4f5d75;
     padding: 20px;
     border-radius: 7px;
-    margin-left: 18px;
 }
 
 .content-item2 {

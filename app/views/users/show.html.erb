@@ -124,7 +124,6 @@
 
        <p style="font-size: 11px; margin-left: 50px; margin-top: -15px; "><%= l entry.created_at, format: :long %></p>
 
-
        <%= form_with(model: entry, url: entry_path(entry), method: :patch, class: "edit-form", style: "display: none;") do |form| %>
          <div class="form-group">
            <% if entry.content.present? %>
@@ -213,10 +212,10 @@
      <% end %>
 
      <% if @entries_user_count > 10 %>
-       <button type="button" class="btn btn-secondary", style="width: 956px; margin-top: 10px; align-items: center;">
+       <button type="button" class="btn btn-secondary" id="load-more-btn" style="width: 956px; margin-top: 10px; align-items: center;">
          Показать еще
        </button>
-     <%end %>
+   <% end %>
    </div>
 </div>
 
@@ -293,7 +292,7 @@
                 }
             };
             xhr.send(null);
-        }, 10);
+        }, 0);
     }
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -349,7 +348,4 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-
-
 </script>
