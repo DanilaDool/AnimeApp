@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   get 'users/show'
 
   resources :entries, only: [:create, :update, :destroy] do
-    resources :likes, only: [:create, :destroy]
-    resources :dislikes, only: [:create, :destroy]
+    resources :likes, turbo: true, only: [:create, :destroy]
+    resources :dislikes, turbo: true, only: [:create, :destroy]
   end
 
   get '/entries/load_more', to: 'entries#load_more'
