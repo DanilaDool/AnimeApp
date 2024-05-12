@@ -19,9 +19,17 @@
 
 .btn-description {
     width: 220px;
+    margin-bottom: 10px;
+}
+
+.btn-list {
+    width: 220px;
     margin-bottom: 30px;
 }
 
+.bi-plus {
+    margin-bottom: 3px;
+}
 .poster-anime {
     width: 220px;
     height: 300px;
