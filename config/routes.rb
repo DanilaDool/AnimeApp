@@ -15,8 +15,9 @@ Rails.application.routes.draw do
     resources :dislikes, turbo: true, only: [:create, :destroy]
   end
 
-  get '/entries/load_more', to: 'entries#load_more'
+  resources :lists, only: [:create, :update]
 
+  get '/entries/load_more', to: 'entries#load_more'
 
   get 'anime/show/:shikimori_id', to: 'anime#show', as: :anime_link
 

@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
       redirect_to root_path, notice: 'Вы успешно вошли в систему!'
     else
       # Если пользователь не найден, создаем нового пользователя на основе полученных данных
+
       new_user = User.create(
         uid: auth['uid'],
         name: auth['info']['name'],
@@ -23,6 +24,7 @@ class SessionsController < ApplicationController
       if new_user.persisted?
         session[:user_id] = new_user.id
         @user = new_user
+        create_default_lists_for_user(new_user)
         redirect_to root_path, notice: 'Регистрация прошла успешно. Вы вошли в систему!'
       else
         redirect_to root_path, alert: 'Ошибка при создании пользователя'
@@ -34,5 +36,13 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     @user = nil
     redirect_to root_path, notice: 'Вы успешно вышли из системы!'
+  end
+
+  private
+
+  def create_default_lists_for_user(user)
+    3.times do |index|
+      user.lists.create(name: "Список #{index + 1}")
+    end
   end
 end

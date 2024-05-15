@@ -22,9 +22,16 @@
           Написать коментарий
         </button>
 
-        <button type="button" class="btn btn-light btn-list">
-          Добавить в список
-        </button>
+        <%= form_with(model: @list, url: lists_path) do |form| %>
+          <div class="field">
+            <%= form.label :name %>
+            <%= form.text_field :name %>
+          </div>
+
+
+          <%= form.submit "Добавить в список",class: "btn btn-light btn-list" %>
+        <% end %>
+
 
       </div>
 
