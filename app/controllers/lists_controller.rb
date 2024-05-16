@@ -2,7 +2,10 @@ class ListsController < ApplicationController
   before_action :current_user # Если вы используете Devise или подобное, чтобы аутентифицировать пользователя
 
   def index
+
+
     @lists = current_user.lists
+
   end
 
   def create
@@ -13,6 +16,15 @@ class ListsController < ApplicationController
     else
       redirect_to request.referrer, alert: "Error creating list"
     end
+  end
+
+  def show
+
+    @list = List.find(params[:id])
+  end
+
+  def update
+
   end
 
   private

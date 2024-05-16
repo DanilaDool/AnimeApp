@@ -15,7 +15,11 @@ Rails.application.routes.draw do
     resources :dislikes, turbo: true, only: [:create, :destroy]
   end
 
-  resources :lists, only: [:create, :update]
+  resources :lists, only: [:create, :update, :index]
+
+  get 'lists/list/show/:id', to: 'lists#show', as: :list_show
+
+  get 'lists/index', to: 'lists#index', as: :lists_all
 
   get '/entries/load_more', to: 'entries#load_more'
 

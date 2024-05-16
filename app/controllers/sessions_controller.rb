@@ -41,8 +41,9 @@ class SessionsController < ApplicationController
   private
 
   def create_default_lists_for_user(user)
-    3.times do |index|
-      user.lists.create(name: "Список #{index + 1}")
+    list_names = ["Смотрю", "Просмотрено", "Брошено"]
+    list_names.each do |name|
+      user.lists.create(name: name)
     end
   end
 end
