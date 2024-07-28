@@ -1,1 +1,52 @@
-<%=@list.name%>
+<div class="block">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="sidebar5">
+        <div class="movie3">
+          <div class="header-for-anime2">
+            <% sorted_lists = @lists.sort_by {|l| l.name == "Смотрю" ? 0 : 1 && l.name == "Просмотрено" ? 1 : 2}%>
+
+            <% sorted_lists.each do |l| %>
+              <% is_current_page = current_page?(list_show_path(l.id)) %>
+              <h3>
+                <a href="<%= list_show_path(l.id) %>" onclick="reloadClickedPage(event, this)" class="header-for-anime-name2 <%= 'current-page' if is_current_page %>"><%= l.name %></a>
+              </h3>
+            <% end %>
+          </div>
+
+          <div class="trip4"></div>
+
+          <div class="content-item3">
+            <% anime = @list.animes.map(&:to_i)%>
+
+            <%unless anime.present?%>
+
+            <div class="f_the_list_is_empty_container">
+              <h1 class="f_the_list_is_empty">Список пуст :(</h1>
+            </div>
+
+            <% else%>
+            
+            <% anime.each do |anime| %>
+              <% anime_id = Anime.find_by(shikimori_id: anime)%>
+
+              <% if anime_id.score.present? %>
+                <div class="image-wrapper4" data-shikimori-id="<%= anime_id.shikimori_id %>">
+                  <a href="<%= anime_link_path(anime_id.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
+                    <%= image_tag "https://shikimori.one/system/animes/original/#{anime_id.shikimori_id}.jpg", alt: "Название фильма" %>
+                    <p class="title-for-showall-anime"><%= anime_id.title.gsub(/\[ТВ-(\d+)\]/, '\1').length > 15 ? "#{anime_id.title[0..14].gsub(/\[ТВ-(\d+)\]/, '\1')}..." : anime_id.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></p>
+                  </a>
+                </div>
+              <% end %>
+            <% end %>
+
+            <% end%>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

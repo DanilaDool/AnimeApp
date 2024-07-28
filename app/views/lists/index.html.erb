@@ -1,5 +1,3 @@
 <% @lists.each do |l|%>
-
-  <a href="list/show/<%=l.id%>"><%= l.name%></a>
-
+  <a href="<%=list_show_path(l.id)%>"><%= l.name%></a>
 <%end%>

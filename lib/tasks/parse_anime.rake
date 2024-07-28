@@ -12,6 +12,7 @@ namespace :parse_anime do
       data['results'].each do |anime_data|
         shikimori_id = anime_data['shikimori_id']
         anime = Anime.find_or_initialize_by(shikimori_id: shikimori_id)
+        if anime.shikimori_id != nil
 
         if anime.anime_img.nil? || anime.anime_img.empty?
           anime.anime_img = cover_url(shikimori_id)
@@ -89,6 +90,8 @@ namespace :parse_anime do
         puts
 
         anime.save
+
+      end
 
         url = data['next_page']
         break unless url

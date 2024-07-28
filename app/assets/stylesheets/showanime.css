@@ -107,5 +107,63 @@
     display: flex;
     align-items: center;
     white-space: nowrap;
+}
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #f9f9f9;
+    color: black;
+    width: 220px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    margin-bottom: 1px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    max-width: 220px;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%; /* Ensures the dropdown is aligned directly below the button */
+    left: 50%; /* Align with the button */
+    transform: translateX(-50%); /* Center align */
+    margin: 0; /* Ensure no margin */
+    padding: 10px; /* Optional: Add padding for better look */
+    border-radius: 10px;
+}
+
+.dropdown-content form {
+    color: black;
+    text-decoration: none;
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack items vertically */
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: center; /* Center text within the form */
+    cursor: pointer;
+    margin: 0; /* Ensure no margin */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropbtn:hover, .dropdown-content form:hover {
+    background-color: #ddd;
+}
+
+.btn-list2 {
+    width: 100%; /* Ensure buttons take full width of the form */
+    margin-top: 5px;
+    border: 2px solid #4f5d75;
 }

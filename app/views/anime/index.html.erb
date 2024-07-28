@@ -11,12 +11,14 @@
 
           <div class="content-item2">
             <% @animes.reverse.each do |anime| %>
-              <div class="image-wrapper2" data-shikimori-id="<%= anime.shikimori_id %>">
-                <a href="<%=anime_link_path(anime.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
-                  <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image3" %>
-                  <p class="title-for-showall-anime"><%= anime.title.gsub(/\[ТВ-(\d+)\]/, '\1').length > 15 ? "#{anime.title[0..14].gsub(/\[ТВ-(\d+)\]/, '\1')}..." : anime.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></p>
-                </a>
-              </div>
+              <% if anime.shikimori_id.present? %>
+                <div class="image-wrapper2" data-shikimori-id="<%= anime.shikimori_id %>">
+                  <a href="<%=anime_link_path(anime.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
+                    <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", alt: "Название фильма", class: "current-image3" %>
+                    <p class="title-for-showall-anime"><%= anime.title.gsub(/\[ТВ-(\d+)\]/, '\1').length > 15 ? "#{anime.title[0..14].gsub(/\[ТВ-(\d+)\]/, '\1')}..." : anime.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></p>
+                  </a>
+                </div>
+              <% end %>
             <% end %>
           </div>
 

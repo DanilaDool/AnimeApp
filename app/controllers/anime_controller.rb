@@ -4,6 +4,10 @@ class AnimeController < ApplicationController
     @anime_id = Anime.find_by!(shikimori_id: params[:shikimori_id])
     @user = current_user
 
+    if @user.present?
+      @lists = @user.lists
+    end
+
     @list = List.new
   end
 
