@@ -1,5 +1,18 @@
 class Anime < ApplicationRecord
 
+  include PgSearch::Model
+
+
+
+                  pg_search_scope :search_by_title_and_content,
+                  against: [:title],
+                  using: {
+                    tsearch: {
+                      prefix: false, # отключаем поиск по префиксу
+                      dictionary: 'simple'
+                    }
+                  }
+
   def in_current_season?
     current_month = Date.today.month
     current_year = Date.today.year

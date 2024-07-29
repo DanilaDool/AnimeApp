@@ -1,0 +1,31 @@
+<div class="block">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="sidebar4">
+        <div class="movie3">
+          <div class="header-for-anime">
+            <h3>Результат поиска</h3>
+          </div>
+
+          <div class="trip4"></div>
+
+          <div class="content-item2">
+            <% @results_a.each do |result| %>
+              <% if result.score.present? && result.videos.present?%>
+                <div class="image-wrapper2" data-shikimori-id="<%= result.shikimori_id %>">
+                  <a href="<%=anime_link_path(result.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
+                    <%= image_tag "https://shikimori.one/system/animes/original/#{result.shikimori_id}.jpg", alt: "Название фильма", class: "current-image3" %>
+                    <p class="title-for-showall-anime"><%= result.title.gsub(/\[ТВ-(\d+)\]/, '\1').length > 15 ? "#{result.title[0..14].gsub(/\[ТВ-(\d+)\]/, '\1')}..." : result.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></p>
+                  </a>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

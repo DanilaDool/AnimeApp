@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'search_results/show'
 
   get "up" => "rails/health#show", as: :rails_health_check
 
@@ -21,6 +22,17 @@ Rails.application.routes.draw do
     patch 'update_list3', on: :collection
   end
 
+  resources :search_results do
+    collection do
+      get 'search', to: 'search_results#show'
+    end
+  end
+
+  resources :search_results, only: [:show] do
+    collection do
+      get 'search', to: 'search_results#show'
+    end
+  end
 
   get 'lists/list/show/:id', to: 'lists#show', as: :list_show
 

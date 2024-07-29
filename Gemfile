@@ -12,6 +12,8 @@ gem 'google_search_results'
 
 gem 'open-uri'
 
+gem 'pg_search'
+
 gem 'nokogiri'
 
 gem "date"
