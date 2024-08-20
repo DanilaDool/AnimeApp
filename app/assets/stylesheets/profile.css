@@ -199,3 +199,36 @@ main {
     align-self: flex-end; /* Зафиксировать футер внизу */;
     margin-top: 275px;
 }
+
+.form-sending1-container {
+    position: relative;
+    width: 100%;
+
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* затемнение */
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .coming-soon-text {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .form-sending1 {
+    filter: blur(5px); /* размывает форму */
+    pointer-events: none; /* отключает все действия на форме */
+    opacity: 0.5; /* делает форму полупрозрачной */
+  }
+  
+  

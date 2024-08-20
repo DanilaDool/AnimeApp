@@ -2,14 +2,13 @@ class Anime < ApplicationRecord
 
   include PgSearch::Model
 
-
-
-                  pg_search_scope :search_by_title_and_content,
-                  against: [:title],
+  pg_search_scope :search_by_title_and_content,
+                  against: { title: 'A' },
                   using: {
                     tsearch: {
-                      prefix: false, # отключаем поиск по префиксу
-                      dictionary: 'simple'
+                      prefix: true,
+                      dictionary: 'simple',
+                      any_word: false
                     }
                   }
 

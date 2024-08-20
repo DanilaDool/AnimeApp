@@ -3,7 +3,7 @@ require 'json'
 
 namespace :parse_anime do
   task parse_data: :environment do
-    url = 'https://kodikapi.com/list?token=5806763453666325d912b64d6031b627&types=anime-serial'
+    url = 'https://kodikapi.com/list?token=5806763453666325d912b64d6031b627&types=anime-serial,foreign-serial&with_episodes=true&with_material_data=true'
 
     begin
       json_data = URI.open(url).read
@@ -27,6 +27,8 @@ namespace :parse_anime do
         anime.created_at = anime_data['created_at']
         anime.updated_at = anime_data['updated_at']
         anime.link = anime_data['link']
+        anime.not_blocked_in = anime_data['not_blocked_in']
+        anime.not_blocked_for_me = anime_data['not_blocked_for_me']
         anime.last_season = anime_data['last_season']
         anime.last_episode = anime_data['last_episode']
         anime.episodes_count = anime_data['episodes_count']
@@ -64,6 +66,8 @@ namespace :parse_anime do
         puts "created_at for anime:#{anime.created_at}"
         puts "updated_at for anime:#{anime.updated_at}"
         puts "link for anime:#{anime.link}"
+        puts "not_blocked_in for anime:#{anime.not_blocked_in}"
+        puts "not_blocked_for_me for anime:#{anime.not_blocked_for_me}"
         puts "last_season for anime:#{anime.last_season}"
         puts "last_episode for anime:#{anime.last_episode}"
         puts "episodes_count for anime:#{anime.episodes_count}"

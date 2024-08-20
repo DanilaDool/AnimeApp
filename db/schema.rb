@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_01_210125) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_20_125401) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_210125) do
     t.string "aired_at"
     t.string "released_at"
     t.integer "minimal_age"
+    t.string "not_blocked_in"
+    t.boolean "not_blocked_for_me"
   end
 
   create_table "comments", force: :cascade do |t|

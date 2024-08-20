@@ -10,6 +10,12 @@ class UsersController < ApplicationController
     @dislike = Dislike.new
     @likes_received_count = @user.likes.count
     @dislikes_received_count = @user.dislikes.count
+    @lists = current_user.lists
+
+    @lists.each do |list|
+      @list = list.id
+    end
+
 
     @likes_per_entry = []
     @entries_user.each do |entry|

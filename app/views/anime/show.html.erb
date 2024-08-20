@@ -1,10 +1,12 @@
 <div class="container">
+ 
   <div class="info-anime">
   <div class="row">
       <div class="col-3">
         <%if @anime_id.shikimori_id.present?%>
-          <%= image_tag "https://shikimori.one/system/animes/original/#{@anime_id.shikimori_id}.jpg",
-                      class: "poster-anime" %>
+        <%= image_tag "https://shikimori.one/system/animes/original/#{@anime_id.shikimori_id}.jpg", 
+              class: 'poster-anime',
+              onerror: "this.onerror=null; this.src='/photo_2024-08-19_08-03-34.jpg'; this.style.border='5px solid black';" %>
         <%end%>
         <a href="#scroll">
           <button type="button" class="btn btn-secondary btn-play">
@@ -16,12 +18,12 @@
           </button>
         </a>
 
-        <button type="button" class="btn btn-light btn-description">
+        <%# <button type="button" class="btn btn-light btn-description">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
           </svg>
           Написать коментарий
-        </button>
+        </button> %>
         
 <% if @user.present? %>
   <% if @anime_id.shikimori_id.present?%>
@@ -89,7 +91,7 @@
          <%end %>
 
           <div class="name">
-            <h1><%=@anime_id.title.gsub(/\[ТВ-(\d+)\]/, '\1')%></h1>
+            <h1><%= @anime_id.title.gsub(/\s*\[ТВ-(\d+).*?\]/, ' \1') %></h1>
           </div>
 
           <% if @anime_id.dtype == "anime-serial" %>
@@ -98,14 +100,13 @@
             <% @anime_id.dtype = "Фильм" %>
           <% end %>
 
-          <% if @anime_id.aired_at.present? &&  @anime_id.released_at.present? %>
-            <p>Выпуск с : <%= @anime_id.aired_at.strftime("%d.%m.%Y") %> по <%= @anime_id.released_at("%d.%m.%Y") %></p>
+          <% if @anime_id.created_at.present? &&  @anime_id.updated_at.present? %>
+            <p>Выпуск с : <%= @anime_id.created_at.strftime("%d.%m.%Y") %> по <%= @anime_id.updated_at.strftime("%d.%m.%Y") %></p>
           <%else %>
             <p>Выпуск с : ? по ?</p>
           <%end %>
 
-
-          <% if  @anime_id.dtype.present? %>
+          <% if @anime_id.dtype.present? %>
             <p>Тип: <%=@anime_id.dtype%></p>
           <%else %>
             <p>Тип: ?</p>
@@ -130,6 +131,8 @@
             <% @anime_id.status = "Онгоинг" %>
           <% elsif @anime_id.status == "released"%>
             <% @anime_id.status = "Вышел" %>
+          <% elsif @anime_id.status == "anons"%>
+            <% @anime_id.status = "Анонсирован" %>
           <% end %>
 
           <% if  @anime_id.status.present? %>
@@ -139,14 +142,32 @@
           <%end %>
 
           <% if @anime_id.rating_mpaa.present? %>
+            <% @minimal_age = nil%>
+
+          <% if @anime_id.rating_mpaa == "g" %>
+            <% @minimal_age = "0+"%>
+          <% elsif @anime_id.rating_mpaa == "pg"%>
+            <% @minimal_age = "10+"%>
+          <% elsif @anime_id.rating_mpaa == "pg_13"%>
+            <% @minimal_age = "13+"%>
+          <% elsif @anime_id.rating_mpaa == "r"%>
+            <% @minimal_age = "17+"%>
+          <% elsif @anime_id.rating_mpaa == "r_plus"%>
+            <% @minimal_age = "18+"%>
+          <% elsif @anime_id.rating_mpaa == "rx"%>
+            <% @minimal_age = "18+"%>
+          <% elsif @anime_id.rating_mpaa == "nc_17"%>
+            <% @minimal_age = "18+"%>
+          <% elsif @anime_id.rating_mpaa == "none"%>
+            <% @minimal_age = "?"%>
+          <%end%>
+
             <p>Рейтинг MPAA: <%= @anime_id.rating_mpaa%></p>
+
+            <p>Возрастное ограничение: <%= @minimal_age%></p>
           <%else %>
             <p>Рейтинг MPAA: ?</p>
-          <%end %>
 
-          <% if @anime_id.minimal_age.present? %>
-            <p>Возрастное ограничение: <%= @anime_id.minimal_age%></p>
-          <%else %>
             <p>Возрастное ограничение: ?</p>
           <%end %>
 
@@ -216,25 +237,106 @@
 
         </div>
 
-   <% if @anime_id.videos.present? %>
-      <div class="col-3">
-        <div class="trailer-video">
-          <h2 class="trailer-video-name">Трейлер</h2>
+        <% if @anime_id.videos.present? && @anime_id.videos.any? %>
+  <div class="col-3">
+    <div class="trailer-video">
+      <h2 class="trailer-video-name">Трейлер</h2>
+      <button id="loadTrailerButton" class="btn btn-secondary" style="margin-left: 40px; margin-top: 50px;">Показать трейлер
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+        </svg>
+      </button>
+      <div id="trailerContainer" style="margin-top: 10px;"></div>
+    </div>
+  
+  </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var loadTrailerButton = document.getElementById("loadTrailerButton");
+        var trailerContainer = document.getElementById("trailerContainer");
+
+        loadTrailerButton.addEventListener("click", function() {
             <% @anime_id.videos.take(1).each do |video| %>
-              <% player_url_https = video["player_url"].sub("http://", "https://") %>
-              <iframe class="trailer-video" width="300" height="150" src="<%= player_url_https %>" frameborder="0" allowfullscreen></iframe>
+                <% player_url_https = video["player_url"].sub("http://", "https://") %>
+                var iframe = document.createElement("iframe");
+                iframe.width = "300";
+                iframe.height = "150";
+                iframe.src = "<%= player_url_https %>";
+                iframe.frameBorder = "0";
+                iframe.allowFullscreen = true;
+                iframe.loading = "lazy";  // Добавлен атрибут lazy
+                trailerContainer.appendChild(iframe);
             <% end %>
-        </div>
-      </div>
-    <% end %>
+            loadTrailerButton.style.display = "none"; // скрыть кнопку после загрузки трейлера
+        });
+    });
+</script>
+
+<% end %>
     <%end%>
 
     <div class="trip2"></div>
-
-    <div id="scroll" class="video-wrapper">
-      <iframe  class="video" src="//kodik.cc/find-player?title=<%= @anime_id.title %>&year=<%= @anime_id.date %>&kinopoiskID=<%= @anime_id.kinopoisk_id %>&imdbID=<%= @anime_id.imdb_id %>&worldartLink=<%= @anime_id.worldart_link %>&shikimoriID=<%= @anime_id.shikimori_id %>&notBlockedForMe=true&types=anime,anime-serial&season=&episode=1&poster=https://shikimori.one/system/animes/original/<%= @anime_id.shikimori_id %>.jpg&start_from=0" width="1220px" height="700px" frameborder="0" allowfullscreen allow="autoplay *; fullscreen *"></iframe>
+      <% unless @anime_id.rating_mpaa.present? && @anime_id.rating_mpaa == "r_plus"%>
+        <div id="scroll" class="video-wrapper">
+          <iframe  class="video" src="//kodik.cc/find-player?title=<%= @anime_id.title %>&year=<%= @anime_id.date %>&kinopoiskID=<%= @anime_id.kinopoisk_id %>&imdbID=<%= @anime_id.imdb_id %>&worldartLink=<%= @anime_id.worldart_link %>&shikimoriID=<%= @anime_id.shikimori_id %>&notBlockedForMe=true&types=anime,anime-serial&season=&episode=1&poster=https://shikimori.one/system/animes/original/<%= @anime_id.shikimori_id %>.jpg&start_from=0" width="1220px" height="700px" frameborder="0" allowfullscreen allow="autoplay *; fullscreen *"></iframe>
+        </div>
+      <% else%>
+<div id="scroll" class="video-wrapper">
+  <div id="age-verification" style="position: absolute; width: 1220px; height: 700px; background: rgba(0, 0, 0, 0.8); color: white; display: flex; align-items: center; justify-content: center; z-index: 10;">
+    <div id="age-content" style="text-align: center;">
+      <p>Вам есть 18 лет?</p>
+      <button class="btn btn-dark" id="deny-age" style="padding: 10px 20px; width: 100px;">Нет</button>
+      <button class="btn btn-light" id="confirm-age" style="padding: 10px 20px; width: 100px; margin-right: 10px;">Да</button>
     </div>
+    <div id="denied-message" style="display: none; text-align: center;">
+      <p>Доступ запрещен. Вы должны быть старше 18 лет, чтобы просмотреть это видео.</p>
+    </div>
+  </div>
 
+  <iframe class="video" src="//kodik.cc/find-player?title=<%= @anime_id.title %>&year=<%= @anime_id.date %>&kinopoiskID=<%= @anime_id.kinopoisk_id %>&imdbID=<%= @anime_id.imdb_id %>&worldartLink=<%= @anime_id.worldart_link %>&shikimoriID=<%= @anime_id.shikimori_id %>&notBlockedForMe=true&types=anime,anime-serial&season=&episode=1&poster=https://shikimori.one/system/animes/original/<%= @anime_id.shikimori_id %>.jpg&start_from=0" width="1220px" height="700px" frameborder="0" allowfullscreen allow="autoplay *; fullscreen *"></iframe>
+</div>
+
+<script>
+  function checkAgeConfirmation() {
+    const ageConfirmationTime = localStorage.getItem('ageConfirmationTime');
+    const currentTime = new Date().getTime();
+
+    if (ageConfirmationTime && currentTime - ageConfirmationTime > 15 * 60 * 1000) {
+      localStorage.removeItem('ageConfirmed');
+      localStorage.removeItem('ageConfirmationTime');
+    }
+  }
+
+  // Проверяем возраст при загрузке страницы
+  checkAgeConfirmation();
+
+  if (localStorage.getItem('ageConfirmed') === 'true') {
+    document.getElementById('age-verification').style.display = 'none';
+  } else {
+    document.getElementById('age-verification').style.display = 'flex';
+  }
+
+  document.getElementById('confirm-age').addEventListener('click', function() {
+    localStorage.setItem('ageConfirmed', 'true');
+    localStorage.setItem('ageConfirmationTime', new Date().getTime());
+    document.getElementById('age-verification').style.display = 'none';
+  });
+
+  document.getElementById('deny-age').addEventListener('click', function() {
+    document.getElementById('age-content').style.display = 'none';
+    document.getElementById('denied-message').style.display = 'block';
+  });
+
+  // Обновляем проверку времени подтверждения каждые 15 минут
+  setInterval(checkAgeConfirmation, 15 * 60 * 1000);
+</script>
+
+
+
+
+      <% end%>
     </div>
   </div>
 </div>

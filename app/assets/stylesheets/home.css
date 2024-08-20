@@ -11,7 +11,7 @@ header {
     margin-bottom: 0;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 1000;
 
 }
 
@@ -579,7 +579,7 @@ a {
     margin-bottom: 10px; /* Отступ под header */
     position: sticky;
     top: 34px;
-    z-index: 2;
+    z-index: 11;
 }
 
 .season-container {
@@ -1183,7 +1183,7 @@ a {
     text-align: left;
     margin-left: 40px; /* Отступ слева */
     text-decoration: none; /* Убираем подчеркивание */
-    transition: all 0.1s ease;
+    transition: all 0.3s ease;
 }
 
 #text-footer2:hover {
@@ -1191,6 +1191,10 @@ a {
 }
 
 #text-footer3:hover {
+    color: #999999;
+}
+
+#text-footer4:hover {
     color: #999999;
 }
 

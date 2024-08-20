@@ -9,18 +9,29 @@
 
           <div class="trip4"></div>
 
-          <div class="content-item2">
-            <% @results_a.each do |result| %>
-              <% if result.score.present? && result.videos.present?%>
-                <div class="image-wrapper2" data-shikimori-id="<%= result.shikimori_id %>">
-                  <a href="<%=anime_link_path(result.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
-                    <%= image_tag "https://shikimori.one/system/animes/original/#{result.shikimori_id}.jpg", alt: "Название фильма", class: "current-image3" %>
-                    <p class="title-for-showall-anime"><%= result.title.gsub(/\[ТВ-(\d+)\]/, '\1').length > 15 ? "#{result.title[0..14].gsub(/\[ТВ-(\d+)\]/, '\1')}..." : result.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></p>
-                  </a>
-                </div>
+          <div class="content-item3">
+            <% if @results_a.present?%>
+              <% @results_a.each do |result| %>
+                <% if result.score.present? && result.videos.present?%>
+                  <div class="image-wrapper2" data-shikimori-id="<%= result.shikimori_id %>">
+                    <a href="<%=anime_link_path(result.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
+                      <%= image_tag "https://shikimori.one/system/animes/original/#{result.shikimori_id}.jpg", alt: "Название фильма", class: "current-image3" %>
+                      <p class="title-for-showall-anime">  <%= result.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1').length > 15 ? "#{result.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1')[0..14]}..." : result.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1') %></p>
+                    </a>
+                  </div>
+                <% end %>
               <% end %>
+            <%else%>
+            
+              <div class="result__is_empty_container">
+                <h1 class="result_is_empty">Ничего не найдено</h1>
+              </div>
+
+              <div class="indentation_s2"></div>
             <% end %>
           </div>
+
+          <div class="indentation_s"></div>
 
         </div>
       </div>

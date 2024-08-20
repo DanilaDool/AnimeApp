@@ -34,7 +34,7 @@
                 <div class="image-wrapper4" data-shikimori-id="<%= anime_id.shikimori_id %>">
                   <a href="<%= anime_link_path(anime_id.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
                     <%= image_tag "https://shikimori.one/system/animes/original/#{anime_id.shikimori_id}.jpg", alt: "Название фильма" %>
-                    <p class="title-for-showall-anime"><%= anime_id.title.gsub(/\[ТВ-(\d+)\]/, '\1').length > 15 ? "#{anime_id.title[0..14].gsub(/\[ТВ-(\d+)\]/, '\1')}..." : anime_id.title.gsub(/\[ТВ-(\d+)\]/, '\1') %></p>
+                    <p class="title-for-showall-anime"><%= anime_id.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1').length > 15 ? "#{anime_id.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1')[0..14]}..." : anime_id.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1') %></p>
                   </a>
                 </div>
               <% end %>
