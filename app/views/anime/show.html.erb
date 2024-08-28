@@ -77,6 +77,21 @@
   <% end %>
 <% end %>
 
+<script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+  // Находим все формы, которые соответствуют вашему критерию (например, по классу или любая форма на странице)
+  const forms = document.querySelectorAll("form"); // Либо можете уточнить выборку, например, по классу или атрибуту
+
+  forms.forEach(function(form) {
+    form.addEventListener("submit", function(event) {
+      setTimeout(function() {
+        window.location.reload(); // Перезагружаем страницу после отправки формы
+      }, 100); // Небольшая задержка, чтобы форма успела отправиться
+    });
+  });
+});
+</script>
       </div>
 
       <div class="col-9">
@@ -299,6 +314,20 @@
 </div>
 
 <script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+  // Находим все формы, которые соответствуют вашему критерию (например, по классу или любая форма на странице)
+  const forms = document.querySelectorAll("form"); // Либо можете уточнить выборку, например, по классу или атрибуту
+
+  forms.forEach(function(form) {
+    form.addEventListener("submit", function(event) {
+      setTimeout(function() {
+        window.location.reload(); // Перезагружаем страницу после отправки формы
+      }, 100); // Небольшая задержка, чтобы форма успела отправиться
+    });
+  });
+});
+
   function checkAgeConfirmation() {
     const ageConfirmationTime = localStorage.getItem('ageConfirmationTime');
     const currentTime = new Date().getTime();
