@@ -24,7 +24,13 @@
           </svg>
           Написать коментарий
         </button> %>
-        
+
+      <% unless @user.present? %>
+        <button type="button" class="btn btn-light btn-list button-logout2">
+          <%= link_to 'Добавить аниме в список', '#', style: "color: black;" %>
+        </button>
+      <% end %>
+
 <% if @user.present? %>
   <% if @anime_id.shikimori_id.present?%>
     <% @list = current_user.lists.find_by(name: "Смотрю") %>
@@ -58,17 +64,17 @@
 
       <div class="dropdown-content">
 
-        <%= form_with(model: @list, url: update_list1_lists_path, method: :patch) do |form| %>
+        <%= form_with(model: @list, url: update_list1_lists_path, method: :patch, remote: true) do |form| %>
           <%= form.hidden_field :shikimori_id, value: @anime_id.shikimori_id %>
           <%= form.submit "Смотрю", class: "btn btn-light btn-list2", disabled: anime_exists %>
         <% end %>
 
-        <%= form_with(model: @list2, url: update_list2_lists_path, method: :patch) do |form| %>
+        <%= form_with(model: @list2, url: update_list2_lists_path, method: :patch, remote: true) do |form| %>
           <%= form.hidden_field :shikimori_id, value: @anime_id.shikimori_id %>
           <%= form.submit "Просмотрено", class: "btn btn-light btn-list2", disabled: anime_exists2 %>
         <% end %>
 
-        <%= form_with(model: @list3, url: update_list3_lists_path, method: :patch) do |form| %>
+        <%= form_with(model: @list3, url: update_list3_lists_path, method: :patch, remote: true) do |form| %>
           <%= form.hidden_field :shikimori_id, value: @anime_id.shikimori_id %>
           <%= form.submit "Брошено", class: "btn btn-light btn-list2", disabled: anime_exists3 %>
         <% end %>
@@ -206,7 +212,7 @@
 
     <div class="description-anime">
       <% if @anime_id.description.present? %>
-        <p><%= @anime_id.description.gsub(/\[character=\d+\]/, '').gsub(/\[\/character\]/, '') %></p>
+        <p><%= @anime_id.description.gsub(/\[character=\d+\]/, '').gsub(/\[\/character\]/, '').gsub(/\[anime=\d+\]/, '').gsub(/\[\/anime\]/, '').gsub(/\[i\]/, '').gsub(/\[\/i\]/, '') %></p>
       <%else %>
         <p>Описание отсутсвует :(</p>
       <% end %>
@@ -405,4 +411,17 @@
         });
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+    const logoutLink = document.querySelector('.button-logout2 a');
+
+  if (logoutLink) {
+    logoutLink.addEventListener('click', function(event) {
+      event.preventDefault();
+      const confirmLogout = confirm('Для добавления в список нужно зарегестрироваться :)');
+      if (confirmLogout) {
+        window.location.href = logoutLink.getAttribute('href');
+      }
+    });
+  }
+});
 </script>

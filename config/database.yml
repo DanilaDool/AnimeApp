@@ -15,7 +15,7 @@ test:
 
 production:
   <<: *default
-  database: Animebd
+  database: Animebd_d
   username: postgres
-  password: <%= ENV['5598'] %>
-  url: <%= ENV['DATABASE_URL'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: localhost

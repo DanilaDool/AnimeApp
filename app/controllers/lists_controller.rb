@@ -47,27 +47,34 @@ class ListsController < ApplicationController
     shikimori_id = params[:list][:shikimori_id]
 
     if list.animes.include?(shikimori_id.to_s)
-      redirect_to request.referrer
+      respond_to do |format|
+        format.js { render 'lists/update_error.js.erb' }
+      end
     else
       anime = Anime.find_by(shikimori_id: shikimori_id)
-      if anime
 
-      current_user.lists.each do |list_name|
-        if list_name.animes.include?(anime.shikimori_id.to_s)
-          list_name.animes.delete(anime.shikimori_id.to_s)
-          list_name.save
+      if anime
+        current_user.lists.each do |user_list|
+          if user_list.animes.include?(anime.shikimori_id.to_s)
+            user_list.animes.delete(anime.shikimori_id.to_s)
+            user_list.save
+          end
         end
-      end
 
         list.animes << shikimori_id.to_s
-
         if list.save
-          redirect_to request.referrer
+          respond_to do |format|
+            format.js { render 'lists/update_list.js.erb' }
+          end
         else
-          redirect_to request.referrer, alert: "Error saving list"
+          respond_to do |format|
+            format.js { render 'lists/update_error.js.erb' }
+          end
         end
       else
-        redirect_to request.referrer, alert: "Anime not found"
+        respond_to do |format|
+          format.js { render 'lists/anime_not_found.js.erb' }
+        end
       end
     end
   end

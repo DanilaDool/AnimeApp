@@ -11,8 +11,12 @@ gem "sprockets-rails"
 gem 'google_search_results'
 
 gem 'open-uri'
+gem 'json'
 
 gem 'pg_search'
+
+gem 'whenever', require: false
+gem 'cron'
 
 gem 'nokogiri'
 

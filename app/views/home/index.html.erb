@@ -168,7 +168,7 @@
 
                         <p class="info-description">
                           <% if anime.description.present? %>
-                            <%= anime.description.gsub(/\[character=\d+\]/, '').gsub(/\[\/character\]/, '') %>
+                            <%= anime.description.gsub(/\[character=\d+\]/, '').gsub(/\[\/character\]/, '').gsub(/\[anime=\d+\]/, '').gsub(/\[\/anime\]/, '').gsub(/\[i\]/, '').gsub(/\[\/i\]/, '') %>
                           <% else%>
                             Описание отсутсвует :(
                           <%end %>

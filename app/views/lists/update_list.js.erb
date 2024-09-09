@@ -1,0 +1,3 @@
+<% if @list.animes.include?(params[:list][:shikimori_id].to_s) %>
+  $(".dropdown").html("<%= escape_javascript(render partial: 'lists/dropdown', locals: { list: @list }) %>");
+<% end %>
