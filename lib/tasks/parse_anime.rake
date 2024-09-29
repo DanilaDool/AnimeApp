@@ -9,15 +9,30 @@ namespace :parse_anime do
       data['results'].each do |anime_data|
         shikimori_id = anime_data['shikimori_id']
         anime = Anime.find_or_initialize_by(shikimori_id: shikimori_id)
+        material_data = anime_data['material_data']
 
-        if anime.shikimori_id != nil && anime_data['type'] == "anime-serial"
+        other_titles_jp = material_data['other_titles_jp']
+
+        chines_or_japan = nil
+
+      if other_titles_jp != nil
+        other_titles_jp.each do |title|
+          if title =~ /[\p{Hiragana}\p{Katakana}A-Za-z]/
+            chines_or_japan = true
+          else
+            chines_or_japan = false
+          end
+        end
+      end
+
+        if anime.shikimori_id != nil && anime_data['type'] == "anime-serial" && material_data.present? && chines_or_japan == true
 
           if anime.anime_img.nil? || anime.anime_img.empty?
             anime.anime_img = cover_url(shikimori_id)
           end
 
           anime.id_anime = anime_data['id']
-          anime.title = anime_data['title']
+          anime.title = anime_data['title'].gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1')
           anime.title_orig = anime_data['title_orig']
           anime.other_title = anime_data['other_title']
           anime.date = anime_data['year']
@@ -42,7 +57,8 @@ namespace :parse_anime do
           anime.blocked_seasons = anime_data['blocked_seasons']
           anime.screenshots = anime_data['screenshots']
           anime.translation = anime_data['translation']
-          anime.genres = get_anime_genres(shikimori_id)
+          anime.genres = material_data['all_genres']
+          anime.age_limit = material_data['minimal_age']
           anime.score = get_anime_score(shikimori_id)
           anime.status = get_anime_status(shikimori_id)
           anime.rating_mpaa = get_anime_rating_mpaa(shikimori_id)
@@ -51,6 +67,44 @@ namespace :parse_anime do
           anime.videos = get_anime_videos(shikimori_id)
           anime.duration = get_anime_duration(shikimori_id)
           anime.description = get_anime_description(shikimori_id)
+
+          if anime.next_episode_at.nil?
+            anime.next_episode_at = material_data['next_episode_at']
+          end
+
+          if anime.duration.nil?
+            anime.duration = material_data['duration']
+          end
+
+          if anime.status.nil? || anime.status.empty?
+            anime.status = material_data['anime_status']
+          end
+
+          if anime.score.nil?
+            anime.score = material_data['shikimori_rating']
+          end
+
+          if anime.rating_mpaa.nil? || anime.rating_mpaa.empty?
+            anime.rating_mpaa = material_data['rating_mpaa']
+          end
+
+          if anime.genres.nil? || anime.genres.empty?
+            anime.genres = material_data['anime_genres']
+          end
+
+          if anime.description == nil
+            anime.description = material_data['description']
+          elsif !material_data['description'].present?
+            anime.description = material_data['anime_description']
+          end
+
+          if anime_data['material_data']
+            anime.material_data = anime_data['material_data']
+            puts "Assigned Material Data: #{anime.material_data.inspect}"
+          else
+            anime.material_data = {}
+          end
+
 
           puts "id for anime:#{anime.id_anime}"
           puts "Title for anime:#{anime.title}"
@@ -88,6 +142,7 @@ namespace :parse_anime do
           puts "videos for anime:#{anime.videos}"
           puts "duration for anime:#{anime.duration}"
           puts "description for anime:#{anime.description}"
+          puts "material_data for anime: #{anime.material_data}"
 
           puts
 
@@ -101,6 +156,11 @@ namespace :parse_anime do
     end
   end
 end
+
+def contains_chines?(text)
+  !!(text =~ /[\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF]/)
+end
+
 
 def cover_url(shikimori_id)
   "https://shikimori.one/system/animes/original/#{shikimori_id}.jpg"
@@ -131,6 +191,10 @@ def get_anime_description(shikimori_id)
     anime_data = JSON.parse(response.body)
 
     description = anime_data['description']
+
+    if description == nil
+      description
+    end
 
     return description
   end

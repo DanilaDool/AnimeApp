@@ -3,14 +3,11 @@ class Anime < ApplicationRecord
   include PgSearch::Model
 
   pg_search_scope :search_by_title_and_content,
-                  against: { title: 'A' },
-                  using: {
-                    tsearch: {
-                      prefix: true,
-                      dictionary: 'simple',
-                      any_word: false
-                    }
-                  }
+  against: [:title, :shikimori_id],
+  using: {
+     tsearch: { prefix: true },
+     trigram: { threshold: 0.2 }
+  }
 
   def in_current_season?
     current_month = Date.today.month

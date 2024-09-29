@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_20_125401) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_29_154700) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "animes", force: :cascade do |t|
@@ -54,6 +55,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_20_125401) do
     t.integer "minimal_age"
     t.string "not_blocked_in"
     t.boolean "not_blocked_for_me"
+    t.jsonb "material_data"
+    t.integer "age_limit"
+    t.index ["title"], name: "index_animes_on_title", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "comments", force: :cascade do |t|

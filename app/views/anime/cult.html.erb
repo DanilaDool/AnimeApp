@@ -18,8 +18,8 @@
                     <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", 
                       alt: 'Название фильма', 
                       class: 'current-image3', 
-                      onerror: "this.onerror=null; this.src='/photo_2024-08-19_08-03-34.jpg'; this.style.border='5px solid black' ;" %>
-                    <p class="title-for-showall-anime"><%= anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1').length > 15 ? "#{anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1')[0..14]}..." : anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1') %></p>
+                      onerror: "this.onerror=null; this.src='https://shikimori.one/assets/globals/missing_original.jpg';" %>
+                    <p class="title-for-showall-anime"><%= anime.title.gsub(/\s*\[ТВ-(\d+)\]/, ' \1').gsub(/\s*\[ТВ\]/, '').length > 15 ? "#{anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1')[0..14]}..." : anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1') %></p>
                   </a>
                 </div>
                 <% end %>

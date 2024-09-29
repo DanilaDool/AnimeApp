@@ -6,7 +6,7 @@
         <%if @anime_id.shikimori_id.present?%>
         <%= image_tag "https://shikimori.one/system/animes/original/#{@anime_id.shikimori_id}.jpg", 
               class: 'poster-anime',
-              onerror: "this.onerror=null; this.src='/photo_2024-08-19_08-03-34.jpg'; this.style.border='5px solid black';" %>
+              onerror: "this.onerror=null; this.src='https://shikimori.one/assets/globals/missing_original.jpg';" %>
         <%end%>
         <a href="#scroll">
           <button type="button" class="btn btn-secondary btn-play">
@@ -112,7 +112,7 @@
          <%end %>
 
           <div class="name">
-            <h1><%= @anime_id.title.gsub(/\s*\[ТВ-(\d+).*?\]/, ' \1') %></h1>
+            <h1><%= @anime_id.title.gsub(/\s*\[ТВ-(\d+)\]/, ' \1').gsub(/\s*\[ТВ\]/, '') %></h1>
           </div>
 
           <% if @anime_id.dtype == "anime-serial" %>
@@ -141,7 +141,7 @@
 
           <% if @anime_id.genres.present? %>
             <p>Жанр: <% @anime_id.genres.each_with_index do |genre, index| %>
-                <%= genre["russian"] %><%= index == @anime_id.genres.size - 1 ? '' : ', ' %>
+                <%= genre %><%= index == @anime_id.genres.size - 1 ? '' : ', ' %>
               <% end if @anime_id.genres.present? %>
             </p>
           <%else %>
@@ -185,7 +185,12 @@
 
             <p>Рейтинг MPAA: <%= @anime_id.rating_mpaa%></p>
 
+          <% if @anime_id.age_limit.present?%>
+            <p>Возрастное ограничение: <%= @anime_id.age_limit%>+</p>
+          <%else%>
             <p>Возрастное ограничение: <%= @minimal_age%></p>
+          <%end%>
+
           <%else %>
             <p>Рейтинг MPAA: ?</p>
 
@@ -197,13 +202,17 @@
           <% else %>
             <p>Продолжительность серии: ? - мин</p>
           <% end %>
+          
 
-        <%if @anime_id.next_episode_at.present? %>
-          <% next_episode_time = DateTime.parse(@anime_id.next_episode_at) if @anime_id.next_episode_at.present? %>
-          <p>Выход следующей серии: <%= next_episode_time.strftime("%d.%m.%Y") if next_episode_time.present? %></p>
-        <% else %>
+          <% if @anime_id.next_episode_at.present?%>
+            <% next_episode_time = DateTime.parse(@anime_id.next_episode_at) if @anime_id.next_episode_at.present? %>
+            <% next_episode_time_msk = next_episode_time.in_time_zone('Moscow') %>
+            <p>Выход следующей серии: <%= next_episode_time_msk.strftime("%d.%m.%Y в %H:%M") if next_episode_time_msk.present? %></p>
+          <% elsif !@anime_id.next_episode_at.nil? && @anime_id.status = "Анонсирован" || @anime_id.status = "Онгоинг" %>
             <p>Выход следующей серии: ?</p>
-        <% end %>
+          <%else%>
+
+          <% end %>
 
         </div>
       </div>
@@ -299,7 +308,7 @@
     <%end%>
 
     <div class="trip2"></div>
-      <% unless @anime_id.rating_mpaa.present? && @anime_id.rating_mpaa == "r_plus"%>
+      <% unless @anime_id.rating_mpaa.present? && @anime_id.rating_mpaa == "r_plus" || @anime_id.rating_mpaa == "R"%>
         <div id="scroll" class="video-wrapper">
           <iframe  class="video" src="//kodik.cc/find-player?title=<%= @anime_id.title %>&year=<%= @anime_id.date %>&kinopoiskID=<%= @anime_id.kinopoisk_id %>&imdbID=<%= @anime_id.imdb_id %>&worldartLink=<%= @anime_id.worldart_link %>&shikimoriID=<%= @anime_id.shikimori_id %>&notBlockedForMe=true&types=anime,anime-serial&season=&episode=1&poster=https://shikimori.one/system/animes/original/<%= @anime_id.shikimori_id %>.jpg&start_from=0" width="1220px" height="700px" frameborder="0" allowfullscreen allow="autoplay *; fullscreen *"></iframe>
         </div>

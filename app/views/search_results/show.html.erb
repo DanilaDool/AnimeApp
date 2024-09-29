@@ -12,10 +12,15 @@
           <div class="content-item3">
             <% if @results_a.present?%>
               <% @results_a.each do |result| %>
-                <% if result.score.present? && result.videos.present?%>
+                <% if result.score.present?%>
                   <div class="image-wrapper2" data-shikimori-id="<%= result.shikimori_id %>">
                     <a href="<%=anime_link_path(result.shikimori_id)%>" onclick="reloadClickedPage(event, this)" >
-                      <%= image_tag "https://shikimori.one/system/animes/original/#{result.shikimori_id}.jpg", alt: "Название фильма", class: "current-image3" %>
+
+                      <%= image_tag "https://shikimori.one/system/animes/original/#{result.shikimori_id}.jpg",
+                       alt: "Название фильма",
+                       class: "current-image3",
+                       onerror: "this.onerror=null; this.src='https://shikimori.one/assets/globals/missing_original.jpg';" %>
+
                       <p class="title-for-showall-anime">  <%= result.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1').length > 15 ? "#{result.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1')[0..14]}..." : result.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1') %></p>
                     </a>
                   </div>
