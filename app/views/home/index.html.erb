@@ -205,17 +205,49 @@
           <h3 style="font-size: 20px;">Фильтр</h3>
         </div>
 
-        <div class="range-slider-container">
-          <label>Выберите год выпуска</label>
-          <p class="small-text-filter">Укажите пустое поле если не желвете искать по году</p>
-          <div class="slider-inputs">
-            <input type="number" id="selectedYear" min="1959" max="2024" onchange="updateYear(this.value)">
-            <p style="display: inline; font-size: smaller;">1959</p>
-            <p style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
+<%= form_with url: search_search_results_path, method: :get, local: true, id: "animeSearchForm" do %>
+  <div class="range-slider-container">
+    <label>Выберите год выпуска</label>
+    <p class="small-text-filter">Укажите пустое поле, если не желаете искать по году</p>
+    <div class="slider-inputs">
+      <!-- Поле для ввода года (числовое) -->
+      <input type="number" id="selectedYear" min="1959" max="2024" onchange="updateYear(this.value)">
+      
+      <!-- Слайдер -->
+      <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="updateSlider(this.value)">
+    </div>
+  </div>
 
-            <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="updateSlider(this.value)">
-          </div>
-        </div>
+  <!-- Поле для текстового поиска -->
+  <%= text_field_tag :query, params[:query], class: "search-input", id: "searchInput" %>
+
+  <!-- Скрытое поле для передачи выбранного года в параметр query -->
+  <%= hidden_field_tag :query, '', id: 'yearQueryField' %>
+<% end %>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const searchForm = document.getElementById("animeSearchForm");
+  const searchInput = document.getElementById("searchInput");
+  const selectedYear = document.getElementById("selectedYear");
+  const customRange = document.getElementById("customRange1");
+  const yearQueryField = document.getElementById("yearQueryField");
+
+  // Синхронизация значений между слайдером и числовым полем
+  window.updateYear = function(value) {
+    customRange.value = value;
+    yearQueryField.value = value;  // Устанавливаем значение в скрытое поле query
+    searchForm.submit();  // Автоматическая отправка формы при изменении
+  };
+
+  window.updateSlider = function(value) {
+    selectedYear.value = value;
+    yearQueryField.value = value;  // Устанавливаем значение в скрытое поле query
+    searchForm.submit();  // Автоматическая отправка формы при изменении
+  };
+});
+</script>
+
 
         <div class="filter-dropdown">
           <div class="dropdown-button" style="font-size: 16px;">Жанры ▼</div>
@@ -280,20 +312,30 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Перезагрузка страницы только один раз
     if (!sessionStorage.getItem('pageRefreshed')) {
         sessionStorage.setItem('pageRefreshed', 'true');
-        location.reload();
+        setTimeout(function() {
+            location.reload();
+        }, 1000);  // Добавляем задержку перед перезагрузкой, чтобы избежать проблем с инициализацией
     }
 
-
+    // Инициализация слайдера
     function initSlickCarousel() {
-        var slidesToShowCount = 6; // По умолчанию отображается 6 слайдов
+        var slidesToShowCount = 6; // По умолчанию показываем 6 слайдов
 
-        // Проверяем разрешение экрана при загрузке страницы
+        // Устанавливаем количество слайдов в зависимости от размера экрана
         if (window.matchMedia("(max-width: 1399px)").matches) {
             slidesToShowCount = 5; // Если ширина экрана меньше 1400px, отображаем 5 слайдов
         }
 
+        // Удаляем предыдущую инициализацию, если она была
+        if ($('.season.slider .images-container').hasClass('slick-initialized')) {
+            $('.season.slider .images-container').slick('unslick');
+        }
+
+        // Инициализация Slick Slider
         $('.season.slider .images-container').slick({
             slidesToShow: slidesToShowCount,
             slidesToScroll: 1,
@@ -311,42 +353,37 @@
 
         // Следим за изменением размеров окна и пересчитываем количество слайдов при необходимости
         $(window).resize(function() {
-            if (window.matchMedia("(max-width: 1399px)").matches) {
-                $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', 5);
-            } else {
-                $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', 6);
-            }
+            var newSlidesToShow = (window.matchMedia("(max-width: 1399px)").matches) ? 5 : 6;
+            $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', newSlidesToShow, true);
         });
     }
 
+    // Инициализация карусели при загрузке страницы
+    initSlickCarousel();
 
-    // Вызываем функцию для инициализации Slick carousel при загрузке страницы
-    $(document).ready(function () {
-        initSlickCarousel();
-    });
-
-    // Вызываем функцию для инициализации Slick carousel после каждой навигации на странице
+    // Повторная инициализация карусели при навигации (если требуется, например, с использованием history API)
     $(window).on('popstate', function () {
         initSlickCarousel();
     });
 
-
-    $(document).ready(function() {
-        $('.dropdown-button').click(function() {
-            $(this).siblings('.dropdown-content').toggle();
-        });
+    // Логика для выпадающих меню
+    $('.dropdown-button').click(function() {
+        $(this).siblings('.dropdown-content').toggle();
     });
 
-    function updateSlider(value) {
+    // Функция для синхронизации значения слайдера и числового поля
+    window.updateSlider = function(value) {
         document.getElementById('selectedYear').value = value;
-    }
+    };
 
-    function updateYear(value) {
+    window.updateYear = function(value) {
         var currentYear = new Date().getFullYear();
         if (value >= 1959 && value <= currentYear) {
             document.getElementById('customRange1').value = value;
         }
-    }
+    };
+});
+
 </script>
 
 </body>
