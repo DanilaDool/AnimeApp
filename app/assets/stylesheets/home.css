@@ -537,6 +537,19 @@ body {
     color: #ffffff;
 }
 
+#anime-this-season_null {
+    display: flex;                /* Включаем Flexbox */
+    justify-content: center;      /* Центрирование по горизонтали */
+    align-items: center;          /* Центрирование по вертикали */
+    height: 100px;                /* Высота контейнера (установите по необходимости) */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: #ffffff;
+    text-align: center;           /* Центрирование текста в строках */
+}
+
+
+
 .container {
     width: 100%;
     margin: 0 auto;
@@ -1104,10 +1117,20 @@ a {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 282px;
+    width: 276px;
     margin-top: 25px;
     /* margin-left: auto; */ /* Удалите эту строку */
     margin-right: auto; /* Оставьте эту строку */
+}
+
+.dropdown-button2 {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 282px;
+    margin-top: 25px;
+    margin-right: auto;
 }
 
 

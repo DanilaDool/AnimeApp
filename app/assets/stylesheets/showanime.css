@@ -109,7 +109,7 @@
     white-space: nowrap;
 }
 
-.dropdown {
+.dropdown2 {
     position: relative;
     display: inline-block;
 }
@@ -154,11 +154,11 @@
     margin: 0; /* Ensure no margin */
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown2:hover .dropdown-content {
     display: block;
 }
 
-.dropbtn:hover, .dropdown-content form:hover {
+.dropbtn2:hover, .dropdown-content form:hover {
     background-color: #ddd;
 }
 

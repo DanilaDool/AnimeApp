@@ -49,7 +49,7 @@
       <% end %>
     <% end %>
 
-    <div class="dropdown">
+    <div class="dropdown2">
 
       <%= form_with(model: @list, url: update_list1_lists_path, method: :patch) do |form| %>
         <%= form.hidden_field :shikimori_id, value: @anime_id.shikimori_id %>
@@ -308,7 +308,7 @@
     <%end%>
 
     <div class="trip2"></div>
-      <% unless @anime_id.rating_mpaa.present? && @anime_id.rating_mpaa == "r_plus" || @anime_id.rating_mpaa == "R"%>
+      <% unless @anime_id.rating_mpaa.present? && @anime_id.rating_mpaa == "r_plus" || @anime_id.rating_mpaa == "R" || @anime_id.rating_mpaa == "R+"%>
         <div id="scroll" class="video-wrapper">
           <iframe  class="video" src="//kodik.cc/find-player?title=<%= @anime_id.title %>&year=<%= @anime_id.date %>&kinopoiskID=<%= @anime_id.kinopoisk_id %>&imdbID=<%= @anime_id.imdb_id %>&worldartLink=<%= @anime_id.worldart_link %>&shikimoriID=<%= @anime_id.shikimori_id %>&notBlockedForMe=true&types=anime,anime-serial&season=&episode=1&poster=https://shikimori.one/system/animes/original/<%= @anime_id.shikimori_id %>.jpg&start_from=0" width="1220px" height="700px" frameborder="0" allowfullscreen allow="autoplay *; fullscreen *"></iframe>
         </div>

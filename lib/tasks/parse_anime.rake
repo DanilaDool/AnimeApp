@@ -1,6 +1,6 @@
 namespace :parse_anime do
   task parse_data: :environment do
-    url = 'https://kodikapi.com/list?token=5806763453666325d912b64d6031b627&types=anime-serial&with_material_data=true'
+    url = 'https://kodikapi.com/list?token=5806763453666325d912b64d6031b627&types=anime-serial,anime&with_material_data=true'
 
     begin
       json_data = URI.open(url).read
@@ -15,17 +15,17 @@ namespace :parse_anime do
 
         chines_or_japan = nil
 
-      if other_titles_jp != nil
-        other_titles_jp.each do |title|
-          if title =~ /[\p{Hiragana}\p{Katakana}A-Za-z]/
-            chines_or_japan = true
-          else
-            chines_or_japan = false
+        if other_titles_jp != nil
+          other_titles_jp.each do |title|
+            if title =~ /[\p{Hiragana}\p{Katakana}A-Za-z]/
+              chines_or_japan = true
+            else
+              chines_or_japan = false
+            end
           end
         end
-      end
 
-        if anime.shikimori_id != nil && anime_data['type'] == "anime-serial" && material_data.present? && chines_or_japan == true
+        if anime.shikimori_id != nil && anime_data['type'] == "anime-serial" || anime_data['type'] == "anime" && material_data.present? && chines_or_japan == true
 
           if anime.anime_img.nil? || anime.anime_img.empty?
             anime.anime_img = cover_url(shikimori_id)
@@ -57,11 +57,18 @@ namespace :parse_anime do
           anime.blocked_seasons = anime_data['blocked_seasons']
           anime.screenshots = anime_data['screenshots']
           anime.translation = anime_data['translation']
-          anime.genres = material_data['all_genres']
+          if anime.genres.nil? || anime.genres.empty?
+            if material_data['anime_genres']
+              anime.genres = material_data['anime_genres'].map(&:downcase)
+            else
+              anime.genres = []  # Или любая другая логика для случая, если 'anime_genres' отсутствует
+            end
+          end
+
           anime.age_limit = material_data['minimal_age']
           anime.score = get_anime_score(shikimori_id)
           anime.status = get_anime_status(shikimori_id)
-          anime.rating_mpaa = get_anime_rating_mpaa(shikimori_id)
+          anime.rating_mpaa = material_data['rating_mpaa']
           anime.next_episode_at = get_anime_next_episode_at(shikimori_id)
           anime.studios = get_anime_studios(shikimori_id)
           anime.videos = get_anime_videos(shikimori_id)
@@ -84,12 +91,12 @@ namespace :parse_anime do
             anime.score = material_data['shikimori_rating']
           end
 
-          if anime.rating_mpaa.nil? || anime.rating_mpaa.empty?
-            anime.rating_mpaa = material_data['rating_mpaa']
-          end
-
           if anime.genres.nil? || anime.genres.empty?
-            anime.genres = material_data['anime_genres']
+            if material_data['drama_genres']
+              anime.genres = material_data['drama_genres'].map(&:downcase)
+            else
+              anime.genres = []  # Или любая другая логика для случая, если 'anime_genres' отсутствует
+            end
           end
 
           if anime.description == nil

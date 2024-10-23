@@ -4,7 +4,19 @@
 <body>
 <div class="max-width">
   <div class="container">
-    <h2 id="anime-this-season">Аниме этого сезона</h2>
+
+                  <% @animes_in_season = @animes.select { |anime| anime.in_current_season? } %>
+              <% if @animes_in_season.size < 6 %>
+                <% latest_animes = @animes.reject { |anime| anime.in_current_season? }.last(6 - @animes_in_season.size) %>
+                <% @animes_in_season.concat(latest_animes) %>
+              <% end %>
+
+              <% if @animes_in_season.empty? || @animes_in_season.size <= 6 %>
+                <div style="color: white;">
+                  <h2 id="anime-this-season_null">Аниме этого сезона пока нет! :(</h2>
+                </div>
+              <% else %>
+                  <h2 id="anime-this-season">Аниме этого сезона</h2>
     <div class="border-color">
       <div class="season-container">
         <div class="season">
@@ -15,17 +27,6 @@
           </a>
           <div class="season slider">
             <div class="images-container">
-              <% @animes_in_season = @animes.select { |anime| anime.in_current_season? } %>
-              <% if @animes_in_season.size < 6 %>
-                <% latest_animes = @animes.reject { |anime| anime.in_current_season? }.last(6 - @animes_in_season.size) %>
-                <% @animes_in_season.concat(latest_animes) %>
-              <% end %>
-
-              <% if @animes_in_season.empty? %>
-                <div class="image-wrapper">
-                  <h4>Аниме в этом сезоне нету</h4>
-                </div>
-              <% else %>
                 <% @animes_in_season.each do |anime| %>
                   <%if anime.shikimori_id.present?%>
                     <div class="image-wrapper" data-shikimori-id="<%= anime.shikimori_id %>">
@@ -39,7 +40,6 @@
                     </div>
                   <% end %>
                 <% end %>
-              <% end %>
             </div>
 
           </div>
@@ -51,6 +51,7 @@
         </div>
       </div>
     </div>
+    <% end %>
   </div>
 
   <div class="latest-updates">
@@ -72,7 +73,7 @@
                 <% if anime.updated_at.to_date == Date.today %>
                   Обновлено: Сегодня в <%= anime.updated_at.strftime('%H:%M') %>
                 <% elsif anime.updated_at.to_date == Date.yesterday %>
-                  Вчера в <%= anime.updated_at.strftime('%H:%M') %>
+                  Обновлено: Вчера в <%= anime.updated_at.strftime('%H:%M') %>
                 <% else %>
                   Обновлено: <%= anime.updated_at.strftime('%d %b, %Y %H:%M') %>
                 <% end %>
@@ -152,7 +153,7 @@
                         <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", 
                           alt: 'Название фильма', 
                           class: 'current-image2', 
-                          onerror: "this.onerror=null; this.src='/photo_2024-08-19_08-03-34.jpg'; this.style.border='5px solid black' ;" %>
+                          onerror: "this.onerror=null; this.src='https://shikimori.one/assets/globals/missing_original.jpg';" %>
                           
                       <div class="description2">
 
@@ -211,19 +212,287 @@
     <p class="small-text-filter">Укажите пустое поле, если не желаете искать по году</p>
     <div class="slider-inputs">
       <!-- Поле для ввода года (числовое) -->
-      <input type="number" id="selectedYear" min="1959" max="2024" onchange="updateYear(this.value)">
-      
+      <input type="number" name="date" id="selectedYear" min="1959" max="2024" onchange="syncSlider(this.value)">
+      <p style="display: inline; font-size: smaller;">1959</p>
+      <p style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
       <!-- Слайдер -->
-      <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="updateSlider(this.value)">
+      <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="syncYearInput(this.value)">
     </div>
   </div>
+
+  <!-- Пример отдельной кнопки danger -->
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="width:250px;">
+    Кнопка выпадающего списка
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:250px;">
+    <li><label class="dropdown-item active"><input type="checkbox" style="margin-right: 10px;"> Действие</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Другое действие</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Что-то еще здесь</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Отделенная ссылка</label></li>
+  </ul>
+</div>
+
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Жанры
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto;">
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="боевик" class="genre-checkbox" style="margin-right: 10px;"> Боевик
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="боевые искусства" class="genre-checkbox" style="margin-right: 10px;"> Боевые искусства
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="взрослая жизнь" class="genre-checkbox" style="margin-right: 10px;"> Взрослая жизнь
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="военное" class="genre-checkbox" style="margin-right: 10px;"> Военное
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="гарем" class="genre-checkbox" style="margin-right: 10px;"> Гарем
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="демоны" class="genre-checkbox" style="margin-right: 10px;"> Демоны
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="детектив" class="genre-checkbox" style="margin-right: 10px;"> Детектив
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="дзёсей" class="genre-checkbox" style="margin-right: 10px;"> Дзёсей
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="драма" class="genre-checkbox" style="margin-right: 10px;"> Драма
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="исторический" class="genre-checkbox" style="margin-right: 10px;"> Исторический
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="игры" class="genre-checkbox" style="margin-right: 10px;"> Игры
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="комедия" class="genre-checkbox" style="margin-right: 10px;"> Комедия
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="космос" class="genre-checkbox" style="margin-right: 10px;"> Космос
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="криминал" class="genre-checkbox" style="margin-right: 10px;"> Криминал
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="магия" class="genre-checkbox" style="margin-right: 10px;"> Магия
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="машины" class="genre-checkbox" style="margin-right: 10px;"> Машины
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="мелодрама" class="genre-checkbox" style="margin-right: 10px;"> Мелодрама
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="меха" class="genre-checkbox" style="margin-right: 10px;"> Меха
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="мистика" class="genre-checkbox" style="margin-right: 10px;"> Мистика
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="музыка" class="genre-checkbox" style="margin-right: 10px;"> Музыка
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="научная фантастика" class="genre-checkbox" style="margin-right: 10px;"> Научная фантастика
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="пародия" class="genre-checkbox" style="margin-right: 10px;"> Пародия
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="повседневность" class="genre-checkbox" style="margin-right: 10px;"> Повседневность
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="полиция" class="genre-checkbox" style="margin-right: 10px;"> Полиция
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="приключения" class="genre-checkbox" style="margin-right: 10px;"> Приключения
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="психология" class="genre-checkbox" style="margin-right: 10px;"> Психология
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="романтика" class="genre-checkbox" style="margin-right: 10px;"> Романтика
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="самураи" class="genre-checkbox" style="margin-right: 10px;"> Самураи
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сверхъестественное" class="genre-checkbox" style="margin-right: 10px;"> Сверхъестественное
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сёдзё" class="genre-checkbox" style="margin-right: 10px;"> Сёдзё
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сёдзё-ай" class="genre-checkbox" style="margin-right: 10px;"> Сёдзё-ай
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сёнен" class="genre-checkbox" style="margin-right: 10px;"> Сёнен
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сёнен-ай" class="genre-checkbox" style="margin-right: 10px;"> Сёнен-ай
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="спорт" class="genre-checkbox" style="margin-right: 10px;"> Спорт
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="триллер" class="genre-checkbox" style="margin-right: 10px;"> Триллер
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="ужасы" class="genre-checkbox" style="margin-right: 10px;"> Ужасы
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="фантастика" class="genre-checkbox" style="margin-right: 10px;"> Фантастика
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="фэнтези" class="genre-checkbox" style="margin-right: 10px;"> Фэнтези
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="экшен" class="genre-checkbox" style="margin-right: 10px;"> Экшен
+      </label>
+    </li>
+  </ul>
+</div>
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Статус
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto;">
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="ongoing" class="status-checkbox" style="margin-right: 10px;"> Онгоинг
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="released" class="status-checkbox" style="margin-right: 10px;"> Вышел
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="anons" class="status-checkbox" style="margin-right: 10px;"> Анонсирован
+      </label>
+    </li>
+  </ul>
+</div>
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Тип
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto;">
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="anime-serial" class="type-checkbox" style="margin-right: 10px;"> Аниме Сериал
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="anime" class="type-checkbox" style="margin-right: 10px;"> Аниме Фильм
+      </label>
+    </li>
+  </ul>
+</div>
+
+  <%= hidden_field_tag :genres, params[:genres], id: "selectedGenres" %>
+
+  <%= hidden_field_tag :status, params[:status], id: "selectedStatus" %>
+
+  <%= hidden_field_tag :dtype, params[:dtype], id: "selectedType" %>
+
+  <%= text_field_tag :rating_mpaa, params[:rating_mpaa], placeholder: 'Возраст' %>
 
   <!-- Поле для текстового поиска -->
   <%= text_field_tag :query, params[:query], class: "search-input", id: "searchInput" %>
 
-  <!-- Скрытое поле для передачи выбранного года в параметр query -->
-  <%= hidden_field_tag :query, '', id: 'yearQueryField' %>
+  <%= submit_tag 'Поиск', class: "btn btn-primary" %>
 <% end %>
+
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -234,30 +503,72 @@ document.addEventListener("DOMContentLoaded", function() {
   const yearQueryField = document.getElementById("yearQueryField");
 
   // Синхронизация значений между слайдером и числовым полем
-  window.updateYear = function(value) {
-    customRange.value = value;
-    yearQueryField.value = value;  // Устанавливаем значение в скрытое поле query
-    searchForm.submit();  // Автоматическая отправка формы при изменении
-  };
-
-  window.updateSlider = function(value) {
+  window.syncYearInput = function(value) {
     selectedYear.value = value;
-    yearQueryField.value = value;  // Устанавливаем значение в скрытое поле query
-    searchForm.submit();  // Автоматическая отправка формы при изменении
+    yearQueryField.value = value; // Обновляем скрытое поле year
   };
+
+  window.syncSlider = function(value) {
+    customRange.value = value;
+    yearQueryField.value = value; // Обновляем скрытое поле year
+  };
+
+  // Отправка формы только при нажатии Enter
+  searchForm.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      searchForm.submit(); // Отправка формы при нажатии Enter
+    }
+  });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  const genreCheckboxes = document.querySelectorAll(".genre-checkbox");
+  const selectedGenresField = document.getElementById("selectedGenres");
+
+  genreCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      const selectedGenres = Array.from(genreCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+      // Разделяем жанры запятыми, а не пробелами
+      selectedGenresField.value = selectedGenres.join(','); // Обновляем скрытое поле
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const statusCheckboxes = document.querySelectorAll(".status-checkbox");
+  const selectedStatusField = document.getElementById("selectedStatus");
+
+  statusCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      const selectedStatus = Array.from(statusCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+      selectedStatusField.value = selectedStatus.join(','); // Обновляем скрытое поле
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const statusCheckboxes = document.querySelectorAll(".type-checkbox");
+  const selectedTypeField = document.getElementById("selectedType");
+
+  statusCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      const selectedTypes = Array.from(statusCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+      selectedTypeField.value = selectedTypes.join(','); // Обновляем скрытое поле
+    });
+  });
+});
+
+
 </script>
-
-
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Жанры ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
-
 
         <div class="filter-dropdown">
           <div class="dropdown-button" style="font-size: 16px;">Статус ▼</div>
@@ -268,32 +579,50 @@ document.addEventListener("DOMContentLoaded", function() {
           </div>
         </div>
 
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Тип ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle dropdown-button " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Жанры
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px;">
+    <li><label class="dropdown-item active"><input type="checkbox" style="margin-right: 10px;"> приключения</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> спорт</label></li>
 
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Озвучка ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
+  </ul>
+</div>
 
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Возрастное ограничение ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle dropdown-button " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Статус
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px;">
+       <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Что-то еще здесь</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Отделенная ссылка</label></li>
+  </ul>
+</div>
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle dropdown-button " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Тип
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px;">
+    <li><label class="dropdown-item active"><input type="checkbox" style="margin-right: 10px;"> Действие</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Другое действие</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Что-то еще здесь</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Отделенная ссылка</label></li>
+  </ul>
+</div>
+
+<div class="dropdown">
+  <button class="btn dropdown-toggle dropdown-button " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="color:white;">
+    Возрастное ограничение
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px;">
+    <li><label class="dropdown-item active"><input type="checkbox" style="margin-right: 10px;"> Действие</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Другое действие</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Что-то еще здесь</label></li>
+    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Отделенная ссылка</label></li>
+  </ul>
+</div>
 
         <div class="filter-dropdown btn-filter">
            <button type="button" class="btn btn-secondary btn-filter-width">Найти</button>
@@ -312,30 +641,20 @@ document.addEventListener("DOMContentLoaded", function() {
  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Перезагрузка страницы только один раз
     if (!sessionStorage.getItem('pageRefreshed')) {
         sessionStorage.setItem('pageRefreshed', 'true');
-        setTimeout(function() {
-            location.reload();
-        }, 1000);  // Добавляем задержку перед перезагрузкой, чтобы избежать проблем с инициализацией
+        location.reload();
     }
 
-    // Инициализация слайдера
-    function initSlickCarousel() {
-        var slidesToShowCount = 6; // По умолчанию показываем 6 слайдов
 
-        // Устанавливаем количество слайдов в зависимости от размера экрана
+    function initSlickCarousel() {
+        var slidesToShowCount = 6; // По умолчанию отображается 6 слайдов
+
+        // Проверяем разрешение экрана при загрузке страницы
         if (window.matchMedia("(max-width: 1399px)").matches) {
             slidesToShowCount = 5; // Если ширина экрана меньше 1400px, отображаем 5 слайдов
         }
 
-        // Удаляем предыдущую инициализацию, если она была
-        if ($('.season.slider .images-container').hasClass('slick-initialized')) {
-            $('.season.slider .images-container').slick('unslick');
-        }
-
-        // Инициализация Slick Slider
         $('.season.slider .images-container').slick({
             slidesToShow: slidesToShowCount,
             slidesToScroll: 1,
@@ -353,37 +672,42 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Следим за изменением размеров окна и пересчитываем количество слайдов при необходимости
         $(window).resize(function() {
-            var newSlidesToShow = (window.matchMedia("(max-width: 1399px)").matches) ? 5 : 6;
-            $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', newSlidesToShow, true);
+            if (window.matchMedia("(max-width: 1399px)").matches) {
+                $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', 5);
+            } else {
+                $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', 6);
+            }
         });
     }
 
-    // Инициализация карусели при загрузке страницы
-    initSlickCarousel();
 
-    // Повторная инициализация карусели при навигации (если требуется, например, с использованием history API)
+    // Вызываем функцию для инициализации Slick carousel при загрузке страницы
+    $(document).ready(function () {
+        initSlickCarousel();
+    });
+
+    // Вызываем функцию для инициализации Slick carousel после каждой навигации на странице
     $(window).on('popstate', function () {
         initSlickCarousel();
     });
 
-    // Логика для выпадающих меню
-    $('.dropdown-button').click(function() {
-        $(this).siblings('.dropdown-content').toggle();
+
+    $(document).ready(function() {
+        $('.dropdown-button').click(function() {
+            $(this).siblings('.dropdown-content').toggle();
+        });
     });
 
-    // Функция для синхронизации значения слайдера и числового поля
-    window.updateSlider = function(value) {
+    function updateSlider(value) {
         document.getElementById('selectedYear').value = value;
-    };
+    }
 
-    window.updateYear = function(value) {
+    function updateYear(value) {
         var currentYear = new Date().getFullYear();
         if (value >= 1959 && value <= currentYear) {
             document.getElementById('customRange1').value = value;
         }
-    };
-});
-
+    }
 </script>
 
 </body>
