@@ -25,7 +25,7 @@ namespace :parse_anime do
           end
         end
 
-        if anime.shikimori_id != nil && anime_data['type'] == "anime-serial" || anime_data['type'] == "anime" && material_data.present? && chines_or_japan == true
+        if anime.shikimori_id != nil && (anime_data['type'] == "anime-serial" || anime_data['type'] == "anime") && material_data.present? && chines_or_japan == true
 
           if anime.anime_img.nil? || anime.anime_img.empty?
             anime.anime_img = cover_url(shikimori_id)
@@ -68,7 +68,14 @@ namespace :parse_anime do
           anime.age_limit = material_data['minimal_age']
           anime.score = get_anime_score(shikimori_id)
           anime.status = get_anime_status(shikimori_id)
-          anime.rating_mpaa = material_data['rating_mpaa']
+
+          if material_data['rating_mpaa']
+            anime.rating_mpaa = material_data['rating_mpaa'].downcase
+          else
+            anime.rating_mpaa = ""
+          end
+
+
           anime.next_episode_at = get_anime_next_episode_at(shikimori_id)
           anime.studios = get_anime_studios(shikimori_id)
           anime.videos = get_anime_videos(shikimori_id)

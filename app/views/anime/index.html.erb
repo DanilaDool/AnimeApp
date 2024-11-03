@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+<div class="col-md-4">
       <div class="filter-sidebar">
         <div class="filter-header">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-filter-right" viewBox="0 0 16 16">
@@ -40,73 +40,454 @@
           <h3 style="font-size: 20px;">Фильтр</h3>
         </div>
 
-        <div class="range-slider-container">
-          <label>Выберите год выпуска</label>
-          <p class="small-text-filter">Укажите пустое поле если не желвете искать по году</p>
-          <div class="slider-inputs">
-            <input type="number" id="selectedYear" min="1959" max="2024" onchange="updateYear(this.value)">
-            <p style="display: inline; font-size: smaller;">1959</p>
-            <p style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
+<%= form_with url: search_search_results_path, method: :get, local: true, id: "animeSearchForm" do %>
+  <div class="range-slider-container">
+    <label>Выберите год выпуска</label>
+    <p class="small-text-filter">Укажите пустое поле, если не желаете искать по году</p>
+    <div class="slider-inputs">
+      <!-- Поле для ввода года (числовое) -->
+      <input type="number" name="date" id="selectedYear" min="1959" max="2024" onchange="syncSlider(this.value)">
+      <p style="display: inline; font-size: smaller;">1959</p>
+      <p style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
+      <!-- Слайдер -->
+      <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="syncYearInput(this.value)">
+    </div>
+  </div>
 
-            <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="updateSlider(this.value)">
-          </div>
+<div class="dropdown">
+  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Жанры">
+    Жанры
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="боевик" class="genre-checkbox" style="margin-right: 10px;"> Боевик
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="боевые искусства" class="genre-checkbox" style="margin-right: 10px;"> Боевые искусства
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="взрослая жизнь" class="genre-checkbox" style="margin-right: 10px;"> Взрослая жизнь
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="военное" class="genre-checkbox" style="margin-right: 10px;"> Военное
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="гарем" class="genre-checkbox" style="margin-right: 10px;"> Гарем
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="демоны" class="genre-checkbox" style="margin-right: 10px;"> Демоны
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="детектив" class="genre-checkbox" style="margin-right: 10px;"> Детектив
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="дзёсей" class="genre-checkbox" style="margin-right: 10px;"> Дзёсей
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="драма" class="genre-checkbox" style="margin-right: 10px;"> Драма
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="исторический" class="genre-checkbox" style="margin-right: 10px;"> Исторический
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="игры" class="genre-checkbox" style="margin-right: 10px;"> Игры
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="комедия" class="genre-checkbox" style="margin-right: 10px;"> Комедия
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="космос" class="genre-checkbox" style="margin-right: 10px;"> Космос
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="криминал" class="genre-checkbox" style="margin-right: 10px;"> Криминал
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="магия" class="genre-checkbox" style="margin-right: 10px;"> Магия
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="машины" class="genre-checkbox" style="margin-right: 10px;"> Машины
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="мелодрама" class="genre-checkbox" style="margin-right: 10px;"> Мелодрама
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="меха" class="genre-checkbox" style="margin-right: 10px;"> Меха
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="мистика" class="genre-checkbox" style="margin-right: 10px;"> Мистика
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="музыка" class="genre-checkbox" style="margin-right: 10px;"> Музыка
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="научная фантастика" class="genre-checkbox" style="margin-right: 10px;"> Научная фантастика
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="пародия" class="genre-checkbox" style="margin-right: 10px;"> Пародия
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="повседневность" class="genre-checkbox" style="margin-right: 10px;"> Повседневность
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="полиция" class="genre-checkbox" style="margin-right: 10px;"> Полиция
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="приключения" class="genre-checkbox" style="margin-right: 10px;"> Приключения
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="психология" class="genre-checkbox" style="margin-right: 10px;"> Психология
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="романтика" class="genre-checkbox" style="margin-right: 10px;"> Романтика
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="работа" class="genre-checkbox" style="margin-right: 10px;"> Работа
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="самураи" class="genre-checkbox" style="margin-right: 10px;"> Самураи
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сверхъестественное" class="genre-checkbox" style="margin-right: 10px;"> Сверхъестественное
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сёдзё" class="genre-checkbox" style="margin-right: 10px;"> Сёдзё
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сёдзё-ай" class="genre-checkbox" style="margin-right: 10px;"> Сёдзё-ай
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сёнен" class="genre-checkbox" style="margin-right: 10px;"> Сёнен
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="сёнен-ай" class="genre-checkbox" style="margin-right: 10px;"> Сёнен-ай
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="спорт" class="genre-checkbox" style="margin-right: 10px;"> Спорт
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="триллер" class="genre-checkbox" style="margin-right: 10px;"> Триллер
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="ужасы" class="genre-checkbox" style="margin-right: 10px;"> Ужасы
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="фантастика" class="genre-checkbox" style="margin-right: 10px;"> Фантастика
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="фэнтези" class="genre-checkbox" style="margin-right: 10px;"> Фэнтези
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="экшен" class="genre-checkbox" style="margin-right: 10px;"> Экшен
+      </label>
+    </li>
+  </ul>
+</div>
+
+<div class="dropdown">
+  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Статус">
+    Статус
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="ongoing" class="status-checkbox" style="margin-right: 10px;"> Онгоинг
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="released" class="status-checkbox" style="margin-right: 10px;"> Вышел
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="anons" class="status-checkbox" style="margin-right: 10px;"> Анонсирован
+      </label>
+    </li>
+  </ul>
+</div>
+
+<div class="dropdown">
+  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Тип">
+    Тип
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="anime-serial" class="type-checkbox" style="margin-right: 10px;"> Аниме Сериал
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="anime" class="type-checkbox" style="margin-right: 10px;"> Аниме Фильм
+      </label>
+    </li>
+  </ul>
+</div>
+
+<div class="dropdown">
+  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Возрастное ограничение">
+    Возрастное ограничение
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="g" class="mpaa-checkbox" style="margin-right: 10px;"> G
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="pg" class="mpaa-checkbox" style="margin-right: 10px;"> PG
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="pg-13" class="mpaa-checkbox" style="margin-right: 10px;"> PG-13
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="r" class="mpaa-checkbox" style="margin-right: 10px;"> R
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="r+ r_plus" class="mpaa-checkbox" style="margin-right: 10px;"> R+
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="rx" class="mpaa-checkbox" style="margin-right: 10px;"> RX
+      </label>
+    </li>
+  </ul>
+</div>
+
+  <%= hidden_field_tag :genres, params[:genres], id: "selectedGenres" %>
+
+  <%= hidden_field_tag :status, params[:status], id: "selectedStatus" %>
+
+  <%= hidden_field_tag :dtype, params[:dtype], id: "selectedType" %>
+
+  <%= hidden_field_tag :rating_mpaa, params[:rating_mpaa], id: "selectedMpaa" %>
+
+  <!-- Поле для текстового поиска -->
+  <%= text_field_tag :query, params[:query], class: "search-input", id: "searchInput" %>
+
+          <div class="filter-dropdown btn-filter">
+            <%= submit_tag 'Найти', class: "btn btn-secondary btn-filter-width", style: "border: 1px solid #ccc;" %>
         </div>
-
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Жанры ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
+<% end %>
 
 
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Статус ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
 
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Тип ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
+<script>
 
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Озвучка ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
+  document.querySelectorAll('.dropdown').forEach((dropdown) => {
+    const button = dropdown.querySelector('.dropdown-toggle');
+    const menu = dropdown.querySelector('.dropdown-menu');
 
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Возрастное ограничение ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
+    // Обработчик клика на кнопку
+    button.addEventListener('click', function () {
+      setTimeout(() => { // Задержка для корректного отображения класса 'show'
+        if (menu.classList.contains('show')) {
+          button.textContent = 'Свернуть';
+        } else {
+          button.textContent = button.getAttribute('data-original-text');
+        }
+      }, 10);
+    });
 
-        <div class="filter-dropdown btn-filter">
-          <button type="button" class="btn btn-secondary btn-filter-width">Найти</button>
-        </div>
+    // Обработчик закрытия меню при клике вне меню
+    document.addEventListener('click', function (event) {
+      if (!dropdown.contains(event.target)) {
+        button.textContent = button.getAttribute('data-original-text');
+      }
+    });
+  });
+
+  document.querySelectorAll('.dropdown-menu').forEach((menu) => {
+    menu.addEventListener('click', function (event) {
+      event.stopPropagation(); // Останавливает закрытие при клике на элементы внутри меню
+    });
+  });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  const searchForm = document.getElementById("animeSearchForm");
+  const searchInput = document.getElementById("searchInput");
+  const selectedYear = document.getElementById("selectedYear");
+  const customRange = document.getElementById("customRange1");
+  const yearQueryField = document.getElementById("yearQueryField");
+
+  // Синхронизация значений между слайдером и числовым полем
+  window.syncYearInput = function(value) {
+    selectedYear.value = value;
+    yearQueryField.value = value; // Обновляем скрытое поле year
+  };
+
+  window.syncSlider = function(value) {
+    customRange.value = value;
+    yearQueryField.value = value; // Обновляем скрытое поле year
+  };
+
+  // Отправка формы только при нажатии Enter
+  searchForm.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      searchForm.submit(); // Отправка формы при нажатии Enter
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const genreCheckboxes = document.querySelectorAll(".genre-checkbox");
+  const selectedGenresField = document.getElementById("selectedGenres");
+
+  genreCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      const selectedGenres = Array.from(genreCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+      // Разделяем жанры запятыми, а не пробелами
+      selectedGenresField.value = selectedGenres.join(','); // Обновляем скрытое поле
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const statusCheckboxes = document.querySelectorAll(".status-checkbox");
+  const selectedStatusField = document.getElementById("selectedStatus");
+
+  statusCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      const selectedStatus = Array.from(statusCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+      selectedStatusField.value = selectedStatus.join(','); // Обновляем скрытое поле
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const statusCheckboxes = document.querySelectorAll(".mpaa-checkbox");
+  const selectedMpaaField = document.getElementById("selectedMpaa");
+
+  statusCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      const selectedMpaas = Array.from(statusCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+      selectedMpaaField.value = selectedMpaas.join(','); // Обновляем скрытое поле с выбранными значениями
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const statusCheckboxes = document.querySelectorAll(".type-checkbox");
+  const selectedTypeField = document.getElementById("selectedType");
+
+  statusCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      const selectedTypes = Array.from(statusCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+      selectedTypeField.value = selectedTypes.join(','); // Обновляем скрытое поле
+    });
+  });
+});
+
+
+</script>
 
       </div>
     </div>
 
-  </div>
+    </div>
 </div>
+
+  </div>
 
 
 <script>

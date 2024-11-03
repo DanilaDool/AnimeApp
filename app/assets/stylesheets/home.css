@@ -1121,6 +1121,12 @@ a {
     margin-top: 25px;
     /* margin-left: auto; */ /* Удалите эту строку */
     margin-right: auto; /* Оставьте эту строку */
+    background-color: #4f5d75;
+    color: white;
+}
+
+.dropdown-button:hover {
+    background-color: #4f5d75;
 }
 
 .dropdown-button2 {
@@ -1132,7 +1138,6 @@ a {
     margin-top: 25px;
     margin-right: auto;
 }
-
 
 .dropdown-content {
     display: none;

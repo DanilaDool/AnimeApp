@@ -220,25 +220,11 @@
     </div>
   </div>
 
-  <!-- Пример отдельной кнопки danger -->
 <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="width:250px;">
-    Кнопка выпадающего списка
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:250px;">
-    <li><label class="dropdown-item active"><input type="checkbox" style="margin-right: 10px;"> Действие</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Другое действие</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Что-то еще здесь</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Отделенная ссылка</label></li>
-  </ul>
-</div>
-
-
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Жанры">
     Жанры
   </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto;">
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
     <li>
       <label class="dropdown-item">
         <input type="checkbox" value="боевик" class="genre-checkbox" style="margin-right: 10px;"> Боевик
@@ -376,6 +362,11 @@
     </li>
     <li>
       <label class="dropdown-item">
+        <input type="checkbox" value="работа" class="genre-checkbox" style="margin-right: 10px;"> Работа
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
         <input type="checkbox" value="самураи" class="genre-checkbox" style="margin-right: 10px;"> Самураи
       </label>
     </li>
@@ -438,10 +429,10 @@
 </div>
 
 <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Статус">
     Статус
   </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto;">
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
     <li>
       <label class="dropdown-item">
         <input type="checkbox" value="ongoing" class="status-checkbox" style="margin-right: 10px;"> Онгоинг
@@ -461,10 +452,10 @@
 </div>
 
 <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Тип">
     Тип
   </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto;">
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
     <li>
       <label class="dropdown-item">
         <input type="checkbox" value="anime-serial" class="type-checkbox" style="margin-right: 10px;"> Аниме Сериал
@@ -478,23 +469,94 @@
   </ul>
 </div>
 
+<div class="dropdown">
+  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Возрастное ограничение">
+    Возрастное ограничение
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="g" class="mpaa-checkbox" style="margin-right: 10px;"> G
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="pg" class="mpaa-checkbox" style="margin-right: 10px;"> PG
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="pg-13" class="mpaa-checkbox" style="margin-right: 10px;"> PG-13
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="r" class="mpaa-checkbox" style="margin-right: 10px;"> R
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="r+ r_plus" class="mpaa-checkbox" style="margin-right: 10px;"> R+
+      </label>
+    </li>
+    <li>
+      <label class="dropdown-item">
+        <input type="checkbox" value="rx" class="mpaa-checkbox" style="margin-right: 10px;"> RX
+      </label>
+    </li>
+  </ul>
+</div>
+
   <%= hidden_field_tag :genres, params[:genres], id: "selectedGenres" %>
 
   <%= hidden_field_tag :status, params[:status], id: "selectedStatus" %>
 
   <%= hidden_field_tag :dtype, params[:dtype], id: "selectedType" %>
 
-  <%= text_field_tag :rating_mpaa, params[:rating_mpaa], placeholder: 'Возраст' %>
+  <%= hidden_field_tag :rating_mpaa, params[:rating_mpaa], id: "selectedMpaa" %>
 
   <!-- Поле для текстового поиска -->
   <%= text_field_tag :query, params[:query], class: "search-input", id: "searchInput" %>
 
-  <%= submit_tag 'Поиск', class: "btn btn-primary" %>
+          <div class="filter-dropdown btn-filter">
+            <%= submit_tag 'Найти', class: "btn btn-secondary btn-filter-width", style: "border: 1px solid #ccc;" %>
+        </div>
 <% end %>
 
 
 
 <script>
+
+  document.querySelectorAll('.dropdown').forEach((dropdown) => {
+    const button = dropdown.querySelector('.dropdown-toggle');
+    const menu = dropdown.querySelector('.dropdown-menu');
+
+    // Обработчик клика на кнопку
+    button.addEventListener('click', function () {
+      setTimeout(() => { // Задержка для корректного отображения класса 'show'
+        if (menu.classList.contains('show')) {
+          button.textContent = 'Свернуть';
+        } else {
+          button.textContent = button.getAttribute('data-original-text');
+        }
+      }, 10);
+    });
+
+    // Обработчик закрытия меню при клике вне меню
+    document.addEventListener('click', function (event) {
+      if (!dropdown.contains(event.target)) {
+        button.textContent = button.getAttribute('data-original-text');
+      }
+    });
+  });
+
+  document.querySelectorAll('.dropdown-menu').forEach((menu) => {
+    menu.addEventListener('click', function (event) {
+      event.stopPropagation(); // Останавливает закрытие при клике на элементы внутри меню
+    });
+  });
+
+
 document.addEventListener("DOMContentLoaded", function() {
   const searchForm = document.getElementById("animeSearchForm");
   const searchInput = document.getElementById("searchInput");
@@ -553,6 +615,21 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
+  const statusCheckboxes = document.querySelectorAll(".mpaa-checkbox");
+  const selectedMpaaField = document.getElementById("selectedMpaa");
+
+  statusCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      const selectedMpaas = Array.from(statusCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+      selectedMpaaField.value = selectedMpaas.join(','); // Обновляем скрытое поле с выбранными значениями
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
   const statusCheckboxes = document.querySelectorAll(".type-checkbox");
   const selectedTypeField = document.getElementById("selectedType");
 
@@ -569,64 +646,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 </script>
-
-        <div class="filter-dropdown">
-          <div class="dropdown-button" style="font-size: 16px;">Статус ▼</div>
-          <div class="dropdown-content">
-            <input type="checkbox" name="genre-option" value="option1"><p class="list-filter">Опция 1</p><br>
-            <input type="checkbox" name="genre-option" value="option2"><p class="list-filter">Опция 2</p><br>
-            <!-- Добавьте другие опции по мере необходимости -->
-          </div>
-        </div>
-
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle dropdown-button " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-    Жанры
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px;">
-    <li><label class="dropdown-item active"><input type="checkbox" style="margin-right: 10px;"> приключения</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> спорт</label></li>
-
-  </ul>
-</div>
-
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle dropdown-button " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-    Статус
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px;">
-       <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Что-то еще здесь</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Отделенная ссылка</label></li>
-  </ul>
-</div>
-
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle dropdown-button " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-    Тип
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px;">
-    <li><label class="dropdown-item active"><input type="checkbox" style="margin-right: 10px;"> Действие</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Другое действие</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Что-то еще здесь</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Отделенная ссылка</label></li>
-  </ul>
-</div>
-
-<div class="dropdown">
-  <button class="btn dropdown-toggle dropdown-button " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="color:white;">
-    Возрастное ограничение
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px;">
-    <li><label class="dropdown-item active"><input type="checkbox" style="margin-right: 10px;"> Действие</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Другое действие</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Что-то еще здесь</label></li>
-    <li><label class="dropdown-item"><input type="checkbox" style="margin-right: 10px;"> Отделенная ссылка</label></li>
-  </ul>
-</div>
-
-        <div class="filter-dropdown btn-filter">
-           <button type="button" class="btn btn-secondary btn-filter-width">Найти</button>
-        </div>
 
       </div>
     </div>
