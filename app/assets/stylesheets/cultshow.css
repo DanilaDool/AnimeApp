@@ -21,3 +21,24 @@
     border: 3px solid white;
     border-radius: 10px;
 }
+
+@media screen and (max-width: 1399px) {
+
+    .sidebar4 {
+      width: 980px; /* Фиксированная ширина */
+    }
+}
+
+@media screen and (max-width: 1050px) {
+
+    .sidebar4 {
+      width: 780px; /* Фиксированная ширина */
+    }
+}
+
+@media screen and (max-width: 991px) {
+
+    .sidebar4 {
+      width: 680px; /* Фиксированная ширина */
+    }
+}

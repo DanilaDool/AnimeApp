@@ -15,6 +15,13 @@ header {
 
 }
 
+.block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 header a:hover {
     transition: all 0.3s ease;
     color: #999999;
@@ -368,9 +375,6 @@ body {
     filter: drop-shadow(0 0 20px var(--clr)) drop-shadow(0 0 40px var(--clr)) drop-shadow(0 0 60px var(--clr));
 }
 
-
-/* Styling Content */
-
 .max-width {
     width: 100%;
     margin: auto;
@@ -399,11 +403,36 @@ body {
 
 .sidebar2 {
     border-radius: 10px;
-    display: grid;
-    width: 950px; /* Фиксированная ширина */
-    margin-left: 73px; /* Автоматический отступ слева для выравнивания */
+    box-sizing: border-box; /* Включает границу в ширину элемента */
+    width: 100%; /* Адаптируется к доступной ширине */
+    max-width: 950px; /* Ограничение максимальной ширины */
     border: 3px solid white;
     margin-top: 10px;
+    margin-left: 73px;
+}
+
+  
+  .sidebar10 {
+    margin: 10px auto; 
+    margin-left: 50px;        /* Фиксированный отступ слева */
+    margin-right: 15px;
+    width: 100%;              /* Адаптивная ширина с правой стороны */
+    max-width: 910px;         /* Ограничение максимальной ширины */
+    border: 3px solid white;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+.sidebar10 h3 {
+    color: #fff;
+    margin-left: 1rem;
+    padding: 1vh 0 3vh 0;
+}
+
+.block-container {
+    display: flex;
+    justify-content: center; /* Выравнивание контента по центру по горизонтали */
+    align-items: center; /* Выравнивание контента по центру по вертикали */
 }
 
 .block {
@@ -411,7 +440,6 @@ body {
     justify-content: center; /* Выравнивание контента по центру по горизонтали */
     align-items: center; /* Выравнивание контента по центру по вертикали */
 }
-
 
 .sidebar h3 {
     color: #fff;
@@ -547,8 +575,6 @@ body {
     color: #ffffff;
     text-align: center;           /* Центрирование текста в строках */
 }
-
-
 
 .container {
     width: 100%;
@@ -860,7 +886,8 @@ a {
     flex-direction: column;
     align-items: flex-start;
     margin-left: 70px;
-
+    margin-right: auto;
+    
 }
 
 
@@ -882,12 +909,10 @@ a {
     margin-right: 10px;
 }
 
-
 .range-slider-container {
     position: relative;
     width: 100%;
 }
-
 
 #selectedYear {
     height: 40px;
@@ -995,7 +1020,7 @@ a {
     border-radius: 50px;
     margin-bottom: 10px;
     margin-right: 100px;
-    margin-left: 100px;
+    margin-left: 120px;
     display: block;
     border-color: white;
 }
@@ -1038,6 +1063,25 @@ a {
 }
 
 .search-input:focus {
+    outline: none; /* Убираем обводку при фокусе */
+}
+
+.search-input2 {
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    height: 30px;
+    width: 0;
+    max-width: 250px; /* Максимальная ширина поля ввода */
+    box-sizing: border-box;
+    font-size: 16px;
+    overflow: hidden;
+    transition: width 0.3s, opacity 0.3s; /* Анимация изменения ширины и прозрачности */
+    opacity: 0; /* Начальная прозрачность 0 */
+    vertical-align: middle;
+    white-space: nowrap; /* Предотвращаем перенос строки */
+}
+
+.search-input2:focus {
     outline: none; /* Убираем обводку при фокусе */
 }
 
@@ -1127,16 +1171,6 @@ a {
 
 .dropdown-button:hover {
     background-color: #4f5d75;
-}
-
-.dropdown-button2 {
-    cursor: pointer;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 282px;
-    margin-top: 25px;
-    margin-right: auto;
 }
 
 .dropdown-content {
@@ -1275,6 +1309,7 @@ a {
     border: 1px solid white;
     background-color: #2d3142;
     padding: 10px 20px;
+    z-index: 11;
 }
 
 /* меняем прозрачность при наведении мышкой */
@@ -1290,6 +1325,86 @@ a {
     display: block;
 }
 
+
+.sidebar10 {
+    margin: 10px auto; 
+    margin-left: 50px;        /* Фиксированный отступ слева */
+    margin-right: 15px;
+    width: 100%;              /* Адаптивная ширина с правой стороны */
+    max-width: 900px;         /* Ограничение максимальной ширины */
+    border: 3px solid white;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  .list-icon {
+    display: none; /* Скрыто по умолчанию */
+}
+
+.lateral {
+    position: fixed;
+    top: 0;
+    left: -300px; /* Скрыто за пределами экрана */
+    width: 280px;
+    transition: all 0.3s ease; /* Плавное появление */
+    z-index: 1000000 !important; /* Поверх основного контента */
+    pointer-events: auto;
+
+}
+  
+.list-icon {
+    position: fixed;
+    top: 3px;
+    left: 10px;
+    z-index: 1100; /* Поверх панели */
+}
+
+#lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background-color: #333; /* Цвет панели */
+    opacity: 0; /* Панель изначально прозрачная */
+    visibility: hidden; /* Скрыта из DOM */
+    transform: translateX(-100%); /* Сдвинута влево за пределы экрана */
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease; /* Плавные переходы */
+}
+
+#lateral.active {
+    opacity: 1; /* Панель становится видимой */
+    visibility: visible; /* Делаем доступной для взаимодействия */
+    transform: translateX(0); /* Возвращаем на экран */
+}
+
+
+
+  
+.nav-link {
+    border: 3px solid white;
+
+}
+
+.btn-outline-secondary {
+    height: 40px; /* Исходная высота */
+    transition: height 0.3s ease; /* Плавный переход высоты за 0.3 секунды */
+}
+.btn-outline-secondary:hover {
+    height: 50px;
+ 
+}
+
+.panel_name:hover {
+    transition: all 0.3s ease;
+    color: #999999;
+}
+
+#closeModalLeftBtn:hover svg {
+    transition: all 0.3s ease;
+    fill: #999999; /* Меняем цвет через fill */
+}
+
 @media screen and (max-width: 1399px) {
     .container-wrapper {
         flex-direction: column; /* Изменение направления контейнера на вертикальное */
@@ -1301,8 +1416,9 @@ a {
     }
 
     .sidebar2 {
-        margin-left: 0; /* Удаление отступа слева */
-        width: 800px;
+        width: 1115px;
+        max-width: 1115px; /* Ограничение максимальной ширины */
+        margin-left: 20px;
     }
 
     .latest-updates {
@@ -1318,31 +1434,65 @@ a {
         background-color: #4f5d75;
         padding: 20px;
         border-radius: 7px;
-        margin-left: 18px;
+    }
+
+    .sidebar10 {
+        width: 1115px; /* Адаптируется к доступной ширине */
+        max-width: 1115px; /* Ограничение максимальной ширины */
+        margin: 10px auto;      /* Центрирование по горизонтали и отступ сверху */
+        display: block; /* Блочный элемент */
+        justify-content: center; /* Центрирование содержимого по горизонтали */
+        align-items: center;     /* Центрирование содержимого по вертикали */
+        box-sizing: border-box;  /* Убедимся, что padding и border входят в ширину */
+        margin-right: -20px;
+    }
+
+    .block-container {
+        display: flex; /* Используем Flexbox */
+        justify-content: center; /* Центрируем элементы по горизонтали */
+        align-items: center; /* Центрируем элементы по вертикали */
+        flex-wrap: wrap; /* Позволяем элементам переноситься */
+        min-height: 100vh; /* Растягиваем контейнер на весь экран */
+        width: 100%; /* Занимаем всю ширину */
+        box-sizing: border-box; /* Учитываем отступы и границы */
+        padding: 20px; /* Отступы внутри контейнера */
     }
 
     .filter-sidebar {
-        margin-left: 25px;
-        padding-right: 5px;
+        width: 1115px;
+        display: flex; /* Включаем flexbox */
+        justify-content: center; /* Выравнивание по горизонтали */
+        align-items: center; /* Выравнивание по вертикали */
+        margin: 0 auto; /* Центрирование самого блока по горизонтали, если это необходимо */
     }
 
-    .filter-header {
-        align-self: flex-start;
-        margin-bottom: 5px;
+    .btn-filter-width {
+        width: 1085px;
     }
 
-    .slider-inputs {
-        width: 286px;
-
+    .dropdown-button {
+        width: 1085px;
     }
 
     #selectedYear {
-        width: 286px;
+        width: 1085px;
+    }
+
+    .adapt-number {
+        margin-left: 1020px !important;
+    }
+
+    .dropdown-menu-dark {
+        width: 1085px !important;
     }
 
 
+    #animeSearchForm {
+        margin-left: -2px;
+    }
+
     #text-footer1 {
-        margin-left: 500px; /* Отступ справа */
+        margin-left: 400px; /* Отступ справа */
     }
 
     .left-header-text {
@@ -1362,7 +1512,7 @@ a {
     }
 
     .search-input2 {
-        max-width: 150px; /* Максимальная ширина поля ввода */
+        max-width: 210px; /* Максимальная ширина поля ввода */
     }
 
     .search-input {
@@ -1372,19 +1522,254 @@ a {
     .icon-vk {
         margin-right: 1px;
     }
+
+    .latest-updates img {
+        margin-left: 155px;
+    }
 }
 
-/* Для экранов шириной до 992px */
-@media screen and (max-width: 992px) {
-    /* Ваши стили здесь */
+@media screen and (max-width: 1200px) {
+
+    #searchIconOpen {
+        margin-right: 6px;
+    }
+
+    .bi-search {
+        margin-bottom: 3px;
+    }
+
+    .search-input {
+        border: 1px solid #ffffff;
+        border-radius: 5px;
+        height: 30px;
+        width: 0;
+        max-width: 240px;
+        box-sizing: border-box;
+        font-size: 16px;
+        overflow: hidden;
+        transition: width 0.3s, opacity 0.3s;
+        opacity: 0;
+        vertical-align: middle;
+        white-space: nowrap;
+        position: absolute; /* Чтобы элемент выходил поверх других */
+        z-index: 1000;      /* Высокий z-index для перекрытия других элементов */
+    }
+
+    .search-input2 {
+        border: 1px solid #ffffff;
+        border-radius: 5px;
+        height: 30px;
+        width: 0;
+        max-width: 220px;
+        box-sizing: border-box;
+        font-size: 16px;
+        overflow: hidden;
+        transition: width 0.3s, opacity 0.3s;
+        opacity: 0;
+        vertical-align: middle;
+        white-space: nowrap;
+        position: absolute; /* Чтобы элемент выходил поверх других */
+        z-index: 1000;      /* Высокий z-index для перекрытия других элементов */
+    }
+
+  .trip {
+    top: 31px;
+  }
+
+  .sidebar10 {
+    width: 1000px; /* Ширина фильтра */
+    display: block; /* Блочный элемент */
+    justify-content: center; /* Центрируем элементы по горизонтали */
+    align-items: center; /* Центрируем элементы по вертикали */
 }
 
-/* Для экранов шириной до 768px */
-@media screen and (max-width: 768px) {
-    /* Ваши стили здесь */
+  .latest-updates {
+    max-width: 940px;
 }
 
-/* Для экранов шириной до 576px */
-@media screen and (max-width: 576px) {
-    /* Ваши стили здесь */
+  .filter-sidebar {
+    width: 950px;
+    display: flex; /* Включаем flexbox */
+    justify-content: center; /* Выравнивание по горизонтали */
+    align-items: center; /* Выравнивание по вертикали */
+    margin: 0 auto; /* Центрирование самого блока по горизонтали, если это необходимо */
 }
+
+  .btn-filter-width {
+    width: 920px;
+}
+
+  .dropdown-button {
+    width: 920px;
+}
+
+  #selectedYear {
+    width: 920px;
+}
+
+  .adapt-number {
+    margin-left: 852px !important;
+}
+
+  .dropdown-menu-dark {
+    width: 900px !important;
+}
+
+.latest-updates img {
+    margin-left: 120px;
+}
+
+}
+
+@media screen and (max-width: 1200px) {
+    .sidebar10 {
+        max-width: 950px; /* Используем процентное значение для адаптации */
+
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .filter-sidebar {
+        width: 900px;
+
+    }
+
+    .btn-filter-width {
+        width: 870px;
+    }
+    
+      .dropdown-button {
+        width: 870px;
+    }
+    
+      #selectedYear {
+        width: 870px;
+    }
+    
+      .adapt-number {
+        margin-left: 800px !important;
+    }
+    
+      .dropdown-menu-dark {
+        width: 1200 !important;
+    }
+
+    .sidebar10 {
+        width: 900px; /* Используем процентное значение для адаптации */
+
+    }
+    
+}
+
+@media screen and (max-width: 1050px) {
+
+
+}
+
+@media screen and (max-width: 991px)  {
+    .left-header-text {
+        display: none;
+    }
+    
+    .separator {
+        display: none;
+    }
+
+    .list-inline-item {
+        display: none;
+    }
+    
+    .search-input, .search-input2 {
+        position: absolute; /* Отключаем absolute */
+        z-index: auto;    /* Можно убрать z-index, если он больше не нужен */
+        max-width: 200px;
+        height: 35px;
+        white-space: nowrap;
+        right: 0;
+        margin-right: 25px;
+
+    }
+
+    .bi-search {
+        width: 25px;
+        height: 25px;
+        margin-top: 10px;
+        margin-left: 40px;
+    }
+    
+    .icon-vk {
+        display: none;
+    }
+    
+    #textvklog_in {
+        display: none;
+    }
+    
+    .text-start {
+        margin-left: 280px;
+        margin-top: 8px;
+    }
+
+    header {
+        height: 50px;
+    }
+      
+    .trip {
+        top: 50px;
+        z-index: 11111;
+    }
+
+    .list-icon {
+        margin-top: 8px;
+        display: block; /* Показывается при ширине от 991px */
+    }
+
+    .latest-updates img {
+
+        margin-left: 140px;
+
+    }
+
+    .filter-sidebar {
+        width: 700px; /* Ширина фильтра */
+        height: 580px; /* Высота фильтра */
+
+    }
+
+    .dropdown-button {
+        width: 660px;
+        color: white;
+    }
+
+    .btn-filter-width {
+        width: 660px;
+    }
+
+    #selectedYear {
+        width: 660px;
+    }
+
+    .adapt-number {
+        margin-left: 595px !important;
+    }
+
+    .name-filter {
+        margin-right: 600px;
+    }
+    
+    .dropdown-menu {
+        width: 600px !important;
+    }
+    
+    .latest-updates {
+        max-width: 700px;
+        max-height: 600px;
+    }
+
+    .sidebar10 {
+        max-width: 700px;
+        margin-left: 5px;
+    }
+
+
+    }

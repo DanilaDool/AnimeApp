@@ -34,3 +34,27 @@
     height: 100%; /* Adjust this as necessary to fill the container */
     text-align: center;
 }
+
+@media screen and (max-width: 1399px) {
+
+    .sidebar20 {
+        margin-top: 10px;
+        border-radius: 10px;
+        display: grid;
+        width: 980px; /* Фиксированная ширина */
+        border: 3px solid white;
+    }
+    
+    .sidebar20 h3 {
+        color: #fff;
+        margin-left: 1rem;
+        padding: 1vh 0 3vh 0;
+    }
+    
+    .movie3 {
+        background-color: #4f5d75;
+        padding: 20px;
+        border-radius: 7px;
+    }
+
+}

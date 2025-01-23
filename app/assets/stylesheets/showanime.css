@@ -167,3 +167,115 @@
     margin-top: 5px;
     border: 2px solid #4f5d75;
 }
+
+.video {
+    width: 1220px !important; /* Стандартная ширина */
+    height: 700px !important; /* Стандартная высота */
+}
+
+@media screen and (max-width: 1399px) {
+
+
+.screenshots-anime-img {
+    width: 255px;
+    height: 140px;
+}
+
+.loadtrailerbutton {
+    position: relative;
+    left: -10px;
+
+}
+
+.trailer-iframe {
+    width: 255px; /* Новая ширина при разрешении <= 1399px */
+    height: 140px; /* Новая высота при разрешении <= 1399px */
+}
+
+.video {
+    width: 1030px !important; /* Новая ширина при разрешении <= 1399px */
+    height: 700px !important; /* Измененная высота при необходимости */
+}
+
+#age-verification {
+    width: 1030px !important; /* Новая ширина при разрешении <= 1399px */
+    height: 700px !important;
+}
+}
+
+@media screen and (max-width: 1200px) {
+
+
+    .screenshots-anime-img {
+        width: 210px;
+        height: 120px;
+    }
+    
+    .loadtrailerbutton {
+        position: relative; /* или absolute, если нужен отрыв от родителя */
+        top: -20px; /* поднимет кнопку вверх */
+        left: -20px;
+    }
+    
+    .trailer-iframe {
+        width: 210px; /* Новая ширина при разрешении <= 1399px */
+        height: 120px; /* Новая высота при разрешении <= 1399px */
+    }
+    
+    .video {
+        width: 850px !important; /* Новая ширина при разрешении <= 1399px */
+        height: 600px !important; /* Измененная высота при необходимости */
+    }
+    
+    #age-verification {
+        width: 850px !important; /* Новая ширина при разрешении <= 1399px */
+        height: 600px !important;
+    }
+    
+    .info-column {
+        margin-left: 40px;
+    }
+    }
+
+    @media screen and (max-width: 991px) {
+
+
+        .screenshots-anime-img {
+            width: 150px;
+            height: 100px;
+        }
+        
+        .loadtrailerbutton {
+            position: relative; /* или absolute, если нужен отрыв от родителя */
+            top: -40px; /* поднимет кнопку вверх */
+            left: -20px;
+        }
+        
+        .trailer-iframe {
+            width: 150px;
+            height: 100px;
+        }
+        
+        .video {
+            width: 610px !important; /* Новая ширина при разрешении <= 1399px */
+            height: 400px !important; /* Измененная высота при необходимости */
+        }
+        
+        #age-verification {
+            width: 610px !important; /* Новая ширина при разрешении <= 1399px */
+            height: 400px !important; /* Измененная высота при необходимости */
+        }
+        
+        .info-column {
+            margin-left: 90px;
+        }
+
+        .btn-list, .btn-play {
+            display: inline-block;
+            width: 220px; /* Фиксированная ширина кнопки */
+            text-align: center;
+            box-sizing: border-box;
+            position: relative; /* Убедитесь, что кнопка имеет относительное позиционирование */
+            z-index: 10; /* Поднимите кнопку выше остальных элементов */
+        }
+        }

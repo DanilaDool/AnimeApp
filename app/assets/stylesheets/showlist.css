@@ -25,6 +25,13 @@
     justify-content: flex-start; /* Ensure items are left-aligned */
 }
 
+.content-item20 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust the gap as needed */
+    justify-content: flex-start; /* Ensure items are left-aligned */
+}
+
 .image-wrapper3 {
     width: 200px; /* Set a fixed width for consistency */
     overflow: hidden;
@@ -99,16 +106,48 @@
 }
   
 /* Медиазапросы для адаптивности */
-@media (max-width: 1350px) {
+@media (max-width: 1399px) {
     .sidebar5 {
-        width: 90vw; /* Ширина 90% от ширины экрана */
-        height: auto; /* Высота по содержимому */
+        margin-top: 10px;
+
+        width: 980px; /* Фиксированная ширина */
+
+    }
+
+    .movie3 {
+        background-color: #4f5d75;
+        padding: 20px;
+        border-radius: 7px;
+    }
+
+    .content-item20 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px; /* Adjust the gap as needed */
+        justify-content: flex-start; /* Ensure items are left-aligned */
+        margin-left: 43px !important;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1050px) {
     .sidebar5 {
-        width: 100vw; /* Ширина 100% от ширины экрана */
-        height: auto; /* Высота по содержимому */
+        margin-top: 10px;
+
+        width: 780px; /* Фиксированная ширина */
+
+    }
+
+    .movie3 {
+        background-color: #4f5d75;
+        padding: 20px;
+        border-radius: 7px;
+    }
+
+    .content-item20 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px; /* Adjust the gap as needed */
+        justify-content: flex-start; /* Ensure items are left-aligned */
+        margin-left: 53px !important;
     }
 }

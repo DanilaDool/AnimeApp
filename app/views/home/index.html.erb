@@ -54,45 +54,47 @@
     <% end %>
   </div>
 
-  <div class="latest-updates">
-    <h2>Последние обновления аниме</h2>
-    <ul class="columns">
-      <% displayed_animes = 0 %>
-      <% @animes.sort_by(&:updated_at).reverse_each do |anime| %>
-        <% if displayed_animes < 8 %>
-          <li class="anime-item">
-            <div>
-              <a href="<%= anime_link_path(anime.shikimori_id)%>" onclick="reloadClickedPage(event, this)">
-                <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", 
-                    alt: 'Название фильма', 
-                    onerror: "this.onerror=null; this.src='https://shikimori.one/assets/globals/missing_original.jpg';" %>
-                <p><%= anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1').length > 23 ? "#{anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1')[0..22]}..." : anime.title.gsub(/\s*\[ТВ-(\d+)\]/, ' \1').gsub(/\s*\[ТВ\]/, '') %></p>
-              </a>
-              
-              <p style="font-size: 12px; color: #ffffff;">
-                <% if anime.updated_at.to_date == Date.today %>
-                  Обновлено: Сегодня в <%= anime.updated_at.strftime('%H:%M') %>
-                <% elsif anime.updated_at.to_date == Date.yesterday %>
-                  Обновлено: Вчера в <%= anime.updated_at.strftime('%H:%M') %>
-                <% else %>
-                  Обновлено: <%= anime.updated_at.strftime('%d %b, %Y %H:%M') %>
-                <% end %>
-              </p>
-              
-              <p>Эпизод: <%= anime.last_episode %></p>
+<div class="latest-updates">
+  <h2>Последние обновления аниме</h2>
+  <ul class="columns">
+    <% displayed_animes = 0 %>
+    <% @animes.sort_by(&:updated_at).reverse_each do |anime| %>
+      <% if displayed_animes < 8 %>
+        <li class="anime-item" data-index="<%= displayed_animes %>">
+          <div>
+            <a href="<%= anime_link_path(anime.shikimori_id) %>" onclick="reloadClickedPage(event, this)">
+              <%= image_tag "https://shikimori.one/system/animes/original/#{anime.shikimori_id}.jpg", 
+                  alt: 'Название фильма',
+                  onerror: "this.onerror=null; this.src='https://shikimori.one/assets/globals/missing_original.jpg';" %>
+              <p><%= anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1').length > 23 ? "#{anime.title.gsub(/\s*\[ТВ-(\d+).*?\]\s*/, ' \1')[0..22]}..." : anime.title.gsub(/\s*\[ТВ-(\d+)\]/, ' \1').gsub(/\s*\[ТВ\]/, '') %></p>
+            </a>
+            
+            <p style="font-size: 12px; color: #ffffff;">
+              <% if anime.updated_at.to_date == Date.today %>
+                Обновлено: Сегодня в <%= anime.updated_at.strftime('%H:%M') %>
+              <% elsif anime.updated_at.to_date == Date.yesterday %>
+                Обновлено: Вчера в <%= anime.updated_at.strftime('%H:%M') %>
+              <% else %>
+                Обновлено: <%= anime.updated_at.strftime('%d %b, %Y %H:%M') %>
+              <% end %>
+            </p>
+            
+            <p>Эпизод: <%= anime.last_episode %></p>
 
-              <% displayed_animes += 1 %>
-            </div>
-          </li>
-        <% end %>
+            <% displayed_animes += 1 %>
+          </div>
+        </li>
       <% end %>
-    </ul>
-  </div>
+    <% end %>
+  </ul>
+</div>
+
+  <div class="block-container">
 <div class="block">
   <div class="row">
     <div class="col-md-8">
 
-      <div class="sidebar2">
+      <div class="sidebar10">
         <div class="movie">
           <div class="header-for-anime">
             <h3>Новые аниме на сайте</h3>
@@ -214,7 +216,7 @@
       <!-- Поле для ввода года (числовое) -->
       <input type="number" name="date" id="selectedYear" min="1959" max="2024" onchange="syncSlider(this.value)">
       <p style="display: inline; font-size: smaller;">1959</p>
-      <p style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
+      <p class="adapt-number" style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
       <!-- Слайдер -->
       <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="syncYearInput(this.value)">
     </div>
@@ -507,6 +509,7 @@
   </ul>
 </div>
 
+
   <%= hidden_field_tag :genres, params[:genres], id: "selectedGenres" %>
 
   <%= hidden_field_tag :status, params[:status], id: "selectedStatus" %>
@@ -644,7 +647,39 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const filterSidebar = document.querySelector(".filter-sidebar");
+    const container = document.querySelector(".block-container");
+    const originalPosition = document.querySelector(".col-md-4");
+    let isFilterMoved = false;
 
+    function moveFilter() {
+        if (!filterSidebar || !container || !originalPosition) return;
+
+        let screenWidth;
+
+        // Используем разные методы для ПК и мобильных устройств
+        if (navigator.userAgent.match(/Mobi|Android|iPhone|iPad|iPod/i)) {
+            screenWidth = document.documentElement.clientWidth; // Для планшетов и телефонов
+        } else {
+            screenWidth = window.innerWidth; // Для ПК
+        }
+
+        if (screenWidth <= 1399 && !isFilterMoved) {
+            container.insertBefore(filterSidebar, container.firstChild);
+            isFilterMoved = true;
+        } else if (screenWidth > 1399 && isFilterMoved) {
+            originalPosition.appendChild(filterSidebar);
+            isFilterMoved = false;
+        }
+    }
+
+    // Выполняем функцию при загрузке страницы
+    moveFilter();
+
+    // Добавляем обработчик изменения размера окна
+    window.addEventListener("resize", moveFilter);
+});
 </script>
 
       </div>
@@ -654,26 +689,26 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 
   </div>
-
+</div>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
 <script>
-    if (!sessionStorage.getItem('pageRefreshed')) {
-        sessionStorage.setItem('pageRefreshed', 'true');
-        location.reload();
+function initSlickCarousel() {
+    var currentBreakpoint = getCurrentBreakpoint(); // Определяем начальный брейкпоинт
+
+    function getCurrentBreakpoint() {
+        if (window.matchMedia("(max-width: 991px)").matches) {
+            return 'small';
+        } else if (window.matchMedia("(max-width: 1399px)").matches) {
+            return 'medium';
+        } else {
+            return 'large';
+        }
     }
 
-
-    function initSlickCarousel() {
-        var slidesToShowCount = 6; // По умолчанию отображается 6 слайдов
-
-        // Проверяем разрешение экрана при загрузке страницы
-        if (window.matchMedia("(max-width: 1399px)").matches) {
-            slidesToShowCount = 5; // Если ширина экрана меньше 1400px, отображаем 5 слайдов
-        }
-
+    function createCarousel(slidesToShowCount) {
         $('.season.slider .images-container').slick({
             slidesToShow: slidesToShowCount,
             slidesToScroll: 1,
@@ -688,16 +723,77 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             ]
         });
-
-        // Следим за изменением размеров окна и пересчитываем количество слайдов при необходимости
-        $(window).resize(function() {
-            if (window.matchMedia("(max-width: 1399px)").matches) {
-                $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', 5);
-            } else {
-                $('.season.slider .images-container').slick('slickSetOption', 'slidesToShow', 6);
-            }
-        });
     }
+
+    function destroyCarousel() {
+        if ($('.season.slider .images-container').hasClass('slick-initialized')) {
+            $('.season.slider .images-container').slick('unslick');
+        }
+    }
+
+    function updateCarousel() {
+        var newBreakpoint = getCurrentBreakpoint();
+        if (newBreakpoint !== currentBreakpoint) {
+            currentBreakpoint = newBreakpoint;
+
+            // Пересоздаём слайдер с новым количеством слайдов
+            destroyCarousel();
+            if (currentBreakpoint === 'small') {
+                createCarousel(3);
+            } else if (currentBreakpoint === 'medium') {
+                createCarousel(5);
+            } else {
+                createCarousel(6);
+            }
+        }
+    }
+
+    // Создаём слайдер на старте
+    if (currentBreakpoint === 'small') {
+        createCarousel(3);
+    } else if (currentBreakpoint === 'medium') {
+        createCarousel(5);
+    } else {
+        createCarousel(6);
+    }
+
+    // Следим за изменениями размеров окна
+    $(window).resize(updateCarousel);
+}
+
+// Вызываем функцию инициализации карусели
+initSlickCarousel();
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  function updateAnimeDisplay() {
+    const animeItems = document.querySelectorAll(".anime-item");
+
+    // Сначала показываем все элементы
+    animeItems.forEach((item) => (item.style.display = "list-item"));
+
+    if (window.matchMedia("(max-width: 1399px)").matches) {
+      animeItems.forEach((item, index) => {
+        if (index >= 6) {
+          item.style.display = "none"; // Скрываем элементы после 6-го
+        }
+      });
+    }
+
+    if (window.matchMedia("(max-width: 991px)").matches) {
+      animeItems.forEach((item, index) => {
+        if (index >= 4) {
+          item.style.display = "none"; // Скрываем элементы после 4-го
+        }
+      });
+    }
+  }
+
+  // Вызываем функцию при загрузке и изменении размера окна
+  updateAnimeDisplay();
+  window.addEventListener("resize", updateAnimeDisplay);
+});
+
 
 
     // Вызываем функцию для инициализации Slick carousel при загрузке страницы

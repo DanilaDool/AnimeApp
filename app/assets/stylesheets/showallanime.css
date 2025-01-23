@@ -2,6 +2,14 @@
     margin-bottom: 20px;
 }
 
+.block .row {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px; /* Установка одинаковых отступов слева */
+    padding-right: 20px; /* Установка одинаковых отступов справа */
+}
+
+
 .title-anime {
     text-align: center;
     font-size: .8em;
@@ -12,8 +20,12 @@
     margin-top: 10px;
     border-radius: 10px;
     display: grid;
-    width: 1000px; /* Фиксированная ширина */
     border: 3px solid white;
+    margin-left: auto;
+    margin-right: 140px;
+    width: 110%; /* Базовая ширина */
+    max-width: 1000px; /* Максимальная ширина */
+    min-width: 700px; /* Минимальная ширина */
 }
 
 .sidebar3 h3 {
@@ -40,7 +52,7 @@
 }
 
 .filter-sidebar2 {
-    border-radius: 5px;
+    border-radius: 10px;
     width: 320px; /* Задаем фиксированную ширину */
     padding: 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
@@ -51,6 +63,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-left: 70px;
+    margin-right: auto;
+    border: 3px solid #ccc;
 }
 
 
@@ -89,13 +104,10 @@
 }
 
 .image-wrapper2 {
-    max-width: 100%;
-    height: auto;
-    flex-shrink: 0;
-    width: 200px;
-    overflow: hidden;
-    margin: 0 9px;
-    scroll-snap-align: start; /* Это свойство указывает, как элемент должен "прилипать" к краю контейнера */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .image-wrapper2 a:hover {
@@ -109,8 +121,8 @@
 }
 
 .image-wrapper2 img {
-    width: 100%;
-    height: 300px; /* Поддержка пропорций */
+    width: 200px;
+    height: 280px; /* Поддержка пропорций */
     object-fit: cover;
     transition: transform 0.3s ease;
     display: block; /* Убедимся, что изображение является блочным элементом */
@@ -126,4 +138,131 @@
 
 .title-for-showall-anime {
     margin-bottom: 30px;
+}
+
+#selectedYear2 {
+    height: 40px;
+    width: 281px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+#selectedYear2:focus {
+    border-color: #2980b9; /* Цвет границы при фокусе */
+}
+
+.dropdown-button2 {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 282px;
+    margin-top: 25px;
+    margin-right: auto;
+    color: white;
+}
+
+.btn-filter-width2 {
+    width: 280px;
+}
+
+@media screen and (max-width: 1399px) {
+
+
+
+    .block-container {
+        display: flex; /* Используем Flexbox */
+        justify-content: center; /* Центрируем элементы по горизонтали */
+        align-items: center; /* Центрируем элементы по вертикали */
+        flex-wrap: wrap; /* Позволяем элементам переноситься */
+        min-height: 100vh; /* Растягиваем контейнер на весь экран */
+        width: 100%; /* Занимаем всю ширину */
+        box-sizing: border-box; /* Учитываем отступы и границы */
+        padding: 20px; /* Отступы внутри контейнера */
+    }
+    
+    .filter-sidebar2 {
+        width: 800px; /* Ширина фильтра */
+        height: 600px; /* Высота фильтра */
+        display: block; /* Блочный элемент */
+        margin: 0; /* Убираем фиксированные отступы */
+        margin-right: 80px;
+
+    }
+    
+    .sidebar3 {
+        width: 800px; /* Ширина контента */
+        margin: 0; /* Убираем фиксированные отступы */
+        margin-top: 10px;
+        margin-left: 28px;
+    }
+    
+    .dropdown-button2 {
+        width: 760px;
+        color: white;
+    }
+
+    .btn-filter-width2 {
+        width: 760px;
+    }
+
+    #selectedYear2 {
+        width: 760px;
+    }
+
+    .adapt-number2 {
+        margin-left: 694px !important;
+    }
+
+    .name-filter2 {
+        margin-right: 650px;
+    }
+    
+    .dropdown-menu {
+        width: 760px !important;
+    }
+
+    
+}
+
+@media screen and (max-width: 950px) {
+    .sidebar3 {
+        width: 700px; /* Ширина контента */
+        margin: 0; /* Убираем фиксированные отступы */
+        margin-top: 10px;
+        margin-left: 28px;
+    }
+
+    .filter-sidebar2 {
+        width: 700px;
+    }
+
+        .dropdown-button2 {
+        width: 660px;
+        color: white;
+    }
+
+    .btn-filter-width2 {
+        width: 660px;
+    }
+
+    #selectedYear2 {
+        width: 660px;
+    }
+
+    .adapt-number2 {
+        margin-left: 595px !important;
+    }
+
+    .name-filter2 {
+        margin-right: 600px;
+    }
+    
+    .dropdown-menu2 {
+        width: 600px !important;
+    }
 }

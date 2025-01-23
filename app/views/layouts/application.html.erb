@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>AnimeHub</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,15 +38,74 @@
 </head>
 <body>
 <header>
+
   <div class="container">
     <div class="row align-items-center">
 
       <div class="col d-flex align-items-center">
 
+<div class="list-icon">
+  <a href="#" id="toggleButton">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+    </svg>
+  </a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('toggleButton'); // Кнопка для открытия/закрытия
+    const closeModalLeftBtn = document.getElementById('closeModalLeftBtn'); // Кнопка закрытия
+    const lateral = document.getElementById('lateral'); // Боковая панель
+
+    // Открытие/закрытие панели
+    toggleButton.addEventListener('click', function (event) {
+        event.preventDefault(); // Отменяем переход по ссылке
+        if (lateral.classList.contains('active')) {
+            closeLateralPanel(); // Закрываем панель
+        } else {
+            openLateralPanel(); // Открываем панель
+        }
+    });
+
+    // Закрытие панели через кнопку
+    closeModalLeftBtn.addEventListener('click', function (event) {
+        event.preventDefault(); // Отменяем переход по ссылке
+        closeLateralPanel(); // Закрываем панель
+    });
+
+    // Функция для открытия панели
+    function openLateralPanel() {
+        lateral.classList.add('active'); // Добавляем класс active для показа панели
+    }
+
+    // Функция для закрытия панели
+    function closeLateralPanel() {
+        lateral.classList.remove('active'); // Убираем класс active для скрытия панели
+    }
+        window.addEventListener('resize', function () {
+        if (window.innerWidth > 991 && lateral.classList.contains('active')) {
+            closeLateralPanel(); // Скрываем панель, если экран больше 991px и панель открыта
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
         <a href="/" class="text-start" onclick="reloadClickedPage(event, this)">
           <h3 class="mb-0 left-header-title">AnimeHub</h3>
         </a>
-
+        
         <div class="separator"></div>
 
         <a href="<%=anime_index_path %>" class="text-start ms-3" onclick="reloadClickedPage(event, this)">
@@ -82,7 +142,7 @@
         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
       </svg>
     </a>
-    <%= text_field_tag :query, params[:query], class: "search-input", id: "searchInput", placeholder: "Shikimori код или Название" %>
+    <%= text_field_tag :query, params[:query], class: "search-input", id: "searchInput", placeholder: "Название или Код" %>
     <%= submit_tag "Search", id: "search_b", style: "display: none;" %>
   <% end %>
 </div>
@@ -102,6 +162,31 @@
       }
     });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const searchIconOpen = document.getElementById("searchIconOpen");
+  const searchIconClose = document.getElementById("searchIconClose");
+  const searchInput = document.getElementById("searchInput");
+
+  // Открытие полноэкранного поиска при клике на иконку поиска
+  searchIconOpen.addEventListener("click", function () {
+    if (window.innerWidth <= 1200) {
+      searchInput.classList.add("fullscreen");
+      searchIconOpen.style.display = "none";
+      searchIconClose.style.display = "block";
+      searchInput.focus();
+    }
+  });
+
+  // Закрытие полноэкранного поиска при клике на иконку закрытия
+  searchIconClose.addEventListener("click", function () {
+    searchInput.classList.remove("fullscreen");
+    searchIconOpen.style.display = "block";
+    searchIconClose.style.display = "none";
+    searchInput.value = "";
+  });
+});
+
+
     if (window.location.pathname === '<%= search_search_results_path %>') {
       if (!sessionStorage.getItem('pageReloaded')) {
         sessionStorage.setItem('pageReloaded', 'true');
@@ -111,6 +196,7 @@
       }
     }
   });
+  
 </script>
 
 
@@ -162,7 +248,7 @@
         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
       </svg>
     </a>
-    <%= text_field_tag :query, params[:query], class: "search-input", id: "searchInput", placeholder: "Shikimori код или Название" %>
+    <%= text_field_tag :query, params[:query], class: "search-input2", id: "searchInput", placeholder: "Shikimori код или Название" %>
     <%= submit_tag "Search", id: "search_b", style: "display: none;" %>
   <% end %>
 </div>
@@ -182,6 +268,31 @@
       }
     });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const searchIconOpen = document.getElementById("searchIconOpen");
+  const searchIconClose = document.getElementById("searchIconClose");
+  const searchInput = document.getElementById("searchInput");
+
+  // Открытие полноэкранного поиска при клике на иконку поиска
+  searchIconOpen.addEventListener("click", function () {
+    if (window.innerWidth <= 1200) {
+      searchInput.classList.add("fullscreen");
+      searchIconOpen.style.display = "none";
+      searchIconClose.style.display = "block";
+      searchInput.focus();
+    }
+  });
+
+  // Закрытие полноэкранного поиска при клике на иконку закрытия
+  searchIconClose.addEventListener("click", function () {
+    searchInput.classList.remove("fullscreen");
+    searchIconOpen.style.display = "block";
+    searchIconClose.style.display = "none";
+    searchInput.value = "";
+  });
+});
+
+
     if (window.location.pathname === '<%= search_search_results_path %>') {
       if (!sessionStorage.getItem('pageReloaded')) {
         sessionStorage.setItem('pageReloaded', 'true');
@@ -191,6 +302,7 @@
       }
     }
   });
+  
 </script>
 
            <div class="icon-vk">
@@ -214,14 +326,178 @@
             </li>
            </div>
 
+
           <% end %>
+
         </nav>
       </div>
     </div>
   </div>
+
 </header>
 
 <div class="trip"></div>
+
+<div id="lateral" class="lateral" style="background-color: white;">
+  <div class="d-flex flex-column flex-shrink-0 p-3 text-white " style="width: 300px; height: 100vh;  background-color:#2d3142;">
+
+    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <span class="fs-4"><h2 class="panel_name">AnimeHub</h2></span>
+    </a>
+
+<a href="#" style="position: absolute; top: 12px; right: 10px;" id="closeModalLeftBtn">
+  <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+  </svg>
+</a>
+
+<%if current_user%>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li>
+        <a href="/" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-house-door-fill" viewBox="0 0 16 16" style="margin-bottom:4px;">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+          </svg>
+          Главная
+        </button>
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= users_show_path %>" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-person-fill" viewBox="0 0 16 16">
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>
+          Профиль
+        </button>
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= anime_index_path%>" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-tv-fill" viewBox="0 0 16 16">
+            <path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2z"/>
+          </svg>
+          Аниме
+          </button>
+          </a>
+      </li>
+
+      <li>
+        <a href="<%= list_show_path(@list.id)%>" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2"/>
+          </svg>
+          Списки Аниме
+          </button>
+          </a>
+      </li>
+
+      <li>
+        <a href="<%= anime_cult_path%>" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-star-fill" viewBox="0 0 16 16" style="margin-bottom:4px;">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+          Культовые аниме
+        </button>
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= anime_link_path(@anime_random_shikimori_id)%>" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-dice-5-fill" viewBox="0 0 16 16" style="margin-bottom:4px;">
+            <path d="M3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zm2.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM8 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+          </svg>
+          Случайное аниме
+        </button>
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <a href="<%= log_out_path(current_user) %>" data-confirm="Вы уверены что хотите выйти?">
+      <button type="button" class="btn btn-secondary" style="width:265px; margin-bottom:10px; color:white;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-box-arrow-right" viewBox="0 0 16 16" style=" margin-bottom:3px;">
+          <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+          <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+        </svg>
+        Выйти с аккаунта
+      </button>
+    </a>
+    <%else%>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li>
+        <a href="/" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-house-door-fill" viewBox="0 0 16 16" style="margin-bottom:4px;">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+          </svg>
+          Главная
+        </button>
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= anime_index_path%>" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-tv-fill" viewBox="0 0 16 16">
+            <path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2z"/>
+          </svg>
+          Аниме
+          </button>
+          </a>
+      </li>
+
+      <li>
+        <a href="<%= anime_cult_path%>" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-star-fill" viewBox="0 0 16 16" style="margin-bottom:4px;">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+          Культовые аниме
+        </button>
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= anime_link_path(@anime_random_shikimori_id)%>" style="color:white;" onclick="reloadClickedPage(event, this)">
+        <button type="button" class="btn btn-outline-secondary" style="width:265px; margin-bottom:10px; color:white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-dice-5-fill" viewBox="0 0 16 16" style="margin-bottom:4px;">
+            <path d="M3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zm2.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM8 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+          </svg>
+          Случайное аниме
+        </button>
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <a href="/auth/vkontakte" data-confirm="Вы уверены что хотите выйти?">
+      <button type="button" class="btn btn-secondary" style="width:265px; margin-bottom:10px; color:white;">
+      <svg width="23" height="23" viewBox="0 0 101 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:3px; margin-right:3px;">
+        <g clip-path="url(#clip0_2_40)">
+          <path d="M0.5 48C0.5 25.3726 0.5 14.0589 7.52944 7.02944C14.5589 0 25.8726 0 48.5 0H52.5C75.1274 0 86.4411 0 93.4706 7.02944C100.5 14.0589 100.5 25.3726 100.5 48V52C100.5 74.6274 100.5 85.9411 93.4706 92.9706C86.4411 100 75.1274 100 52.5 100H48.5C25.8726 100 14.5589 100 7.52944 92.9706C0.5 85.9411 0.5 74.6274 0.5 52V48Z" fill="#0077FF"/>
+          <path d="M53.7085 72.042C30.9168 72.042 17.9169 56.417 17.3752 30.417H28.7919C29.1669 49.5003 37.5834 57.5836 44.25 59.2503V30.417H55.0004V46.8752C61.5837 46.1669 68.4995 38.667 70.8329 30.417H81.5832C79.7915 40.5837 72.2915 48.0836 66.9582 51.1669C72.2915 53.6669 80.8336 60.2086 84.0836 72.042H72.2499C69.7082 64.1253 63.3754 58.0003 55.0004 57.1669V72.042H53.7085Z" fill="white"/>
+        </g>
+        <defs>
+          <clipPath id="clip0_2_40">
+            <rect width="100" height="100" fill="white" transform="translate(0.5)"/>
+          </clipPath>
+        </defs>
+      </svg>
+        Авторизоваться через ВК
+      </button>
+    </a>
+<%end%>
+
+  </div>
+</div>
 
 <div class="go-top">Вверх</div>
 

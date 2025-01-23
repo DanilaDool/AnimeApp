@@ -1,3 +1,4 @@
+<div class="block-container">
 <div class="block">
   <div class="row">
     <div class="col-md-8">
@@ -9,7 +10,7 @@
 
           <div class="trip4"></div>
 
-          <div class="content-item2", style="margin-left: 12px; ">
+          <div class="content-item2">
             <% @animes.reverse.each do |anime| %>
               <% if anime.shikimori_id.present? %>
                 <div class="image-wrapper2" data-shikimori-id="<%= anime.shikimori_id %>">
@@ -32,12 +33,12 @@
     </div>
 
 <div class="col-md-4">
-      <div class="filter-sidebar">
+      <div class="filter-sidebar2" style="margin-left: 80px;">
         <div class="filter-header">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-filter-right" viewBox="0 0 16 16">
             <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
           </svg>
-          <h3 style="font-size: 20px;">Фильтр</h3>
+          <h3 class="name-filter2" style="font-size: 20px;">Фильтр</h3>
         </div>
 
 <%= form_with url: search_search_results_path, method: :get, local: true, id: "animeSearchForm" do %>
@@ -46,16 +47,16 @@
     <p class="small-text-filter">Укажите пустое поле, если не желаете искать по году</p>
     <div class="slider-inputs">
       <!-- Поле для ввода года (числовое) -->
-      <input type="number" name="date" id="selectedYear" min="1959" max="2024" onchange="syncSlider(this.value)">
+      <input type="number" name="date" id="selectedYear2" min="1959" max="2024" onchange="syncSlider(this.value)">
       <p style="display: inline; font-size: smaller;">1959</p>
-      <p style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
+      <p class="adapt-number2" style="display: inline; margin-left: 212px; font-size: smaller;">2024</p>
       <!-- Слайдер -->
       <input type="range" class="form-range" id="customRange1" min="1959" max="2024" oninput="syncYearInput(this.value)">
     </div>
   </div>
 
 <div class="dropdown">
-  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Жанры">
+  <button class="btn dropdown-toggle dropdown-button2" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Жанры">
     Жанры
   </button>
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
@@ -263,7 +264,7 @@
 </div>
 
 <div class="dropdown">
-  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Статус">
+  <button class="btn dropdown-toggle dropdown-button2" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Статус">
     Статус
   </button>
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
@@ -286,7 +287,7 @@
 </div>
 
 <div class="dropdown">
-  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Тип">
+  <button class="btn dropdown-toggle dropdown-button2" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Тип">
     Тип
   </button>
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
@@ -304,7 +305,7 @@
 </div>
 
 <div class="dropdown">
-  <button class="btn dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Возрастное ограничение">
+  <button class="btn dropdown-toggle dropdown-button2" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" data-original-text="Возрастное ограничение">
     Возрастное ограничение
   </button>
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="width:276px; max-height: 300px; overflow-y: auto; z-index:1;">
@@ -353,7 +354,7 @@
   <%= text_field_tag :query, params[:query], class: "search-input", id: "searchInput" %>
 
           <div class="filter-dropdown btn-filter">
-            <%= submit_tag 'Найти', class: "btn btn-secondary btn-filter-width", style: "border: 1px solid #ccc;" %>
+            <%= submit_tag 'Найти', class: "btn btn-secondary btn-filter-width2", style: "border: 1px solid #ccc;" %>
         </div>
 <% end %>
 
@@ -394,7 +395,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   const searchForm = document.getElementById("animeSearchForm");
   const searchInput = document.getElementById("searchInput");
-  const selectedYear = document.getElementById("selectedYear");
+  const selectedYear = document.getElementById("selectedYear2");
   const customRange = document.getElementById("customRange1");
   const yearQueryField = document.getElementById("yearQueryField");
 
@@ -478,6 +479,35 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+        document.addEventListener("DOMContentLoaded", function () {
+            const filterSidebar = document.querySelector(".filter-sidebar2");
+            const container = document.querySelector(".block-container");
+            let isFilterMoved = false; // Флаг для отслеживания состояния
+
+            function moveFilter() {
+                if (!filterSidebar || !container) return; // Проверка на существование элементов
+
+                const screenWidth = document.documentElement.clientWidth;
+
+                if (screenWidth <= 1399 && !isFilterMoved) {
+                    container.insertBefore(filterSidebar, container.firstChild);
+                    isFilterMoved = true;
+                } else if (screenWidth > 1399 && isFilterMoved) {
+                    const originalPosition = document.querySelector(".col-md-4");
+                    if (originalPosition) {
+                        originalPosition.appendChild(filterSidebar);
+                        isFilterMoved = false;
+                    }
+                }
+            }
+
+            // Вызываем функцию при загрузке страницы
+            moveFilter();
+
+            // Вызываем функцию при изменении размера окна
+            window.addEventListener("resize", moveFilter);
+        });
+
 
 </script>
 
@@ -488,17 +518,17 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 
   </div>
-
+</div>
 
 <script>
     $(document).ready(function() {
-        $('.dropdown-button').click(function() {
+        $('.dropdown-button2').click(function() {
             $(this).siblings('.dropdown-content').toggle();
         });
     });
 
     function updateSlider(value) {
-        document.getElementById('selectedYear').value = value;
+        document.getElementById('selectedYear2').value = value;
     }
 
     function updateYear(value) {
